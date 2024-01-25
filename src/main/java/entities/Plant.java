@@ -1,6 +1,7 @@
 package entities;
 
 import java.util.Date;
+import java.util.Vector;
 
 public class Plant {
     private int id;
@@ -9,24 +10,38 @@ public class Plant {
     private String imageLink;
     private String color;
     private double unitPrice;
-    private String tag;
+    private Vector<String> plantTags;
+    private Vector<String> plantCategories;
     private int quantity;
     private Date saleOpening;
     private String stockStatus;
 
-
-    public Plant() {
-    }
-
     public Plant(int id, String title, String description, String imageLink, String color, double unitPrice,
-                 String tag, int quantity, Date saleOpening, String stockStatus) {
+                 Vector<String> plantTags, Vector<String> plantCategories, int quantity, Date saleOpening,
+                 String stockStatus) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.imageLink = imageLink;
         this.color = color;
         this.unitPrice = unitPrice;
-        this.tag = tag;
+        this.plantTags = plantTags;
+        this.plantCategories = plantCategories;
+        this.quantity = quantity;
+        this.saleOpening = saleOpening;
+        this.stockStatus = stockStatus;
+    }
+
+    public Plant(String title, String description, String imageLink, String color, double unitPrice,
+                 Vector<String> plantTags, Vector<String> plantCategories, int quantity, Date saleOpening,
+                 String stockStatus) {
+        this.title = title;
+        this.description = description;
+        this.imageLink = imageLink;
+        this.color = color;
+        this.unitPrice = unitPrice;
+        this.plantTags = plantTags;
+        this.plantCategories = plantCategories;
         this.quantity = quantity;
         this.saleOpening = saleOpening;
         this.stockStatus = stockStatus;
@@ -80,12 +95,20 @@ public class Plant {
         this.unitPrice = unitPrice;
     }
 
-    public String getTag() {
-        return tag;
+    public Vector<String> getPlantTags() {
+        return plantTags;
     }
 
-    public void setTag(String tag) {
-        this.tag = tag;
+    public void setPlantTags(Vector<String> plantTags) {
+        this.plantTags = plantTags;
+    }
+
+    public Vector<String> getPlantCategories() {
+        return plantCategories;
+    }
+
+    public void setPlantCategories(Vector<String> plantCategories) {
+        this.plantCategories = plantCategories;
     }
 
     public int getQuantity() {
