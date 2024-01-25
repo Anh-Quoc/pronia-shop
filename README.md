@@ -10,7 +10,7 @@ I have included a script to create a database so you can have the same content t
 
 ## Live Demonstration
 
-The E-commerce demo can be [viewed online here]().
+The E-commerce demo can be [viewed online here](https://template.hasthemes.com/pronia/pronia/index.html).
 
 Here are screenshots that show the E-commerce demo application in use.
 
