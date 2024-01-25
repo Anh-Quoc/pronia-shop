@@ -96,6 +96,7 @@ public class Plant {
     }
 
     public void setUnitPrice(double unitPrice) {
+
         this.unitPrice = unitPrice;
     }
 

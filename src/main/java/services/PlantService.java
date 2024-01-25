@@ -42,4 +42,9 @@ public class PlantService {
         return plants;
     }
 
+    public Vector<Plant> getRelatedPlant(int id){
+        Vector<Plant> plants = plantDAO.getRelatedPlant(id);
+        return plants;
+    }
+
 }

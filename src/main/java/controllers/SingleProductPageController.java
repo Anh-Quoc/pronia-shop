@@ -1,5 +1,6 @@
 package controllers;
 
+import entities.Plant;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -8,6 +9,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import services.PlantService;
 
 import java.io.IOException;
+import java.util.Vector;
+
 @WebServlet(name="SingleProductPageController", urlPatterns = {"/plants"})
 public class SingleProductPageController extends HttpServlet {
     private PlantService plantService;
@@ -20,11 +23,18 @@ public class SingleProductPageController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int plantId = Integer.parseInt(req.getParameter("id"));
-        req.setAttribute("plant", plantService.getPlantById(plantId));
-        try {
-            req.getRequestDispatcher("single-product.jsp").forward(req,resp);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        Plant plant = plantService.getPlantById(plantId);
+        Vector<Plant> relatedPlants = plantService.getRelatedPlant(plantId);
+        if(plant != null) {
+            req.setAttribute("plant", plant);
+            req.setAttribute("relatedPlants", relatedPlants);
+            try {
+                req.getRequestDispatcher("single-product.jsp").forward(req, resp);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            resp.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
     }
 
