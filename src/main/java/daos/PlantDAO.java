@@ -11,17 +11,17 @@ import java.util.Vector;
 
 public class PlantDAO {
 
-    private static PlantDAO instance = null;
-
+    private PlantTagDAO plantTagDAO;
+    private PlantCategoryDAO plantCategoryDAO;
     private final String SELECT_ALL_PLANT_STATEMENT = "SELECT * FROM plants";
     private final String SELECT_PLANT_BY_TITLE_STATEMENT = "SELECT * FROM plants WHERE plants.title LIKE ?";
     private final String SELECT_PLANT_BY_ID_STATEMENT = "SELECT * FROM plants WHERE plants.id = ?";
 
-    private final String SELECT_TAG_OF_PLANT_BY_PLANT_ID = "SELECT * FROM plant_with_tags_view WHERE id = ?";
-    private final String SELECT_CATEGORIES_OF_PLANT_BY_PLANT_ID = "SELECT * FROM plant_with_categories_view WHERE id = ?";
 
+    private static PlantDAO instance = null;
     private PlantDAO() {
-
+        plantTagDAO = PlantTagDAO.getInstance();
+        plantCategoryDAO = PlantCategoryDAO.getInstance();
     }
 
     public static PlantDAO getInstance() {
@@ -46,8 +46,8 @@ public class PlantDAO {
                 plant.setColor(resultSet.getString("color"));
                 plant.setUnitPrice(resultSet.getFloat("unit_price"));
 
-                plant.setPlantTags(getTagOfPlantByID(plant.getId()));
-                plant.setPlantCategories(getCategoriesOfPlantByID(plant.getId()));
+                plant.setPlantTags(plantTagDAO.getTagOfPlantByID(plant.getId()));
+                plant.setPlantCategories(plantCategoryDAO.getCategoriesOfPlantByID(plant.getId()));
 
                 plant.setQuantity(resultSet.getInt("quantity"));
                 plant.setSaleOpening(resultSet.getDate("sale_opening"));
@@ -93,8 +93,8 @@ public class PlantDAO {
                 plant.setImageLink(resultSet.getString("image_link"));
                 plant.setColor(resultSet.getString("color"));
                 plant.setUnitPrice(resultSet.getFloat("unit_price"));
-                plant.setPlantTags(getTagOfPlantByID(plant.getId()));
-                plant.setPlantCategories(getCategoriesOfPlantByID(plant.getId()));
+                plant.setPlantTags(plantTagDAO.getTagOfPlantByID(plant.getId()));
+                plant.setPlantCategories(plantCategoryDAO.getCategoriesOfPlantByID(plant.getId()));
                 plant.setQuantity(resultSet.getInt("quantity"));
                 plant.setSaleOpening(resultSet.getDate("sale_opening"));
                 plant.setStockStatus(resultSet.getString("stock_status"));
@@ -123,8 +123,8 @@ public class PlantDAO {
                 plant.setColor(resultSet.getString("color"));
                 plant.setUnitPrice(resultSet.getFloat("unit_price"));
 
-                plant.setPlantTags(getTagOfPlantByID(plant.getId()));
-                plant.setPlantCategories(getCategoriesOfPlantByID(plant.getId()));
+                plant.setPlantTags(plantTagDAO.getTagOfPlantByID(plant.getId()));
+                plant.setPlantCategories(plantCategoryDAO.getCategoriesOfPlantByID(plant.getId()));
 
                 plant.setQuantity(resultSet.getInt("quantity"));
                 plant.setSaleOpening(resultSet.getDate("sale_opening"));
@@ -139,40 +139,5 @@ public class PlantDAO {
         return plants;
     }
 
-    private Vector<String> getTagOfPlantByID(int id){
-        Vector<String> tags = new Vector<>();
-        try(Connection connection = DBContext.getConnection()){
-            PreparedStatement statement = connection.prepareStatement(SELECT_TAG_OF_PLANT_BY_PLANT_ID);
-            statement.setInt(1, id);
-            ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()){
-                String tag = resultSet.getString("tag");
-                tags.add(tag);
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return tags;
-    }
-
-    private Vector<String> getCategoriesOfPlantByID(int id){
-        Vector<String> categories = new Vector<>();
-        try(Connection connection = DBContext.getConnection()){
-            PreparedStatement statement = connection.prepareStatement(SELECT_CATEGORIES_OF_PLANT_BY_PLANT_ID);
-            statement.setInt(1, id);
-            ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()){
-                String category = resultSet.getString("category");
-                categories.add(category);
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return categories;
-    }
 
 }
