@@ -16,6 +16,10 @@ public class Plant {
     private Date saleOpening;
     private String stockStatus;
 
+    public Plant(){
+
+    }
+
     public Plant(int id, String title, String description, String imageLink, String color, double unitPrice,
                  Vector<String> plantTags, Vector<String> plantCategories, int quantity, Date saleOpening,
                  String stockStatus) {

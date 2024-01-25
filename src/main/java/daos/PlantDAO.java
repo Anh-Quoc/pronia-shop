@@ -1,24 +1,27 @@
 package daos;
 
 import entities.Plant;
+import utils.DBContext;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Vector;
-import java.util.stream.Collectors;
 
 public class PlantDAO {
 
     private static PlantDAO instance = null;
-    private Vector<Plant> plants;
+
+    private final String SELECT_ALL_PLANT_STATEMENT = "SELECT * FROM plants";
+    private final String SELECT_PLANT_BY_TITLE_STATEMENT = "SELECT * FROM plants WHERE plants.title LIKE ?";
+    private final String SELECT_PLANT_BY_ID_STATEMENT = "SELECT * FROM plants WHERE plants.id = ?";
+
+    private final String SELECT_TAG_OF_PLANT_BY_PLANT_ID = "SELECT * FROM plant_with_tags_view WHERE id = ?";
+    private final String SELECT_CATEGORIES_OF_PLANT_BY_PLANT_ID = "SELECT * FROM plant_with_categories_view WHERE id = ?";
+
     private PlantDAO() {
-        plants = new Vector<>();
-        plants.add(new Plant(1, "Cactus_1", "Cactus is a plant", "https://cdn.blossominggifts.com/media/catalog/product/cache/7/image/9df78eab33525d08d6e5fb8d27136e95/r/e/red-rose-plant-dark-grey-pot.webp", "Green", 10.0, "Cactus", 100, null, "In stock"));
-        plants.add(new Plant(2, "Cactus_2", "Cactus is a plant", "https://cdn.blossominggifts.com/media/catalog/product/cache/7/image/9df78eab33525d08d6e5fb8d27136e95/1/0/100-springtime-tulips-vase.webp", "Green", 10.0, "Cactus", 100, null, "In stock"));
-        plants.add(new Plant(3, "Cactus_3", "Cactus is a plant", "https://cdn11.bigcommerce.com/s-i7i23daso6/images/stencil/1280x1280/products/9106/13820/Clematis_Taiga_0011240__31226.1638273410.jpg?c=1", "Green", 10.0, "Cactus", 100, null, "In stock"));
-        plants.add(new Plant(4, "Cactus_4", "Cactus is a plant", "https://hortology.co.uk/cdn/shop/products/Ficus-elastica-Robusta-Rubber-Plant-12x35cm_2000x.jpg?v=1704197517", "Green", 10.0, "Cactus", 100, null, "In stock"));
-        plants.add(new Plant(5, "Cactus_5", "Cactus is a plant", "https://hortology.co.uk/cdn/shop/products/Ficus-elastica-Robusta-Rubber-Plant-12x35cm_2000x.jpg?v=1704197517", "Green", 10.0, "Cactus", 100, null, "In stock"));
-        plants.add(new Plant(6, "Cactus_6", "Cactus is a plant", "https://hortology.co.uk/cdn/shop/products/Ficus-elastica-Robusta-Rubber-Plant-12x35cm_2000x.jpg?v=1704197517", "Green", 10.0, "Cactus", 100, null, "In stock"));
-        plants.add(new Plant(7, "Cactus_7", "Cactus is a plant", "https://hortology.co.uk/cdn/shop/products/Ficus-elastica-Robusta-Rubber-Plant-12x35cm_2000x.jpg?v=1704197517", "Green", 10.0, "Cactus", 100, null, "In stock"));
-        plants.add(new Plant(8, "Cactus_8", "Cactus is a plant", "https://hortology.co.uk/cdn/shop/products/Ficus-elastica-Robusta-Rubber-Plant-12x35cm_2000x.jpg?v=1704197517", "Green", 10.0, "Cactus", 100, null, "In stock"));
+
     }
 
     public static PlantDAO getInstance() {
@@ -29,36 +32,147 @@ public class PlantDAO {
     }
 
     public Vector<Plant> getAllPlant() {
+        Vector<Plant> plants = new Vector<>();
+        try(Connection connection = DBContext.getConnection()){
+            PreparedStatement statement = connection.prepareStatement(SELECT_ALL_PLANT_STATEMENT);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()){
+                Plant plant = new Plant();
+                plant.setId(resultSet.getInt("id"));
+                plant.setTitle(resultSet.getString("title"));
+                plant.setDescription(resultSet.getString("description"));
+                plant.setImageLink(resultSet.getString("image_link"));
+                plant.setColor(resultSet.getString("color"));
+                plant.setUnitPrice(resultSet.getFloat("unit_price"));
+
+                plant.setPlantTags(getTagOfPlantByID(plant.getId()));
+                plant.setPlantCategories(getCategoriesOfPlantByID(plant.getId()));
+
+                plant.setQuantity(resultSet.getInt("quantity"));
+                plant.setSaleOpening(resultSet.getDate("sale_opening"));
+                plant.setStockStatus(resultSet.getString("stock_status"));
+
+                plants.add(plant);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         return plants;
     }
 
     public Vector<Plant> getFeaturedPlant() {
-        return plants;
+        return null;
     }
 
     public Vector<Plant> getBestsellerPlant() {
-        return plants;
+        return null;
     }
 
     public Vector<Plant> getLatestPlant() {
-        return plants;
+        return null;
     }
 
     public Vector<Plant> getNewPlants() {
-        return plants;
+        return null;
     }
 
     public Plant getPlantById(int id) {
-        return plants.stream()
-                .filter(plant -> plant.getId() == id)
-                .findFirst()
-                .orElse(null);
+        Plant plant = null;
+        try(Connection connection = DBContext.getConnection()){
+            PreparedStatement statement = connection.prepareStatement(SELECT_PLANT_BY_ID_STATEMENT);
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+
+            if(resultSet.next()){
+                plant = new Plant();
+                plant.setId(resultSet.getInt("id"));
+                plant.setTitle(resultSet.getString("title"));
+                plant.setDescription(resultSet.getString("description"));
+                plant.setImageLink(resultSet.getString("image_link"));
+                plant.setColor(resultSet.getString("color"));
+                plant.setUnitPrice(resultSet.getFloat("unit_price"));
+                plant.setPlantTags(getTagOfPlantByID(plant.getId()));
+                plant.setPlantCategories(getCategoriesOfPlantByID(plant.getId()));
+                plant.setQuantity(resultSet.getInt("quantity"));
+                plant.setSaleOpening(resultSet.getDate("sale_opening"));
+                plant.setStockStatus(resultSet.getString("stock_status"));
+
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return plant;
     }
 
     public Vector<Plant> getPlantByTitle(String productTitle) {
-        return plants.stream()
-                .filter(plant -> plant.getTitle().contains(productTitle))
-                .collect(Collectors.toCollection(Vector::new));
+        Vector<Plant> plants = new Vector<>();
+        try(Connection connection = DBContext.getConnection()){
+            PreparedStatement statement = connection.prepareStatement(SELECT_PLANT_BY_TITLE_STATEMENT);
+            statement.setString(1, "%" + productTitle + "%");
+            ResultSet resultSet = statement.executeQuery();
 
+            while (resultSet.next()){
+                Plant plant = new Plant();
+                plant.setId(resultSet.getInt("id"));
+                plant.setTitle(resultSet.getString("title"));
+                plant.setDescription(resultSet.getString("description"));
+                plant.setImageLink(resultSet.getString("image_link"));
+                plant.setColor(resultSet.getString("color"));
+                plant.setUnitPrice(resultSet.getFloat("unit_price"));
+
+                plant.setPlantTags(getTagOfPlantByID(plant.getId()));
+                plant.setPlantCategories(getCategoriesOfPlantByID(plant.getId()));
+
+                plant.setQuantity(resultSet.getInt("quantity"));
+                plant.setSaleOpening(resultSet.getDate("sale_opening"));
+                plant.setStockStatus(resultSet.getString("stock_status"));
+
+                plants.add(plant);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return plants;
     }
+
+    private Vector<String> getTagOfPlantByID(int id){
+        Vector<String> tags = new Vector<>();
+        try(Connection connection = DBContext.getConnection()){
+            PreparedStatement statement = connection.prepareStatement(SELECT_TAG_OF_PLANT_BY_PLANT_ID);
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()){
+                String tag = resultSet.getString("tag");
+                tags.add(tag);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return tags;
+    }
+
+    private Vector<String> getCategoriesOfPlantByID(int id){
+        Vector<String> categories = new Vector<>();
+        try(Connection connection = DBContext.getConnection()){
+            PreparedStatement statement = connection.prepareStatement(SELECT_CATEGORIES_OF_PLANT_BY_PLANT_ID);
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()){
+                String category = resultSet.getString("category");
+                categories.add(category);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return categories;
+    }
+
 }

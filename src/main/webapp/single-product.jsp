@@ -1,4 +1,5 @@
 <%@ page import="entities.Plant" %>
+<%@ page import="java.util.Vector" %>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -564,21 +565,39 @@
                             </div>
                             <div class="product-category">
                                 <span class="title">Categories :</span>
+
                                 <ul>
+                                    <% Vector<String> categories = plant.getPlantCategories(); %>
+                                    <% if(categories != null && !categories.isEmpty()){
+                                        for(int i = 0; i < categories.size(); ++i) {
+                                            String category = categories.get(i);
+                                    %>
                                     <li>
-                                        <a href="#">Office,</a>
+                                        <a href="#"><%= i < categories.size() - 1 ? category + ", ": category%></a>
                                     </li>
-                                    <li>
-                                        <a href="#">Home</a>
-                                    </li>
+                                    <%
+                                            }
+                                        }
+                                    %>
                                 </ul>
+
                             </div>
                             <div class="product-category product-tags">
                                 <span class="title">Tags :</span>
                                 <ul>
                                     <li>
-                                        <a href="#"><%=plant.getTag()%>
+                                        <% Vector<String> tags = plant.getPlantTags(); %>
+                                        <% if(tags != null && !tags.isEmpty()){
+                                                for(int i = 0; i < tags.size(); ++i) {
+                                                    String tag = tags.get(i);
+                                        %>
+                                        <a href="#">
+                                           <%= i < tags.size() - 1 ? tag + ", ": tag%>
                                         </a>
+                                        <%
+                                                }
+                                          }
+                                        %>
                                     </li>
                                 </ul>
                             </div>
