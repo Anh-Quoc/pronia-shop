@@ -1,5 +1,6 @@
 <%@ page import="java.util.Vector" %>
 <%@ page import="entities.Plant" %>
+<%@ page import="entities.PlantTag" %>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -376,6 +377,7 @@
                                     </form>
                                 </div>
                                 <div class="widgets-area">
+
                                     <div class="widgets-item pt-0">
                                         <h2 class="widgets-title mb-4">Categories</h2>
                                         <ul class="widgets-category">
@@ -385,44 +387,20 @@
                                                     All <span>(65)</span>
                                                 </a>
                                             </li>
+                                            <%
+                                                Vector<PlantTag> listTags = (Vector<PlantTag>) request.getAttribute("listPlantTag");
+                                                if(listTags != null && !listTags.isEmpty()) {
+                                                    for (PlantTag tag : listTags) {
+                                            %>
                                             <li>
                                                 <a href="#">
-                                                    <i class="fa fa-chevron-right"></i>
-                                                    Bansai <span>(12)</span>
+                                                    <i class="fa fa-chevron-right"></i><%=tag.getName()%><span> (<%=tag.getAmount()%>)</span>
                                                 </a>
                                             </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i class="fa fa-chevron-right"></i>
-                                                    House Plants <span>(22)</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i class="fa fa-chevron-right"></i>
-                                                    Indoor Living <span>(19)</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i class="fa fa-chevron-right"></i>
-                                                    Perennnials <span>(17)</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i class="fa fa-chevron-right"></i>
-                                                    Plant For Gift <span>(01)</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i class="fa fa-chevron-right"></i>
-                                                    Garden Tools <span>(12)</span>
-                                                </a>
-                                            </li>
+                                            <% }} %>
                                         </ul>
                                     </div>
+
                                     <div class="widgets-item">
                                         <h2 class="widgets-title mb-4">Color</h2>
                                         <ul class="widgets-category widgets-color">
