@@ -1,6 +1,8 @@
 <%@ page import="java.util.Vector" %>
 <%@ page import="entities.Plant" %>
 <%@ page import="entities.PlantTag" %>
+<%@ page import="java.util.List" %>
+<%@ page import="entities.PlantCategory" %>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -388,13 +390,13 @@
                                                 </a>
                                             </li>
                                             <%
-                                                Vector<PlantTag> listTags = (Vector<PlantTag>) request.getAttribute("listPlantTag");
-                                                if(listTags != null && !listTags.isEmpty()) {
-                                                    for (PlantTag tag : listTags) {
+                                                Vector<PlantCategory> listPlantCategories = (Vector<PlantCategory>) request.getAttribute("listPlantCategories");
+                                                if(listPlantCategories != null && !listPlantCategories.isEmpty()) {
+                                                    for (PlantCategory category : listPlantCategories) {
                                             %>
                                             <li>
                                                 <a href="#">
-                                                    <i class="fa fa-chevron-right"></i><%=tag.getName()%><span> (<%=tag.getAmount()%>)</span>
+                                                    <i class="fa fa-chevron-right"></i><%=category.getName()%><span> (<%=category.getAmount()%>)</span>
                                                 </a>
                                             </li>
                                             <% }} %>
@@ -445,29 +447,21 @@
                                                 data-max="350" data-grid="false" />
                                         </div>
                                     </div>
+
+                                    <% Vector<PlantTag> listPlantTag = (Vector<PlantTag>) request.getAttribute("listPlantTag"); %>
+                                    <% if(listPlantTag != null && !listPlantTag.isEmpty()) { %>
                                     <div class="widgets-item">
                                         <h2 class="widgets-title mb-4">Populer Tags</h2>
+
                                         <ul class="widgets-tag">
+                                            <% for (PlantTag tag : listPlantTag) { %>
                                             <li>
-                                                <a href="#">Fashion</a>
+                                                <a href="#"><%=tag.getName()%></a>
                                             </li>
-                                            <li>
-                                                <a href="#">Organic</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">Old Fashion</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">Men</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">Fashion</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">Dress</a>
-                                            </li>
+                                            <% } %>
                                         </ul>
                                     </div>
+                                    <% } %>
                                 </div>
                                 <div class="banner-item widgets-banner img-hover-effect">
                                     <div class="banner-img">

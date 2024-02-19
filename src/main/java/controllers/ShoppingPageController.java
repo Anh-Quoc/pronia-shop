@@ -46,6 +46,7 @@ public class ShoppingPageController extends HttpServlet {
             sortType = "default";
         }
     // SELECT * FROM plants WHERE plants.title LIKE '%%' AND category = ? AND color = ? AND tag = ?
+        req.setAttribute("listPlantCategories", plantService.getTop6CategoryHasPlant());
         req.setAttribute("listPlantTag", plantTagService.getTop6TagHasPlant());
         req.setAttribute("listPlants", plantService.getAllPlant());
         req.getRequestDispatcher("shop.jsp").forward(req, resp);

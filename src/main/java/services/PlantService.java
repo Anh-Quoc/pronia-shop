@@ -1,16 +1,20 @@
 package services;
 
+import daos.PlantCategoryDAO;
 import daos.PlantDAO;
 import entities.Plant;
+import entities.PlantCategory;
 
 import java.util.Vector;
 
 public class PlantService {
 
     private PlantDAO plantDAO;
+    private PlantCategoryDAO plantCategoryDAO;
 
     public PlantService() {
         plantDAO = PlantDAO.getInstance();
+        plantCategoryDAO = PlantCategoryDAO.getInstance();
     }
 
     public Vector<Plant> getAllPlant() {
@@ -45,6 +49,11 @@ public class PlantService {
     public Vector<Plant> getRelatedPlant(int id){
         Vector<Plant> plants = plantDAO.getRelatedPlant(id);
         return plants;
+    }
+
+    public Vector<PlantCategory> getTop6CategoryHasPlant() {
+        Vector<PlantCategory> plantCategories = plantCategoryDAO.getTop6CategoryHasPlant();
+        return plantCategories;
     }
 
 }

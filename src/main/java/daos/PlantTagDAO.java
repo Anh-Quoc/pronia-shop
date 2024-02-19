@@ -13,8 +13,8 @@ public class PlantTagDAO {
 
     private final String SELECT_TAG_OF_PLANT_BY_PLANT_ID_STATEMENT = "SELECT * FROM plant_with_tags_view WHERE id = ?";
     private final String SELECT_ALL_TAG_STATEMENT = "SELECT * FROM tag";
-    private final String SELECT_TOP_6_TAG_HAS_PLANT_STATEMENT = "SELECT TOP 6 tag, COUNT(tag) AS tag_count FROM plant_with_tags_view " +
-            "GROUP BY tag " +
+    private final String SELECT_TOP_6_TAG_HAS_PLANT_STATEMENT = "SELECT TOP 6 tag_name, COUNT(tag_name) AS tag_count FROM plant_with_tags_view " +
+            "GROUP BY tag_name " +
             "ORDER BY tag_count DESC";
     private static PlantTagDAO instance;
 
@@ -37,7 +37,7 @@ public class PlantTagDAO {
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()){
-                String tag = resultSet.getString("tag");
+                String tag = resultSet.getString("tag_name");
                 tags.add(tag);
             }
 
@@ -54,7 +54,7 @@ public class PlantTagDAO {
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()){
-                String tag = resultSet.getString("tag");
+                String tag = resultSet.getString("tag_name");
                 int count = resultSet.getInt("tag_count");
                 plantTags.add(new PlantTag(tag, count));
             }
