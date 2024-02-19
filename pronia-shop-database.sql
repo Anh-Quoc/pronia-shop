@@ -104,11 +104,12 @@ CREATE TABLE plants
     image_link   VARCHAR(MAX),
     color        NVARCHAR(30),
 
-    unit_price   FLOAT       DEFAULT 0,
+    unit_price   DECIMAL(5, 2) DEFAULT 0,
 
     quantity     INT,
     sale_opening DATE,
-    stock_status VARCHAR(30) DEFAULT 'In Stock',
+    stock_status VARCHAR(30)   DEFAULT 'In Stock',
+    active       BIT           DEFAULT 1,
 )
 GO
 INSERT INTO plants (title, description, image_link, color, unit_price, quantity, sale_opening, stock_status)
@@ -223,9 +224,9 @@ VALUES ('Rose', 'Beautiful red roses',
        ('Pansy', 'Cheerful pansies for cool-season gardening',
         'https://treemart.org/wp-content/uploads/2023/03/Pansy.jpg', 'Various', 32.99, 30, '2025-08-10',
         'In Stock');
-GO
-UPDATE pronia_shop.dbo.plants
-SET description = N'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incidid ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+-- GO
+-- UPDATE pronia_shop.dbo.plants
+-- SET description = N'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incidid ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
 GO
 CREATE TABLE plant_categories
 (
@@ -396,11 +397,20 @@ VALUES (1, 1),
        (36, 5),
        (37, 4),
        (38, 3)
-
+GO
+CREATE TABLE user_roles
+(
+    id   INTEGER IDENTITY (1,1) PRIMARY KEY,
+    name NVARCHAR(30),
+)
+GO
+INSERT INTO user_roles (name)
+VALUES ('Admin'),
+       ('Customer')
 GO
 CREATE TABLE users
 (
-    id             INTEGER PRIMARY KEY,
+    id             INTEGER IDENTITY (1,1) PRIMARY KEY,
     first_name     NVARCHAR(30),
     last_name      NVARCHAR(30),
 
@@ -415,84 +425,360 @@ CREATE TABLE users
     postcode       VARCHAR(128) NOT NULL,
 
     phone          VARCHAR(11)  NOT NULL,
-)
 
+    role_id        INTEGER FOREIGN KEY REFERENCES user_roles (id),
+)
 GO
+INSERT INTO users (first_name, last_name, email_address, password, country, street_address, apartment, city, postcode,
+                   phone, role_id)
+VALUES ('Hoang Anh', 'Quoc', 'anhquoc5.1.2003.q@gmail.com', '123456', 'Viet Nam', 'Thach Hoa - Thach That',
+        'YoungHouse', 'Ha Noi', '123456', '0859159180', 1),
+       ('Nguyen Thi', 'A', 'nguyenthiA1873@gmail.com', '123456', 'Viet Nam', 'Trieu Son', '', 'Thanh Hoa', '123456',
+        '0859159180', 2),
+       ('John', 'Doe', 'john.doe@example.com', 'password123', 'USA', '123 Main St', 'Apt 456', 'New York', '10001',
+        '555-1234', 2),
+       ('Jane', 'Smith', 'jane.smith@example.com', 'pass456', 'Canada', '789 Maple Ave', 'Suite 789', 'Toronto',
+        'M1M 1M1', '555-5678', 2),
+       ('Michael', 'Johnson', 'michael.johnson@example.com', 'pass789', 'UK', '456 Oak Lane', 'Apt 101', 'London',
+        'SW1A 1AA', '555-8765', 2),
+       ('Sophie', 'Taylor', 'sophie.taylor@example.com', 'secure123', 'Australia', '789 Elm Street', 'Unit 23',
+        'Sydney', '2000', '555-4321', 2),
+       ('Carlos', 'Rodriguez', 'carlos.rodriguez@example.com', 'pass123', 'Spain', 'Calle Principal', 'Piso 3',
+        'Barcelona', '08001', '555-9876', 2),
+       ('Anna', 'Lopez', 'anna.lopez@example.com', 'password456', 'Italy', 'Via Roma', 'Appartamento 5', 'Rome',
+        '00100', '555-6543', 2),
+       ('Makoto', 'Sato', 'makoto.sato@example.com', 'pass789', 'Japan', '1-2-3 Shinjuku', 'Apartment 101', 'Tokyo',
+        '160-0022', '555-7890', 2),
+       ('Yuki', 'Tanaka', 'yuki.tanaka@example.com', 'secure123', 'Japan', '4-5-6 Shibuya', 'Unit 203', 'Tokyo',
+        '150-0043', '555-0123', 2)
+GO
+CREATE VIEW user_view AS
+SELECT users.*, user_roles.name AS role_name
+FROM users
+         JOIN user_roles ON users.role_id = user_roles.id
+GO
+
+
+
 CREATE TABLE user_sessions
 (
-    id         INTEGER PRIMARY KEY,
-    session_id VARCHAR(128) NOT NULL,
-    user_id    INTEGER FOREIGN KEY REFERENCES users (id),
-    validDate  DATE,
+    id          INTEGER IDENTITY (1,1) PRIMARY KEY,
+    session_id  VARCHAR(128) NOT NULL UNIQUE,
+    user_id     INTEGER FOREIGN KEY REFERENCES users (id),
+    time_creation DATETIME DEFAULT CURRENT_TIMESTAMP,
+    valid_until DATETIME DEFAULT CURRENT_TIMESTAMP,
 )
 GO
+
+
 CREATE TABLE order_status
 (
-    id   INTEGER PRIMARY KEY,
+    id   INTEGER IDENTITY (1,1) PRIMARY KEY,
     name NVARCHAR(20),
 )
 GO
+INSERT INTO order_status (name)
+VALUES ('Pending'),
+       ('Processing'),
+       ('Delivered'),
+       ('Cancelled'),
+       ('Returned')
+GO
 CREATE TABLE orders
 (
-    id              INTEGER PRIMARY KEY,
+    id              INTEGER IDENTITY (1,1) PRIMARY KEY,
 
-    country         NVARCHAR(20) NOT NULL,
-    street_address  VARCHAR(128) NOT NULL,
+    country         NVARCHAR(20)  NOT NULL,
+    street_address  VARCHAR(128)  NOT NULL,
     apartment       VARCHAR(128),
 
-    city            VARCHAR(128) NOT NULL,
-    postcode        VARCHAR(128) NOT NULL,
+    city            VARCHAR(128)  NOT NULL,
+    postcode        VARCHAR(128)  NOT NULL,
 
-    total_price     DECIMAL      NOT NULL,
+    total_price     DECIMAL(5, 2) NOT NULL DEFAULT 0,
     order_date      DATE,
     order_status_id INTEGER FOREIGN KEY REFERENCES order_status (id),
     customer_id     INTEGER FOREIGN KEY REFERENCES users (id),
 )
 GO
+INSERT INTO orders (country, street_address, apartment, city, postcode, total_price, order_date, order_status_id,
+                    customer_id)
+VALUES ('Viet Nam', 'Trieu Son', '', 'Thanh Hoa', '123456', 0, '2021-01-01', 1, 2),
+       ('USA', '123 Main St', 'Apt 456', 'New York', '10001', 0, '2021-02-15', 2, 4),
+       ('Canada', '789 Maple Ave', 'Suite 789', 'Toronto', 'M1M 1M1', 0, '2021-03-01', 3, 5),
+       ('UK', '456 Oak Lane', 'Apt 101', 'London', 'SW1A 1AA', 0, '2021-04-15', 4, 6),
+       ('Australia', '789 Elm Street', 'Unit 23', 'Sydney', '2000', 0, '2021-05-01', 5, 7),
+       ('Spain', 'Calle Principal', 'Piso 3', 'Barcelona', '08001', 0, '2021-06-15', 1, 8),
+       ('Italy', 'Via Roma', 'Appartamento 5', 'Rome', '00100', 0, '2021-07-01', 2, 9),
+       ('Japan', '1-2-3 Shinjuku', 'Apartment 101', 'Tokyo', '160-0022', 0, '2021-08-15', 3, 3),
+       ('Japan', '4-5-6 Shibuya', 'Unit 203', 'Tokyo', '150-0043', 0, '2021-09-01', 4, 2),
+       ('Germany', 'Hauptstrasse', 'Wohnung 7', 'Berlin', '10115', 0, '2021-10-10', 1, 2)
+
+GO
 CREATE TABLE order_detail
 (
-    id         INTEGER PRIMARY KEY,
+    id         INTEGER IDENTITY (1,1) PRIMARY KEY,
 
     product_id INTEGER REFERENCES plants (id),
     quantity   INTEGER NOT NULL,
     order_id   INTEGER FOREIGN KEY REFERENCES orders (id),
 )
 GO
-CREATE TABLE cart_status
-(
-    id   INTEGER PRIMARY KEY,
-    name VARCHAR(30),
-)
-GO
-CREATE TABLE carts
-(
-    id          INTEGER PRIMARY KEY,
-    customer_id INTEGER FOREIGN KEY REFERENCES users (id),
+CREATE TRIGGER update_total_price_of_order
+    ON order_detail
+    AFTER INSERT
+    AS
+    UPDATE orders
+    SET total_price = (SELECT SUM(plants.unit_price * order_detail.quantity)
+                       FROM plants
+                                JOIN order_detail ON plants.id = order_detail.product_id
+                       WHERE order_detail.order_id = orders.id)
+    WHERE orders.id = (SELECT order_id FROM inserted)
 
-    cart_status INTEGER FOREIGN KEY REFERENCES cart_status (id),
-)
 GO
-CREATE TABLE cart_detail
-(
-    id         INTEGER PRIMARY KEY,
-    product_id INTEGER FOREIGN KEY REFERENCES plants (id),
-    quantity   INTEGER NOT NULL,
-    cart_id    INTEGER FOREIGN KEY REFERENCES carts (id),
-)
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (1, 1, 1)
 GO
-CREATE TABLE wish_list
-(
-    id          INTEGER PRIMARY KEY,
-    customer_id INTEGER FOREIGN KEY REFERENCES users (id),
-)
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (2, 2, 1)
 GO
-CREATE TABLE wish_list_detail
-(
-    id           INTEGER PRIMARY KEY,
-    product_id   INTEGER FOREIGN KEY REFERENCES plants (id),
-    wish_list_id INTEGER FOREIGN KEY REFERENCES wish_list (id),
-)
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (3, 3, 1)
 GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (4, 2, 1)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (7, 1, 1)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (4, 2, 2)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (5, 3, 3)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (6, 2, 4)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (38, 3, 3)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (37, 4, 4)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (36, 2, 5)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (35, 4, 6)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (34, 1, 7)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (33, 2, 8)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (32, 3, 9)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (31, 3, 10)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (30, 3, 1)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (29, 2, 2)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (28, 2, 3)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (27, 4, 4)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (26, 2, 5)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (25, 2, 6)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (24, 3, 7)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (23, 2, 8)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (22, 2, 9)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (21, 2, 10)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (20, 2, 1)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (19, 2, 2)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (18, 3, 3)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (17, 1, 4)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (16, 2, 5)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (15, 3, 6)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (14, 2, 7)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (13, 2, 8)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (12, 2, 9)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (11, 3, 10)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (10, 3, 1)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (9, 3, 2)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (8, 2, 3)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (7, 3, 4)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (6, 2, 5)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (5, 3, 6)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (4, 4, 7)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (3, 2, 8)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (2, 3, 9)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (1, 3, 10)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (38, 2, 1)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (37, 2, 2)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (36, 2, 3)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (35, 2, 4)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (34, 3, 5)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (33, 2, 6)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (31, 2, 8)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (30, 1, 9)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (29, 2, 10)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (28, 2, 1)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (27, 3, 2)
+GO
+INSERT INTO order_detail (product_id, quantity, order_id)
+VALUES (26, 2, 3)
+GO
+CREATE VIEW order_view AS
+SELECT orders.id,
+       orders.country,
+       orders.street_address,
+       orders.apartment,
+       orders.city,
+       orders.postcode,
+       orders.total_price,
+       orders.order_date,
+       order_status.name AS order_status,
+       orders.customer_id,
+       users.first_name +' '+ users.last_name AS customer_name,
+       users.email_address,
+       users.phone
+FROM orders
+         JOIN order_status ON orders.order_status_id = order_status.id
+         JOIN users ON orders.customer_id = users.id
+GO
+CREATE VIEW order_detail_view AS
+SELECT order_detail.id,
+       order_detail.product_id,
+       plants.title AS product_name,
+       order_detail.quantity,
+       plants.unit_price,
+       order_detail.quantity * plants.unit_price AS sub_total_price,
+       order_detail.order_id
+FROM order_detail
+         JOIN plants ON order_detail.product_id = plants.id
+GO
+
+
+-- CREATE TABLE cart_status
+-- (
+--     id   INTEGER IDENTITY (1,1) PRIMARY KEY,
+--     name VARCHAR(30),
+-- )
+-- GO
+-- CREATE TABLE carts
+-- (
+--     id          INTEGER IDENTITY (1,1) PRIMARY KEY,
+--     customer_id INTEGER FOREIGN KEY REFERENCES users (id),
+--
+--     cart_status INTEGER FOREIGN KEY REFERENCES cart_status (id),
+-- )
+-- GO
+-- CREATE TABLE cart_detail
+-- (
+--     id         INTEGER IDENTITY (1,1) PRIMARY KEY,
+--     product_id INTEGER FOREIGN KEY REFERENCES plants (id),
+--     quantity   INTEGER NOT NULL,
+--     cart_id    INTEGER FOREIGN KEY REFERENCES carts (id),
+-- )
+-- GO
+-- CREATE TABLE wish_list
+-- (
+--     id          INTEGER IDENTITY (1,1) PRIMARY KEY,
+--     customer_id INTEGER FOREIGN KEY REFERENCES users (id),
+-- )
+-- GO
+-- CREATE TABLE wish_list_detail
+-- (
+--     id           INTEGER IDENTITY (1,1) PRIMARY KEY,
+--     product_id   INTEGER FOREIGN KEY REFERENCES plants (id),
+--     wish_list_id INTEGER FOREIGN KEY REFERENCES wish_list (id),
+-- )
+-- GO
+
+
+
 CREATE VIEW plant_with_categories_view AS
 SELECT plants.id,
        plants.title,
@@ -503,7 +789,8 @@ SELECT plants.id,
        plants.quantity,
        plants.sale_opening,
        plants.stock_status,
-       categories.name AS category
+       categories.id   AS category_id,
+       categories.name AS category_name
 
 FROM plants
          JOIN plant_categories ON plants.id = plant_categories.plant_id
@@ -519,13 +806,18 @@ SELECT plants.id,
        plants.quantity,
        plants.sale_opening,
        plants.stock_status,
-       tags.name AS tag
+       tags.id   AS tag_id,
+       tags.name AS tag_name
 
 FROM plants
          JOIN plant_tags ON plants.id = plant_tags.plant_id
          JOIN tags ON plant_tags.tag_id = tags.id
 
+--
+-- SELECT TOP 8 *
+-- FROM plants
+-- ORDER BY plants.sale_opening DESC
+--
+-- SELECT DISTINCT plants.color
+-- FROM plants
 
-SELECT TOP 8 * FROM plants ORDER BY plants.sale_opening DESC
-
-SELECT DISTINCT plants.color FROM plants
