@@ -806,8 +806,8 @@ SELECT plants.id,
        plants.quantity,
        plants.sale_opening,
        plants.stock_status,
-       tags.id   AS tag_id,
-       tags.name AS tag_name
+       tags.id,
+       tags.name
 
 FROM plants
          JOIN plant_tags ON plants.id = plant_tags.plant_id
