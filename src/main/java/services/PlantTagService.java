@@ -1,30 +1,39 @@
 package services;
 
-import daos.PlantTagDAO;
-import entities.PlantTag;
+import daos.impl.TagDao;
+import entities.Tag;
 
-import java.util.Vector;
+import java.util.List;
 
 public class PlantTagService {
+    private TagDao tagDao;
+    private static PlantTagService instance;
 
-        private PlantTagDAO plantTagDAO;
-        private static PlantTagService instance;
+    private PlantTagService() {
+        tagDao = TagDao.getInstance();
+    }
 
-        private PlantTagService() {
-            plantTagDAO = PlantTagDAO.getInstance();
+    public static PlantTagService getInstance() {
+        if (instance == null) {
+            instance = new PlantTagService();
         }
+        return instance;
+    }
 
-        public static PlantTagService getInstance(){
-            if(instance == null){
-                instance = new PlantTagService();
-            }
-            return instance;
-        }
+//    public List<Tag> getTop6TagHasPlant() {
+//        return tagDao.getTop6TagHasPlant();
+//    }
 
-        public Vector<PlantTag> getTop6TagHasPlant(){
-            return plantTagDAO.getTop6TagHasPlant();
-        }
+    public List<Tag> getAllPlantTag() {
+        return tagDao.getAllTag();
+    }
 
+    public Tag getTagByName(String name) {
+        return tagDao.getTagByName(name);
+    }
 
+    public List<Tag> getTagsByPlantId(int id) {
+        return tagDao.getTagByPlantId(id);
+    }
 
 }
