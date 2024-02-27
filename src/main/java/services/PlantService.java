@@ -5,6 +5,7 @@ import daos.impl.PlantDao;
 
 import dtos.CategoryDTO;
 import dtos.TagDTO;
+import entities.Category;
 import entities.Plant;
 import dtos.PlantDTO;
 import entities.Tag;
@@ -138,9 +139,8 @@ public class PlantService {
             return tag;
         }).collect(Collectors.toList());
 
-        List<CategoryDTO> categories = plantDTO.getPlantCategories();
-        List<CategoryDTO> plantCategories = plantDTO.getPlantCategories().stream().map(categoryDTO -> {
-            CategoryDTO category = new CategoryDTO();
+        List<Category> plantCategories = plantDTO.getPlantCategories().stream().map(categoryDTO -> {
+            Category category = new Category();
             category.setId(categoryDTO.getId());
             category.setName(categoryDTO.getName());
             return category;
@@ -158,7 +158,9 @@ public class PlantService {
 
 
         // Save new plant to database
-        plantDAO.savePlant(newPlant);
+        Integer plantId = plantDAO.savePlant(newPlant);
+        plantTagService.saveTagsForPlant(plantId, tags);
+        plantCategoryService.saveCategoriesForPlant(plantId, plantCategories);
     }
 //
 //    public void updatePlant(HttpServletRequest req) {

@@ -15,7 +15,7 @@ public interface PlantDaoInterface {
     List<Plant> getPlantByTitle(String title);
     List<Plant> getRelatedPlant(int plantId);
 
-    void savePlant(Plant plant);
+    Integer savePlant(Plant plant);
     void updatePlant(Plant plant);
     void deletePlant(int id);
     void deletePlant(Plant plant);

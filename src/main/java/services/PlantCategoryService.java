@@ -4,6 +4,7 @@ import daos.impl.CategoryDao;
 import entities.Category;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PlantCategoryService {
     private CategoryDao categoryDAO;
@@ -35,4 +36,14 @@ public class PlantCategoryService {
     public List<Category> getCategoriesByPlantId(int plantId) {
         return categoryDAO.getCategoriesOfPlantByPlantID(plantId);
     }
+
+    public void saveCategoriesForPlant(Integer plantId, List<Category> categories) {
+
+        List<Category> categoryEntities = categories.stream()
+                .map(categoryDTO -> categoryDAO.getCategoryByName(categoryDTO.getName()))
+                .collect(Collectors.toList());
+
+        categoryDAO.saveCategoriesForPlant(plantId, categoryEntities);
+    }
+
 }

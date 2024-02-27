@@ -37,12 +37,16 @@ public class GenericDao<T> implements GenericDaoInterface<T> {
                 int index = i + 1;
                 if (parameter instanceof Long) {
                     prepareStatement.setLong(index, (Long) parameter);
+                } else if (parameter instanceof Double) {
+                    prepareStatement.setDouble(index, (Double) parameter);
                 } else if (parameter instanceof String) {
                     prepareStatement.setString(index, (String) parameter);
                 } else if (parameter instanceof Integer) {
                     prepareStatement.setInt(index, (Integer) parameter);
-                } else if (parameter instanceof Timestamp) {
-                    prepareStatement.setTimestamp(index, (Timestamp) parameter);
+                } else if(parameter instanceof java.sql.Date) {
+                    prepareStatement.setDate(index, (java.sql.Date) parameter);
+//                } else if (parameter instanceof Timestamp) {
+//                    prepareStatement.setTimestamp(index, (Timestamp) parameter);
                 } else if (parameter instanceof Boolean) {
                     prepareStatement.setBoolean(index, (Boolean) parameter);
                 }
@@ -53,12 +57,12 @@ public class GenericDao<T> implements GenericDaoInterface<T> {
     }
 
     @Override
-    public Long executeUpdate(String sql, Object... parameters) {
+    public Integer executeUpdate(String sql, Object... parameters) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         try {
-            Long id = null;
+            Integer id = null;
             connection = DBContext.getConnection();
             connection.setAutoCommit(false);
 
@@ -69,7 +73,7 @@ public class GenericDao<T> implements GenericDaoInterface<T> {
 
             resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) {
-                id = resultSet.getLong(1);
+                id = resultSet.getInt(1);
             }
 
             connection.commit();
@@ -77,6 +81,7 @@ public class GenericDao<T> implements GenericDaoInterface<T> {
         } catch (SQLException ex) {
             try {
                 connection.rollback();
+                System.out.println(ex.getMessage());
             } catch (SQLException ex1) {
                 ex1.printStackTrace();
             }

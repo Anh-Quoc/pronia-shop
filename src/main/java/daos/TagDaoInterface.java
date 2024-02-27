@@ -19,6 +19,8 @@ public interface TagDaoInterface {
 
     void saveTag(Tag tag);
 
+    void saveTagsForPlant(int plantId, List<Tag> tagId);
+
     void updateTag(Tag tag);
 
     void deleteTag(int id);

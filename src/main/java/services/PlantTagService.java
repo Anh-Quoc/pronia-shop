@@ -1,9 +1,11 @@
 package services;
 
 import daos.impl.TagDao;
+import dtos.TagDTO;
 import entities.Tag;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PlantTagService {
     private TagDao tagDao;
@@ -36,4 +38,11 @@ public class PlantTagService {
         return tagDao.getTagByPlantId(id);
     }
 
+    public void saveTagsForPlant(Integer plantId, List<Tag> tags) {
+        List<Tag> tagEntities = tags
+                .stream()
+                .map(tagDTO -> tagDao.getTagByName(tagDTO.getName()))
+                .collect(Collectors.toList());
+        tagDao.saveTagsForPlant(plantId, tagEntities);
+    }
 }

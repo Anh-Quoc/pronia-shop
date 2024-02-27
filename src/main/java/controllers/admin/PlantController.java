@@ -111,7 +111,7 @@ public class PlantController extends HttpServlet {
 
 
         plantDTO.setQuantity(Integer.parseInt(req.getParameter("quantity")));
-        plantDTO.setSaleOpening(Date.valueOf(req.getParameter("saleOpening")));
+        plantDTO.setSaleOpening(java.sql.Date.valueOf(req.getParameter("saleOpening")));
         plantDTO.setStockStatus(req.getParameter("stockStatus"));
         plantDTO.setActive(Boolean.parseBoolean(req.getParameter("isActive")));
         return plantDTO;

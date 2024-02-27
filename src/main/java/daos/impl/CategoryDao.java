@@ -23,6 +23,9 @@ public class CategoryDao extends GenericDao<Category> implements CategoryDaoInte
 
     private final String INSERT_CATEGORY_STATEMENT = "INSERT INTO categories(name) VALUES(?)";
 
+    private final String INSERT_PLANT_CATEGORY_STATEMENT = "INSERT INTO plant_categories(plant_id, category_id) VALUES (?, ?)";
+
+
     private final String UPDATE_CATEGORY_STATEMENT = "UPDATE categories SET name = ? WHERE id = ?";
 
     private static CategoryDao instance;
@@ -76,6 +79,13 @@ public class CategoryDao extends GenericDao<Category> implements CategoryDaoInte
     @Override
     public void saveCategory(Category category) {
         executeUpdate(INSERT_CATEGORY_STATEMENT, category.getName());
+    }
+
+    @Override
+    public void saveCategoriesForPlant(Integer plantId, List<Category> categories) {
+        for (Category category : categories) {
+            executeUpdate(INSERT_PLANT_CATEGORY_STATEMENT, plantId, category.getId());
+        }
     }
 
     @Override

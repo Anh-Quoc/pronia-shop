@@ -18,6 +18,9 @@ public class TagDao extends GenericDao<Tag> implements TagDaoInterface {
     private final String SELECT_TAG_BY_ID_STATEMENT = "SELECT * FROM tags WHERE id = ?";
 
     private final String INSERT_TAG_STATEMENT = "INSERT INTO tags (name) VALUES (?)";
+
+    private final String INSERT_PLANT_TAG_STATEMENT = "INSERT INTO plant_tags(plant_id, tag_id) VALUES (?, ?)";
+
     private final String UPDATE_TAG_STATEMENT = "UPDATE tags SET name = ? WHERE id = ?";
 
     private final String SELECT_TOP_6_TAG_HAS_PLANT_STATEMENT = "SELECT TOP 6 tag_name, COUNT(tag_name) AS tag_count FROM plant_with_tags_view " +
@@ -79,6 +82,14 @@ public class TagDao extends GenericDao<Tag> implements TagDaoInterface {
     @Override
     public void saveTag(Tag tag) {
         executeUpdate(INSERT_TAG_STATEMENT, tag.getName());
+    }
+
+    @Override
+    public void saveTagsForPlant(int plantId, List<Tag> tags) {
+        for (Tag tag : tags) {
+            executeUpdate(INSERT_PLANT_TAG_STATEMENT, plantId, tag.getId());
+        }
+
     }
 
     @Override

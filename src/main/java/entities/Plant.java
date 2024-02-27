@@ -2,10 +2,12 @@ package entities;
 
 import dtos.PlantDTO;
 import lombok.Data;
+import lombok.ToString;
 
 import java.sql.Date;
 
 @Data
+@ToString
 public class Plant {
     private Integer id;
     private String title;
@@ -14,7 +16,7 @@ public class Plant {
     private String color;
     private double unitPrice;
     private int quantity;
-    private Date saleOpening;
+    private java.sql.Date saleOpening;
     private String stockStatus;
     private boolean active;
 

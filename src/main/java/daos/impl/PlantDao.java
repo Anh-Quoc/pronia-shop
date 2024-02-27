@@ -78,13 +78,11 @@ public class PlantDao extends GenericDao<Plant> implements PlantDaoInterface {
 //    }
 
     @Override
-    public void savePlant(Plant plant) {
+    public Integer savePlant(Plant plant) {
 
-        executeUpdate(INSERT_PLANT_STATEMENT, plant.getTitle(), plant.getDescription(), plant.getImageLink(),
+        return executeUpdate(INSERT_PLANT_STATEMENT, plant.getTitle(), plant.getDescription(), plant.getImageLink(),
                 plant.getColor(), plant.getUnitPrice(), plant.getQuantity(), plant.getSaleOpening(),
                 plant.getStockStatus(), plant.isActive());
-
-        
     }
 
     @Override

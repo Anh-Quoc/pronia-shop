@@ -16,6 +16,8 @@ public interface CategoryDaoInterface {
 
     void saveCategory(Category category);
 
+    void saveCategoriesForPlant(Integer plantId, List<Category> categories);
+
     void updateCategory(Category category);
 
     void deleteCategory(int id);
