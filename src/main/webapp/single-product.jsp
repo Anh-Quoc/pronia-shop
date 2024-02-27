@@ -1,5 +1,7 @@
-<%@ page import="entities.Plant" %>
-<%@ page import="java.util.Vector" %>
+<%@ page import="dtos.PlantDTO" %>
+<%@ page import="entities.Category" %>
+<%@ page import="java.util.List" %>
+<%@ page import="entities.Tag" %>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -404,7 +406,7 @@
     <!-- Begin Main Content Area  -->
     <main class="main-content">
 
-        <% Plant plant = (Plant) request.getAttribute("plant"); %>
+        <% PlantDTO plant = (PlantDTO) request.getAttribute("plant"); %>
 
         <div class="single-product-area section-space-top-100">
             <div class="container">
@@ -567,13 +569,13 @@
                                 <span class="title">Categories :</span>
 
                                 <ul>
-                                    <% Vector<String> categories = plant.getPlantCategories(); %>
+                                    <% List<Category> categories = plant.getPlantCategories(); %>
                                     <% if(categories != null && !categories.isEmpty()){
                                         for(int i = 0; i < categories.size(); ++i) {
-                                            String category = categories.get(i);
+                                            Category category = categories.get(i);
                                     %>
                                     <li>
-                                        <a href="#"><%= i < categories.size() - 1 ? category + ", ": category%></a>
+                                        <a href="#"><%= i < categories.size() - 1 ? category.getName() + ", ": category.getName()%></a>
                                     </li>
                                     <%
                                             }
@@ -586,13 +588,13 @@
                                 <span class="title">Tags :</span>
                                 <ul>
                                     <li>
-                                        <% Vector<String> tags = plant.getPlantTags(); %>
+                                        <% List<Tag> tags = plant.getPlantTags(); %>
                                         <% if(tags != null && !tags.isEmpty()){
                                                 for(int i = 0; i < tags.size(); ++i) {
-                                                    String tag = tags.get(i);
+                                                    Tag tag = tags.get(i);
                                         %>
                                         <a href="#">
-                                           <%= i < tags.size() - 1 ? tag + ", ": tag%>
+                                           <%= i < tags.size() - 1 ? tag.getName() + ", ": tag.getName()%>
                                         </a>
                                         <%
                                                 }
@@ -724,7 +726,7 @@
 
         <!-- Begin Product Area -->
         <%--            Related Products--%>
-        <% Vector<Plant> relatedPlants = (Vector<Plant>) request.getAttribute("relatedPlants"); %>
+        <% List<PlantDTO> relatedPlants = (List<PlantDTO>) request.getAttribute("relatedPlants"); %>
 
         <% if (relatedPlants != null && !relatedPlants.isEmpty()) {
 
@@ -745,7 +747,7 @@
                             <div class="swiper-wrapper">
 
                                 <%
-                                    for(Plant relatedPlant : relatedPlants){
+                                    for(PlantDTO relatedPlant : relatedPlants){
 
                                 %>
 
@@ -981,7 +983,7 @@
     <!-- Begin Modal Area -->
     <%
         if(relatedPlants != null && !relatedPlants.isEmpty()){
-            for(Plant relatedPlant : relatedPlants){
+            for(PlantDTO relatedPlant : relatedPlants){
     %>
 
     <div class="modal quick-view-modal fade" id="quickModal_<%=relatedPlant.getId()%>" data-bs-backdrop="static" data-bs-keyboard="false"

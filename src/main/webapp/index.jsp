@@ -1,5 +1,5 @@
-<%@ page import="java.util.Vector" %>
 <%@ page import="entities.Plant" %>
+<%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -732,7 +732,7 @@
                              aria-labelledby="featured-tab">
                             <div class="product-item-wrap row">
                                 <%
-                                    Vector<Plant> featuredPlants = (Vector<Plant>) request.getAttribute("featuredPlants");
+                                    List<Plant> featuredPlants = (List<Plant>) request.getAttribute("featuredPlants");
                                     if (featuredPlants != null) {
                                         for (Plant plant : featuredPlants) {
                                 %>
@@ -804,7 +804,7 @@
                         <div class="tab-pane fade" id="bestseller" role="tabpanel" aria-labelledby="bestseller-tab">
                             <div class="product-item-wrap row">
                                 <%
-                                    Vector<Plant> bestsellerPlants = (Vector<Plant>) request.getAttribute("bestsellerPlants");
+                                    List<Plant> bestsellerPlants = (List<Plant>) request.getAttribute("bestsellerPlants");
                                     if (bestsellerPlants != null) {
                                         for (Plant plant : bestsellerPlants) {
                                 %>
@@ -875,7 +875,7 @@
                         <div class="tab-pane fade" id="latest" role="tabpanel" aria-labelledby="latest-tab">
                             <div class="product-item-wrap row">
                                 <%
-                                    Vector<Plant> latestPlants = (Vector<Plant>) request.getAttribute("latestPlants");
+                                    List<Plant> latestPlants = (List<Plant>) request.getAttribute("latestPlants");
                                     if (latestPlants != null) {
                                         for (Plant plant : latestPlants) {
                                 %>

@@ -1,8 +1,7 @@
-<%@ page import="java.util.Vector" %>
-<%@ page import="entities.Plant" %>
-<%@ page import="entities.PlantTag" %>
 <%@ page import="java.util.List" %>
-<%@ page import="entities.PlantCategory" %>
+<%@ page import="entities.Tag" %>
+<%@ page import="dtos.CategoryDTO" %>
+<%@ page import="dtos.PlantDTO" %>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -362,7 +361,7 @@
             <div class="global-overlay"></div>
         </header>
         <!-- Main Header Area End Here -->
-        <% Vector<Plant> listPlants = (Vector<Plant>) request.getAttribute("listPlants"); %>
+        <% List<PlantDTO> listPlants = (List<PlantDTO>) request.getAttribute("listPlants"); %>
         <!-- Begin Main Content Area -->
         <main class="main-content">
             <div class="shop-area section-space-y-axis-100">
@@ -390,9 +389,9 @@
                                                 </a>
                                             </li>
                                             <%
-                                                Vector<PlantCategory> listPlantCategories = (Vector<PlantCategory>) request.getAttribute("listPlantCategories");
+                                                List<CategoryDTO> listPlantCategories = (List<CategoryDTO>) request.getAttribute("listPlantCategories");
                                                 if(listPlantCategories != null && !listPlantCategories.isEmpty()) {
-                                                    for (PlantCategory category : listPlantCategories) {
+                                                    for (CategoryDTO category : listPlantCategories) {
                                             %>
                                             <li>
                                                 <a href="#">
@@ -448,13 +447,13 @@
                                         </div>
                                     </div>
 
-                                    <% Vector<PlantTag> listPlantTag = (Vector<PlantTag>) request.getAttribute("listPlantTag"); %>
+                                    <% List<Tag> listPlantTag = (List<Tag>) request.getAttribute("listPlantTag"); %>
                                     <% if(listPlantTag != null && !listPlantTag.isEmpty()) { %>
                                     <div class="widgets-item">
                                         <h2 class="widgets-title mb-4">Populer Tags</h2>
 
                                         <ul class="widgets-tag">
-                                            <% for (PlantTag tag : listPlantTag) { %>
+                                            <% for (Tag tag : listPlantTag) { %>
                                             <li>
                                                 <a href="#"><%=tag.getName()%></a>
                                             </li>
@@ -517,7 +516,7 @@
 
                                         <%
                                             if(listPlants != null) {
-                                                for (Plant plant : listPlants) {
+                                                for (PlantDTO plant : listPlants) {
                                         %>
 
                                         <div class="col-md-4 col-sm-6">
@@ -594,7 +593,7 @@
                                         <%
 
                                             if(listPlants != null) {
-                                                for (Plant plant : listPlants) {
+                                                for (PlantDTO plant : listPlants) {
                                         %>
                                         <div class="col-12">
                                             <div class="product-item">
@@ -844,7 +843,7 @@
         <!-- Begin Modal Area -->
         <%
             if(listPlants != null) {
-                for (Plant plant : listPlants) {
+                for (PlantDTO plant : listPlants) {
         %>
         <div class="modal quick-view-modal fade" id="quickModal_<%=plant.getId()%>" data-bs-backdrop="static" data-bs-keyboard="false"
             tabindex="-1" aria-labelledby="quickModal" aria-hidden="true">
