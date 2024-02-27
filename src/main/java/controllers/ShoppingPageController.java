@@ -1,7 +1,5 @@
 package controllers;
 
-import daos.PlantDAO;
-import daos.PlantTagDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -20,7 +18,7 @@ public class ShoppingPageController extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        plantService = new PlantService();
+        plantService = PlantService.getInstance();
         plantTagService = PlantTagService.getInstance();
     }
 
@@ -46,8 +44,8 @@ public class ShoppingPageController extends HttpServlet {
             sortType = "default";
         }
     // SELECT * FROM plants WHERE plants.title LIKE '%%' AND category = ? AND color = ? AND tag = ?
-        req.setAttribute("listPlantCategories", plantService.getTop6CategoryHasPlant());
-        req.setAttribute("listPlantTag", plantTagService.getTop6TagHasPlant());
+//        req.setAttribute("listPlantCategories", plantService.getTop6CategoryHasPlant());
+//        req.setAttribute("listPlantTag", plantTagService.getTop6TagHasPlant());
         req.setAttribute("listPlants", plantService.getAllPlant());
         req.getRequestDispatcher("shop.jsp").forward(req, resp);
     }
@@ -58,7 +56,7 @@ public class ShoppingPageController extends HttpServlet {
 
         String productTitle = req.getParameter("searchValue");
         if(productTitle != null && !productTitle.isEmpty()){
-            req.setAttribute("listPlants", plantService.searchPlantByTitle(productTitle));
+            req.setAttribute("listPlants", plantService.searchPlantByName(productTitle));
             req.getRequestDispatcher("shop.jsp").forward(req, resp);
         }
     }

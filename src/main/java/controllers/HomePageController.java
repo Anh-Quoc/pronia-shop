@@ -16,7 +16,7 @@ public class HomePageController extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        plantService = new PlantService();
+        plantService = PlantService.getInstance();
     }
 
     @Override

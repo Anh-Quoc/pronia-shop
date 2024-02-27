@@ -1,6 +1,6 @@
 package controllers;
 
-import entities.Plant;
+import dtos.PlantDTO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import services.PlantService;
 
 import java.io.IOException;
-import java.util.Vector;
+import java.util.List;
 
 @WebServlet(name="SingleProductPageController", urlPatterns = {"/plants"})
 public class SingleProductPageController extends HttpServlet {
@@ -17,14 +17,14 @@ public class SingleProductPageController extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        plantService = new PlantService();
+        plantService = PlantService.getInstance();
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int plantId = Integer.parseInt(req.getParameter("id"));
-        Plant plant = plantService.getPlantById(plantId);
-        Vector<Plant> relatedPlants = plantService.getRelatedPlant(plantId);
+        PlantDTO plant = plantService.getPlantById(plantId);
+        List<PlantDTO> relatedPlants = plantService.getRelatedPlant(plantId);
         if(plant != null) {
             req.setAttribute("plant", plant);
             req.setAttribute("relatedPlants", relatedPlants);
