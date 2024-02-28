@@ -30,7 +30,9 @@ public class CategoryController extends HttpServlet {
                 break;
             case "DELETE":
                 int id = Integer.parseInt(req.getParameter("categoryID"));
-//                plantCategoryDAO.deleteCategoryByID(id);
+                CategoryDTO categoryDTO = new CategoryDTO();
+                categoryDTO.setId(id);
+                plantCategoryService.deleteCategory(categoryDTO);
                 getAllCategory(req, resp);
                 break;
             case "SEARCH":

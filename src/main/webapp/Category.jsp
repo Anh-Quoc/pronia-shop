@@ -298,6 +298,7 @@
                     </th>
                     <th>ID</th>
                     <th>Name</th>
+                    <th>Active</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -314,6 +315,7 @@
                     </td>
                     <td><%=category.getId()%></td>
                     <td><%=category.getName()%></td>
+                    <td><%=category.isActive()%></td>
                     <td>
                         <a href="#editCategoryModal_<%=category.getId()%>" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                         <a href="#deleteCategoryModal_<%=category.getId()%>" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
@@ -396,7 +398,7 @@
 <div id="deleteCategoryModal_<%=category.getId()%>" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="admin-categories" method="POST">
+            <form action="admin-categories" method="GET">
                 <input type="hidden" name="command" value="DELETE">
                 <div class="modal-header">
                     <h4 class="modal-title">Delete Category</h4>

@@ -103,7 +103,7 @@ public class CategoryDao extends GenericDao<Category> implements CategoryDaoInte
     }
 
     @Override
-    public void deleteCategory(int id) {
+    public void deleteCategory(Integer id) {
         executeUpdate(DELETE_CATEGORY_STATEMENT, id);
     }
 

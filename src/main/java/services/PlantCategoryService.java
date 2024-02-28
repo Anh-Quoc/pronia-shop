@@ -73,4 +73,8 @@ public class PlantCategoryService {
             categoryDAO.updateCategory(categoryEntity);
         }
     }
+
+    public void deleteCategory(CategoryDTO category) {
+        categoryDAO.deleteCategory(category.getId());
+    }
 }

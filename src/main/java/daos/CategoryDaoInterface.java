@@ -20,7 +20,7 @@ public interface CategoryDaoInterface {
 
     void updateCategory(Category category);
 
-    void deleteCategory(int id);
+    void deleteCategory(Integer id);
 
     void deleteCategory(Category category);
 
