@@ -72,4 +72,11 @@ public class PlantTagService {
         tagDao.updateTagsForPlant(plantId, tagEntities);
     }
 
+    public void updateTagByID(TagDTO tag) {
+        Tag tagEntity = new Tag();
+        tagEntity.setId(tag.getId());
+        tagEntity.setName(tag.getName());
+        tagDao.updateTag(tagEntity);
+    }
+
 }

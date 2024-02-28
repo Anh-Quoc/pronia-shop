@@ -13,6 +13,11 @@ public class TagDTO {
     public TagDTO() {
     }
 
+    public TagDTO(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public TagDTO(Integer id, String name, Integer amount) {
         this.id = id;
         this.name = name;

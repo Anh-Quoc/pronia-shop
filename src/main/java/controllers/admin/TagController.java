@@ -61,7 +61,8 @@ public class TagController extends HttpServlet {
             case "UPDATE":
                 Integer id = Integer.parseInt(req.getParameter("tagID"));
                 String nameUpdate = req.getParameter("name");
-//                plantTagService.updateTagByID(id, nameUpdate);
+                TagDTO tagDTOUpdate = new TagDTO(id, nameUpdate);
+                plantTagService.updateTagByID(tagDTOUpdate);
                 getAllTag(req, resp);
                 break;
             default:
