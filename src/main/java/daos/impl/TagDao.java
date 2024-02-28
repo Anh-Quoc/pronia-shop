@@ -25,7 +25,7 @@ public class TagDao extends GenericDao<Tag> implements TagDaoInterface {
 
     private final String UPDATE_PLANT_TAG_STATEMENT = "UPDATE plant_tags SET tag_id = ? WHERE plant_id = ?";
 
-    private final String DELETE_TAG_STATEMENT = "DELETE FROM tags WHERE id = ?";
+    private final String DELETE_TAG_STATEMENT = "UPDATE tags SET active = 0 WHERE id = ?";
 
     private final String DELETE_PLANT_TAG_STATEMENT = "DELETE FROM plant_tags WHERE plant_id = ?";
 
@@ -117,7 +117,7 @@ public class TagDao extends GenericDao<Tag> implements TagDaoInterface {
 
     @Override
     public void deleteTag(int id) {
-
+        executeUpdate(DELETE_TAG_STATEMENT, id);
     }
 
     @Override
@@ -127,7 +127,7 @@ public class TagDao extends GenericDao<Tag> implements TagDaoInterface {
 
     @Override
     public void deleteTag(Tag tag) {
-
+        executeUpdate(DELETE_TAG_STATEMENT, tag.getId());
     }
 
 

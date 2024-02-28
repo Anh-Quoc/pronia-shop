@@ -7,6 +7,7 @@ import lombok.Data;
 public class CategoryDTO {
     private Integer id;
     private String name;
+    private boolean active;
     private Integer amount;
 
     public CategoryDTO() {
@@ -36,6 +37,7 @@ public class CategoryDTO {
             if(category.getName() != null){
                 this.name = category.getName();
             }
+            this.active = category.isActive();
         }
     }
 

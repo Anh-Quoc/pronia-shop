@@ -14,6 +14,7 @@ public class CategoryMapper implements RowMapperInterface<Category>, DTOMapper<C
         try {
             category.setId(rs.getInt("id"));
             category.setName(rs.getString("name"));
+            category.setActive(rs.getBoolean("active"));
         } catch (Exception e) {
             return null;
         }

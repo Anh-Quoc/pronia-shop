@@ -2,6 +2,7 @@ CREATE TABLE categories
 (
     id   INTEGER IDENTITY (1,1) PRIMARY KEY,
     name NVARCHAR(30),
+    active BIT DEFAULT 1
 )
 GO
 INSERT INTO categories (name)
@@ -791,7 +792,8 @@ SELECT plants.id,
        plants.sale_opening,
        plants.stock_status,
        categories.id   AS category_id,
-       categories.name AS category_name
+       categories.name AS category_name,
+       categories.active
 
 FROM plants
          JOIN plant_categories ON plants.id = plant_categories.plant_id

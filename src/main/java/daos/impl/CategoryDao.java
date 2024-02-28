@@ -28,7 +28,7 @@ public class CategoryDao extends GenericDao<Category> implements CategoryDaoInte
 
     private final String UPDATE_CATEGORY_STATEMENT = "UPDATE categories SET name = ? WHERE id = ?";
 
-    private final String DELETE_CATEGORY_STATEMENT = "DELETE FROM categories WHERE id = ?";
+    private final String DELETE_CATEGORY_STATEMENT = "UPDATE categories SET active = 0 WHERE id = ?";
 
     private final String DELETE_PLANT_CATEGORY_STATEMENT = "DELETE FROM plant_categories WHERE plant_id = ?";
 
@@ -67,7 +67,7 @@ public class CategoryDao extends GenericDao<Category> implements CategoryDaoInte
 
     @Override
     public List<Category> getCategoriesOfPlantByPlantID(int plantID) {
-        List<Category> categories = executeQuery(SELECT_CATEGORIES_OF_PLANT_BY_PLANT_ID, new PlantCategoryMapper(), plantID);
+        List<Category> categories = executeQuery(SELECT_CATEGORIES_OF_PLANT_BY_PLANT_ID + " AND active = 1", new PlantCategoryMapper(), plantID);
         return categories;
     }
 
@@ -104,7 +104,7 @@ public class CategoryDao extends GenericDao<Category> implements CategoryDaoInte
 
     @Override
     public void deleteCategory(int id) {
-
+        executeUpdate(DELETE_CATEGORY_STATEMENT, id);
     }
 
     public void deletePlantCategory(int plantId) {
@@ -113,6 +113,6 @@ public class CategoryDao extends GenericDao<Category> implements CategoryDaoInte
 
     @Override
     public void deleteCategory(Category category) {
-
+        executeUpdate(DELETE_CATEGORY_STATEMENT, category.getId());
     }
 }

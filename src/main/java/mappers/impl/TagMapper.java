@@ -15,6 +15,7 @@ public class TagMapper implements RowMapperInterface<Tag>, DTOMapper<TagDTO, Tag
         try {
             plantTag.setId(rs.getInt("id"));
             plantTag.setName(rs.getString("name"));
+            plantTag.setActive(rs.getBoolean("active"));
         } catch (Exception e) {
             return null;
         }
