@@ -58,7 +58,9 @@ public class CategoryController extends HttpServlet {
                 getAllCategory(req, resp);
                 break;
             case "UPDATE":
-//                plantCategoryService.updateCategory(req);
+                Integer id = Integer.parseInt(req.getParameter("categoryID"));
+                categoryDTO = new CategoryDTO(id, req.getParameter("categoryName"));
+                plantCategoryService.updateCategory(categoryDTO);
                 getAllCategory(req, resp);
                 break;
         }

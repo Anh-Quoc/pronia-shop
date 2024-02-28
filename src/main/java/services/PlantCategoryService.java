@@ -64,4 +64,13 @@ public class PlantCategoryService {
         categoryDAO.updateCategoriesForPlant(plantId, categoryEntities);
     }
 
+    public void updateCategory(CategoryDTO category) {
+        Category categoryEntity = categoryDAO.getCategoryByName(category.getName());
+        if (categoryEntity == null) {
+            categoryEntity = new Category();
+            categoryEntity.setId(category.getId());
+            categoryEntity.setName(category.getName());
+            categoryDAO.updateCategory(categoryEntity);
+        }
+    }
 }
