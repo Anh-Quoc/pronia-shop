@@ -1,6 +1,7 @@
 package controllers.admin;
 
 
+import dtos.TagDTO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -53,7 +54,8 @@ public class TagController extends HttpServlet {
         switch (command) {
             case "CREATE":
                 String name = req.getParameter("name");
-//                plantTagService.createNewTag(name);
+                TagDTO tagDTO = new TagDTO(name);
+                plantTagService.createNewTag(tagDTO);
                 getAllTag(req, resp);
                 break;
             case "UPDATE":

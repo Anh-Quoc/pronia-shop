@@ -42,6 +42,18 @@ public class PlantTagService {
         return tagDao.getTagByPlantId(id);
     }
 
+    public void createNewTag(TagDTO tag) {
+
+        Tag tagEntity = new Tag();
+        tagEntity = tagDao.getTagByName(tag.getName());
+
+        if (tagEntity == null) {
+            tagEntity = new Tag();
+            tagEntity.setName(tag.getName());
+        }
+        tagDao.saveTag(tagEntity);
+    }
+
     public void saveTagsForPlant(Integer plantId, List<Tag> tags) {
         List<Tag> tagEntities = tags
                 .stream()

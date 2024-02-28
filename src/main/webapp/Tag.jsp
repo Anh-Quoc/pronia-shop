@@ -344,7 +344,7 @@
 <div id="addEmployeeModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="tags" method="POST">
+            <form action="admin-tags" method="POST">
                 <input type="hidden" name="command" value="CREATE">
                 <div class="modal-header">
                     <h4 class="modal-title">Add Tag</h4>
@@ -371,7 +371,7 @@
 <div id="editTagModal_<%=tag.getId()%>" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="tags" method="POST">
+            <form action="admin-tags" method="POST">
                 <input type="hidden" name="command" value="UPDATE">
                 <input type="hidden" name="tagID" value="<%=tag.getId()%>">
                 <div class="modal-header">
