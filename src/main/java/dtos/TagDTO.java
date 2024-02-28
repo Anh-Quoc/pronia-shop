@@ -7,6 +7,7 @@ import lombok.Data;
 public class TagDTO {
     private Integer id;
     private String name;
+    private boolean active;
     private Integer amount;
 
     public TagDTO() {
@@ -30,6 +31,7 @@ public class TagDTO {
             if(tag.getName() != null) {
                 this.name = tag.getName();
             }
+            this.active = tag.isActive();
         }
 
 

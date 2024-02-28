@@ -53,6 +53,12 @@ public class TagDao extends GenericDao<Tag> implements TagDaoInterface {
     }
 
     @Override
+    public List<Tag> getAllActiveTag() {
+        List<Tag> tags = executeQuery(SELECT_ALL_TAG_STATEMENT + " WHERE active = 1", new TagMapper());
+        return tags;
+    }
+
+    @Override
     public Tag getTagById(int id) {
         Tag tag = executeQuery(SELECT_TAG_BY_ID_STATEMENT, new TagMapper(), id).get(0);
         return tag;
@@ -60,7 +66,7 @@ public class TagDao extends GenericDao<Tag> implements TagDaoInterface {
 
     @Override
     public List<Tag> getTagByPlantId(int id) {
-        List<Tag> tags = executeQuery(SELECT_TAG_OF_PLANT_BY_PLANT_ID_STATEMENT, new PlantTagMapper(), id);
+        List<Tag> tags = executeQuery(SELECT_TAG_OF_PLANT_BY_PLANT_ID_STATEMENT + " AND active = 1", new PlantTagMapper(), id);
         return tags;
     }
 

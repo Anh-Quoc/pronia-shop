@@ -8,6 +8,7 @@ import lombok.Data;
 public class Tag {
     private Integer id;
     private String name;
+    private boolean active;
     public Tag() {
 
     }

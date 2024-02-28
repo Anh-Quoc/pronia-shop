@@ -51,6 +51,7 @@ CREATE TABLE tags
 (
     id   INTEGER IDENTITY (1,1) PRIMARY KEY,
     name NVARCHAR(30),
+    active BIT DEFAULT 1
 )
 GO
 INSERT INTO tags (name)
@@ -806,8 +807,9 @@ SELECT plants.id,
        plants.quantity,
        plants.sale_opening,
        plants.stock_status,
-       tags.id,
-       tags.name
+       tags.id AS tag_id,
+       tags.name AS tag_name,
+       tags.active
 
 FROM plants
          JOIN plant_tags ON plants.id = plant_tags.plant_id

@@ -7,6 +7,8 @@ import java.util.List;
 public interface TagDaoInterface {
     List<Tag> getAllTag();
 
+    List<Tag> getAllActiveTag();
+
     Tag getTagById(int id);
 
     List<Tag> getTagByPlantId(int id);

@@ -30,6 +30,10 @@ public class PlantTagService {
         return tagDao.getAllTag();
     }
 
+    public List<Tag> getAllActivePlantTag() {
+        return tagDao.getAllActiveTag();
+    }
+
     public Tag getTagByName(String name) {
         return tagDao.getTagByName(name);
     }
