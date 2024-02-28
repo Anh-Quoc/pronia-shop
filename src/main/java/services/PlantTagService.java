@@ -43,6 +43,17 @@ public class PlantTagService {
                 .stream()
                 .map(tagDTO -> tagDao.getTagByName(tagDTO.getName()))
                 .collect(Collectors.toList());
+
+        tagDao.deleteTagsForPlant(plantId);
         tagDao.saveTagsForPlant(plantId, tagEntities);
     }
+
+    public void updateTagsForPlant(Integer plantId, List<Tag> tags) {
+        List<Tag> tagEntities = tags
+                .stream()
+                .map(tagDTO -> tagDao.getTagByName(tagDTO.getName()))
+                .collect(Collectors.toList());
+        tagDao.updateTagsForPlant(plantId, tagEntities);
+    }
+
 }

@@ -162,44 +162,40 @@ public class PlantService {
         plantTagService.saveTagsForPlant(plantId, tags);
         plantCategoryService.saveCategoriesForPlant(plantId, plantCategories);
     }
-//
-//    public void updatePlant(HttpServletRequest req) {
-//        // Update plant
-//        Plant newPlant = new Plant();
-//        newPlant.setId(Integer.parseInt(req.getParameter("plantID")));
-//        newPlant.setTitle(req.getParameter("title"));
-//        newPlant.setDescription(req.getParameter("description"));
-//        newPlant.setImageLink(req.getParameter("imageLink"));
-//        newPlant.setColor(req.getParameter("color"));
-//        newPlant.setUnitPrice(Double.parseDouble(req.getParameter("unitPrice")));
-//
-//        Vector<PlantCategory> plantCategories = new Vector<>();
-//        for(String category : req.getParameterValues("plantCategories[]")){
-//            PlantCategory plantCategory = plantCategoryService.getCategoryByName(category);
-//            if(plantCategory != null){
-//                plantCategories.add(plantCategory);
-//            }
-//        }
-//
-//        Vector<PlantTag> plantTags = new Vector<>();
-//        for(String tag : req.getParameterValues("plantTags[]")){
-//            PlantTag plantTag = plantTagService.getTagByName(tag);
-//            if(plantTag != null){
-//                plantTags.add(plantTag);
-//            }
-//        }
-//        newPlant.setPlantTags(plantTags);
-//        newPlant.setPlantCategories(plantCategories);
-//
-//        newPlant.setQuantity(Integer.parseInt(req.getParameter("quantity")));
-//        newPlant.setSaleOpening(Date.valueOf(req.getParameter("saleOpening")));
-//
-//        newPlant.setStockStatus(req.getParameter("stockStatus"));
-//        newPlant.setActive(Boolean.parseBoolean(req.getParameter("isActive")));
-//
-//        // Save new plant to database
-//        plantDAO.update(newPlant);
-//    }
+
+    public void updatePlant(PlantDTO plantDTO) {
+        Plant newPlant = new Plant();
+        List<Tag> tags = plantDTO.getPlantTags().stream().map(tagDTO -> {
+            Tag tag = new Tag();
+            tag.setId(tagDTO.getId());
+            tag.setName(tagDTO.getName());
+            return tag;
+        }).collect(Collectors.toList());
+
+        List<Category> plantCategories = plantDTO.getPlantCategories().stream().map(categoryDTO -> {
+            Category category = new Category();
+            category.setId(categoryDTO.getId());
+            category.setName(categoryDTO.getName());
+            return category;
+        }).collect(Collectors.toList());
+
+        newPlant.setId(plantDTO.getId());
+        newPlant.setTitle(plantDTO.getTitle());
+        newPlant.setDescription(plantDTO.getDescription());
+        newPlant.setImageLink(plantDTO.getImageLink());
+        newPlant.setColor(plantDTO.getColor());
+        newPlant.setUnitPrice(plantDTO.getUnitPrice());
+        newPlant.setQuantity(plantDTO.getQuantity());
+        newPlant.setSaleOpening(plantDTO.getSaleOpening());
+        newPlant.setStockStatus(plantDTO.getStockStatus());
+        newPlant.setActive(plantDTO.isActive());
+
+
+        // Save new plant to database
+        plantDAO.updatePlant(newPlant);
+        plantTagService.updateTagsForPlant(newPlant.getId(), tags);
+        plantCategoryService.updateCategoriesForPlant(newPlant.getId(), plantCategories);
+    }
 
     public void deletePlantByID(int id) {
         plantDAO.deletePlant(id);

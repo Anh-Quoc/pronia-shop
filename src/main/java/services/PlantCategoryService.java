@@ -46,4 +46,11 @@ public class PlantCategoryService {
         categoryDAO.saveCategoriesForPlant(plantId, categoryEntities);
     }
 
+    public void updateCategoriesForPlant(Integer plantId, List<Category> categories) {
+        List<Category> categoryEntities = categories.stream()
+                .map(categoryDTO -> categoryDAO.getCategoryByName(categoryDTO.getName()))
+                .collect(Collectors.toList());
+        categoryDAO.updateCategoriesForPlant(plantId, categoryEntities);
+    }
+
 }

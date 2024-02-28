@@ -83,7 +83,7 @@ public class PlantController extends HttpServlet {
                 getAllPlant(req, resp);
                 break;
             case "UPDATE":
-//                plantService.updatePlant(req);
+                plantService.updatePlant(getPlantDTOFromRequest(req));
                 getAllPlant(req, resp);
                 break;
 
@@ -94,6 +94,12 @@ public class PlantController extends HttpServlet {
 
     private PlantDTO getPlantDTOFromRequest(HttpServletRequest req) {
         PlantDTO plantDTO = new PlantDTO();
+
+        if(req.getParameter("plantID") != null){
+            plantDTO.setId(Integer.parseInt(req.getParameter("plantID")));
+
+        }
+
         plantDTO.setTitle(req.getParameter("title"));
         plantDTO.setDescription(req.getParameter("description"));
         plantDTO.setImageLink(req.getParameter("imageLink"));

@@ -28,6 +28,10 @@ public class CategoryDao extends GenericDao<Category> implements CategoryDaoInte
 
     private final String UPDATE_CATEGORY_STATEMENT = "UPDATE categories SET name = ? WHERE id = ?";
 
+    private final String DELETE_CATEGORY_STATEMENT = "DELETE FROM categories WHERE id = ?";
+
+    private final String DELETE_PLANT_CATEGORY_STATEMENT = "DELETE FROM plant_categories WHERE plant_id = ?";
+
     private static CategoryDao instance;
 
     private CategoryDao (){
@@ -93,9 +97,18 @@ public class CategoryDao extends GenericDao<Category> implements CategoryDaoInte
         executeUpdate(UPDATE_CATEGORY_STATEMENT, category.getName(), category.getId());
     }
 
+    public void updateCategoriesForPlant(Integer plantId, List<Category> categories) {
+        deletePlantCategory(plantId);
+        saveCategoriesForPlant(plantId, categories);
+    }
+
     @Override
     public void deleteCategory(int id) {
 
+    }
+
+    public void deletePlantCategory(int plantId) {
+        executeUpdate(DELETE_PLANT_CATEGORY_STATEMENT, plantId);
     }
 
     @Override

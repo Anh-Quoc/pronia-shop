@@ -23,7 +23,11 @@ public interface TagDaoInterface {
 
     void updateTag(Tag tag);
 
+    void updateTagsForPlant(int plantId, List<Tag> tags);
+
     void deleteTag(int id);
+
+    void deleteTagsForPlant(int plantId);
 
     void deleteTag(Tag tag);
 }

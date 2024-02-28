@@ -23,6 +23,12 @@ public class TagDao extends GenericDao<Tag> implements TagDaoInterface {
 
     private final String UPDATE_TAG_STATEMENT = "UPDATE tags SET name = ? WHERE id = ?";
 
+    private final String UPDATE_PLANT_TAG_STATEMENT = "UPDATE plant_tags SET tag_id = ? WHERE plant_id = ?";
+
+    private final String DELETE_TAG_STATEMENT = "DELETE FROM tags WHERE id = ?";
+
+    private final String DELETE_PLANT_TAG_STATEMENT = "DELETE FROM plant_tags WHERE plant_id = ?";
+
     private final String SELECT_TOP_6_TAG_HAS_PLANT_STATEMENT = "SELECT TOP 6 tag_name, COUNT(tag_name) AS tag_count FROM plant_with_tags_view " +
             "GROUP BY tag_name " +
             "ORDER BY tag_count DESC";
@@ -98,14 +104,27 @@ public class TagDao extends GenericDao<Tag> implements TagDaoInterface {
     }
 
     @Override
+    public void updateTagsForPlant(int plantId, List<Tag> tags) {
+        deleteTagsForPlant(plantId);
+        saveTagsForPlant(plantId, tags);
+    }
+
+    @Override
     public void deleteTag(int id) {
 
+    }
+
+    @Override
+    public void deleteTagsForPlant(int plantId) {
+        executeUpdate(DELETE_PLANT_TAG_STATEMENT, plantId);
     }
 
     @Override
     public void deleteTag(Tag tag) {
 
     }
+
+
 
 
 }
