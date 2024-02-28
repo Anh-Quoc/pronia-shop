@@ -30,7 +30,7 @@ public class TagController extends HttpServlet {
                 break;
             case "DELETE":
                 int id = Integer.parseInt(req.getParameter("tagID"));
-//                plantTagService.deleteTagByID(id);
+                plantTagService.deleteTagByID(id);
                 getAllTag(req, resp);
                 break;
             case "SEARCH":

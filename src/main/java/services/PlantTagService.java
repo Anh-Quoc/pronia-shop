@@ -79,4 +79,8 @@ public class PlantTagService {
         tagDao.updateTag(tagEntity);
     }
 
+    public void deleteTagByID(int id) {
+        tagDao.deleteTag(id);
+    }
+
 }
