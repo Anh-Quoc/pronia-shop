@@ -39,8 +39,19 @@ public class PlantDao extends GenericDao<Plant> implements PlantDaoInterface {
     }
 
     @Override
+    public Plant getActivePlantById(int id) {
+        List<Plant> result = executeQuery(SELECT_PLANT_BY_ID_STATEMENT + " AND active = 1", new PlantMapper(), id);
+        return result.isEmpty() ? null : result.get(0);
+    }
+
+    @Override
     public List<Plant> getAllPlant() {
         List<Plant> result = executeQuery(SELECT_ALL_PLANT_STATEMENT, new PlantMapper());
+        return result;
+    }
+
+    public List<Plant> getAllActivePlant() {
+        List<Plant> result = executeQuery(SELECT_ALL_PLANT_STATEMENT + " WHERE active = 1", new PlantMapper());
         return result;
     }
 

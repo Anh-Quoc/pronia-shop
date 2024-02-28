@@ -62,9 +62,39 @@ public class PlantService {
         return plants;
     }
 
-    public PlantDTO getPlantById(int id) {
-        Plant plant = plantDAO.getPlantById(id);
+    public List<PlantDTO> getAllActivePlants(){
+        List<PlantDTO> plants = new Vector<>();
+        List<Plant> listPlantEntity = plantDAO.getAllActivePlant();
 
+        listPlantEntity.forEach(plant -> {
+            PlantDTO plantDTO = new PlantDTO();
+
+            List<TagDTO> tags = plantTagService.getTagsByPlantId(plant.getId()).stream().map(tag -> {
+                TagDTO tagDTO = new TagDTO();
+                tagDTO.loadFromEntity(tag);
+                return tagDTO;
+            }).collect(Collectors.toList());
+
+
+            List<CategoryDTO> categories = plantCategoryService.getCategoriesByPlantId(plant.getId()).stream().map(category -> {
+                CategoryDTO categoryDTO = new CategoryDTO();
+                categoryDTO.loadFromEntity(category);
+                return categoryDTO;
+            }).collect(Collectors.toList());
+
+            plantDTO.loadFromEntity(plant, tags, categories);
+
+            plants.add(plantDTO);
+        });
+
+        return plants;
+    }
+
+    public PlantDTO getPlantById(int id) {
+        Plant plant = plantDAO.getActivePlantById(id);
+        if (plant == null) {
+            return null;
+        }
         PlantDTO plantDTO = new PlantDTO();
 
         List<TagDTO> tags = plantTagService.getTagsByPlantId(plant.getId()).stream().map(tag -> {
@@ -132,6 +162,8 @@ public class PlantService {
 
     public void createNewPlant(PlantDTO plantDTO) {
         Plant newPlant = new Plant();
+        newPlant.loadFromDTO(plantDTO);
+
         List<Tag> tags = plantDTO.getPlantTags().stream().map(tagDTO -> {
             Tag tag = new Tag();
             tag.setId(tagDTO.getId());
@@ -145,17 +177,6 @@ public class PlantService {
             category.setName(categoryDTO.getName());
             return category;
         }).collect(Collectors.toList());
-
-        newPlant.setTitle(plantDTO.getTitle());
-        newPlant.setDescription(plantDTO.getDescription());
-        newPlant.setImageLink(plantDTO.getImageLink());
-        newPlant.setColor(plantDTO.getColor());
-        newPlant.setUnitPrice(plantDTO.getUnitPrice());
-        newPlant.setQuantity(plantDTO.getQuantity());
-        newPlant.setSaleOpening(plantDTO.getSaleOpening());
-        newPlant.setStockStatus(plantDTO.getStockStatus());
-        newPlant.setActive(plantDTO.isActive());
-
 
         // Save new plant to database
         Integer plantId = plantDAO.savePlant(newPlant);
@@ -165,6 +186,8 @@ public class PlantService {
 
     public void updatePlant(PlantDTO plantDTO) {
         Plant newPlant = new Plant();
+        newPlant.loadFromDTO(plantDTO);
+
         List<Tag> tags = plantDTO.getPlantTags().stream().map(tagDTO -> {
             Tag tag = new Tag();
             tag.setId(tagDTO.getId());
@@ -178,18 +201,6 @@ public class PlantService {
             category.setName(categoryDTO.getName());
             return category;
         }).collect(Collectors.toList());
-
-        newPlant.setId(plantDTO.getId());
-        newPlant.setTitle(plantDTO.getTitle());
-        newPlant.setDescription(plantDTO.getDescription());
-        newPlant.setImageLink(plantDTO.getImageLink());
-        newPlant.setColor(plantDTO.getColor());
-        newPlant.setUnitPrice(plantDTO.getUnitPrice());
-        newPlant.setQuantity(plantDTO.getQuantity());
-        newPlant.setSaleOpening(plantDTO.getSaleOpening());
-        newPlant.setStockStatus(plantDTO.getStockStatus());
-        newPlant.setActive(plantDTO.isActive());
-
 
         // Save new plant to database
         plantDAO.updatePlant(newPlant);

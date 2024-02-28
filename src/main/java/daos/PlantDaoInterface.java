@@ -8,6 +8,8 @@ public interface PlantDaoInterface {
 
     Plant getPlantById(int id);
 
+    Plant getActivePlantById(int id);
+
     List<Plant> getAllPlant();
     List<Plant> getFeaturedPlant();
     List<Plant> getBestsellerPlant();

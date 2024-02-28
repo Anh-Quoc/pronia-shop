@@ -2,6 +2,8 @@
 <%@ page import="entities.Category" %>
 <%@ page import="java.util.List" %>
 <%@ page import="entities.Tag" %>
+<%@ page import="dtos.CategoryDTO" %>
+<%@ page import="dtos.TagDTO" %>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -569,10 +571,10 @@
                                 <span class="title">Categories :</span>
 
                                 <ul>
-                                    <% List<Category> categories = plant.getPlantCategories(); %>
+                                    <% List<CategoryDTO> categories = plant.getPlantCategories(); %>
                                     <% if(categories != null && !categories.isEmpty()){
                                         for(int i = 0; i < categories.size(); ++i) {
-                                            Category category = categories.get(i);
+                                            CategoryDTO category = categories.get(i);
                                     %>
                                     <li>
                                         <a href="#"><%= i < categories.size() - 1 ? category.getName() + ", ": category.getName()%></a>
@@ -588,10 +590,10 @@
                                 <span class="title">Tags :</span>
                                 <ul>
                                     <li>
-                                        <% List<Tag> tags = plant.getPlantTags(); %>
+                                        <% List<TagDTO> tags = plant.getPlantTags(); %>
                                         <% if(tags != null && !tags.isEmpty()){
                                                 for(int i = 0; i < tags.size(); ++i) {
-                                                    Tag tag = tags.get(i);
+                                                    TagDTO tag = tags.get(i);
                                         %>
                                         <a href="#">
                                            <%= i < tags.size() - 1 ? tag.getName() + ", ": tag.getName()%>
