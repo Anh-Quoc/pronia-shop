@@ -1,6 +1,7 @@
 package services;
 
 import daos.impl.CategoryDao;
+import dtos.CategoryDTO;
 import entities.Category;
 
 import java.util.List;
@@ -35,6 +36,16 @@ public class PlantCategoryService {
 
     public List<Category> getCategoriesByPlantId(int plantId) {
         return categoryDAO.getCategoriesOfPlantByPlantID(plantId);
+    }
+
+    public void createNewCategory(CategoryDTO category) {
+        Category categoryEntity;
+        categoryEntity = categoryDAO.getCategoryByName(category.getName());
+        if (categoryEntity == null) {
+            categoryEntity = new Category();
+            categoryEntity.setName(category.getName());
+            categoryDAO.saveCategory(categoryEntity);
+        }
     }
 
     public void saveCategoriesForPlant(Integer plantId, List<Category> categories) {

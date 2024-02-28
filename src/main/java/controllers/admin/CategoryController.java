@@ -1,6 +1,7 @@
 package controllers.admin;
 
 
+import dtos.CategoryDTO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -52,7 +53,8 @@ public class CategoryController extends HttpServlet {
         String command = req.getParameter("command");
         switch (command) {
             case "CREATE":
-//                plantCategoryService.createNewCategory(req);
+                CategoryDTO categoryDTO = new CategoryDTO(req.getParameter("nameCategory"));
+                plantCategoryService.createNewCategory(categoryDTO);
                 getAllCategory(req, resp);
                 break;
             case "UPDATE":
