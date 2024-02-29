@@ -22,6 +22,7 @@ public class UserMapper implements RowMapperInterface<User> {
             newUser.setCity(resultSet.getString("city"));
             newUser.setPostcode(resultSet.getString("postcode"));
             newUser.setPhone(resultSet.getString("phone"));
+            newUser.setActive(resultSet.getBoolean("active"));
             newUser.setRole(resultSet.getString("role_name"));
         } catch (Exception e) {
             return null;

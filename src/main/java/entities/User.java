@@ -19,6 +19,8 @@ public class User {
 
     private String phone;
 
+    private boolean active;
+
     private String role;
 
     public User() {

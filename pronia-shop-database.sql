@@ -427,7 +427,7 @@ CREATE TABLE users
     postcode       VARCHAR(128) NOT NULL,
 
     phone          VARCHAR(11)  NOT NULL,
-
+    active         BIT          DEFAULT 1,
     role_id        INTEGER FOREIGN KEY REFERENCES user_roles (id),
 )
 GO

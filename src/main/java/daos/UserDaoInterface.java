@@ -8,4 +8,5 @@ public interface UserDaoInterface {
 
     List<User> getAllUser();
 
+    void deleteUser(int id);
 }

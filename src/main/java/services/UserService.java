@@ -25,4 +25,9 @@ public class UserService {
         return userDao.getAllUser();
     }
 
+
+    public void deleteUserByID(int id) {
+        userDao.deleteUser(id);
+    }
+
 }

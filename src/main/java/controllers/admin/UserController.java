@@ -27,9 +27,9 @@ public class UserController extends HttpServlet {
                getAllUser(req, resp);
                break;
            case "DELETE":
-//               int id = Integer.parseInt(req.getParameter("userID"));
-//               userDAO.deleteUserByID(id);
-//               getAllUser(req, resp);
+               int id = Integer.parseInt(req.getParameter("userID"));
+               userService.deleteUserByID(id);
+               getAllUser(req, resp);
                break;
            case "SEARCH":
                String search = req.getParameter("searchValue");

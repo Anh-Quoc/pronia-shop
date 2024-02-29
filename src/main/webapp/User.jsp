@@ -357,7 +357,7 @@
                     <th>Postcode</th>
                     <th>Phone</th>
                     <th>Role</th>
-
+                    <th>Active</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -396,7 +396,7 @@
                     </td>
                     <td><%=user.getRole()%>
                     </td>
-
+                    <td><%=user.isActive()%></td>
                     <td>
                         <a href="#editUserModal_<%=user.getId()%>" class="edit" data-toggle="modal"><i
                                 class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
@@ -622,7 +622,9 @@
 <div id="deleteUserModal_<%=user.getId()%>" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form>
+            <form action="admin-users" method="get">
+                <input type="hidden" name="command" value="DELETE">
+                <input type="hidden" name="userID" value="<%=user.getId()%>">
                 <div class="modal-header">
                     <h4 class="modal-title">Delete User</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
