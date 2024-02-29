@@ -32,7 +32,7 @@ public class CustomerAuthenticationFilter implements Filter {
         Cookie[] cookies = req.getCookies();
         if(cookies != null) {
             for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("session_id")) {
+                if (cookie.getName().equals("customer_session_id")) {
                     if (userSessionService.isValidCustomerSessionId(cookie.getValue())) {
                         filterChain.doFilter(servletRequest, servletResponse);
                         return;

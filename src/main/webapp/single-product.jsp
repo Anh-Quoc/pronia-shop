@@ -117,7 +117,7 @@
                                                 Cookie[] cookies = request.getCookies();
                                                 if (cookies != null) {
                                                     for (Cookie cookie : cookies) {
-                                                        if (cookie.getName().equals("session_id")) {
+                                                        if (cookie.getName().equals("customer_session_id")) {
                                                             isAuthentication = true;
                                                             break;
                                                         }
@@ -129,7 +129,7 @@
                                             %>
 
                                             <li><a class="dropdown-item" href="my-account.html">My account</a></li>
-                                            <li><a class="dropdown-item" href="logout">Logout</a></li>
+                                            <li><a class="dropdown-item" href="logout?accountType=customer">Logout</a></li>
                                             <%
                                             } else { %>
                                             <li><a class="dropdown-item" href="login">Login |
@@ -237,7 +237,7 @@
                                             <%
                                                 if (isAuthentication) { %>
                                             <li><a class="dropdown-item" href="my-account.html">My account</a></li>
-                                            <li><a class="dropdown-item" href="logout">Logout</a></li>
+                                            <li><a class="dropdown-item" href="logout?accountType=customer">Logout</a></li>
                                             <%
                                                 } else { %>
                                             <li><a class="dropdown-item" href="login">Login |
@@ -314,7 +314,7 @@
                                     <%
                                         if (isAuthentication) { %>
                                     <li><a class="dropdown-item" href="my-account.html">My account</a></li>
-                                    <li><a class="dropdown-item" href="logout">Logout</a></li>
+                                    <li><a class="dropdown-item" href="logout?accountType=customer">Logout</a></li>
                                     <%
                                         } else { %>
                                     <li><a class="dropdown-item" href="login">Login | Register</a>

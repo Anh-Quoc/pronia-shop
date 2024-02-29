@@ -32,7 +32,7 @@ public class AdminAuthenticationFilter implements Filter {
         Cookie[] cookies = req.getCookies();
         if(cookies != null) {
             for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("session_id")) {
+                if (cookie.getName().equals("admin_session_id")) {
                     if (userSessionService.isValidAdminSessionId(cookie.getValue())) {
                         filterChain.doFilter(servletRequest, servletResponse);
                         return;

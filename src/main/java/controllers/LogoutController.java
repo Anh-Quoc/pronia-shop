@@ -27,12 +27,27 @@ public class LogoutController extends HttpServlet {
     }
 
     public void logout(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+
+        String accountType = req.getParameter("accountType");
+
+        switch (accountType) {
+            case "admin":
+                logoutAdmin(req, resp);
+                break;
+            case "customer":
+                logoutCustomer(req, resp);
+                break;
+        }
+        resp.sendRedirect("login");
+    }
+
+    private void logoutAdmin(HttpServletRequest req, HttpServletResponse resp) {
         Cookie[] cookies = req.getCookies();
         if(cookies != null) {
             for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("session_id")) {
+                if (cookie.getName().equals("admin_session_id")) {
                     userSessionService.deactivateSessionId(cookie.getValue());
-                    Cookie newCookie = new Cookie("session_id", "");
+                    Cookie newCookie = new Cookie("admin_session_id", "");
                     newCookie.setMaxAge(0);
                     cookie.setDomain("localhost");
                     cookie.setPath("/pronia-shop");
@@ -40,7 +55,22 @@ public class LogoutController extends HttpServlet {
                 }
             }
         }
-        resp.sendRedirect("login");
+    }
+
+    private void logoutCustomer(HttpServletRequest req, HttpServletResponse resp) {
+        Cookie[] cookies = req.getCookies();
+        if(cookies != null) {
+            for (Cookie cookie : cookies) {
+                if(cookie.getName().equals("customer_session_id")) {
+                    userSessionService.deactivateSessionId(cookie.getValue());
+                    Cookie newCookie = new Cookie("customer_session_id", "");
+                    newCookie.setMaxAge(0);
+                    cookie.setDomain("localhost");
+                    cookie.setPath("/pronia-shop");
+                    resp.addCookie(newCookie);
+                }
+            }
+        }
     }
 
     @Override

@@ -57,16 +57,23 @@ public class LoginController extends HttpServlet {
                 newSession = new UserSession(user.getId());
             }
 
-            Cookie cookie = new Cookie("session_id", newSession.getSessionId());
-            cookie.setMaxAge(COOKIE_LIFE_TIME);
-            cookie.setDomain("localhost");
-            cookie.setPath("/pronia-shop");
-            cookie.setHttpOnly(true);
-            resp.addCookie(cookie);
+
 
             if (user.getRole().equals("Admin")) {
+                Cookie cookie = new Cookie("admin_session_id", newSession.getSessionId());
+                cookie.setMaxAge(COOKIE_LIFE_TIME);
+                cookie.setDomain("localhost");
+                cookie.setPath("/pronia-shop");
+                cookie.setHttpOnly(true);
+                resp.addCookie(cookie);
                 resp.sendRedirect("admin-dashboard");
             } else if(user.getRole().equals("Customer")){
+                Cookie cookie = new Cookie("customer_session_id", newSession.getSessionId());
+                cookie.setMaxAge(COOKIE_LIFE_TIME);
+                cookie.setDomain("localhost");
+                cookie.setPath("/pronia-shop");
+                cookie.setHttpOnly(true);
+                resp.addCookie(cookie);
                 resp.sendRedirect("home");
             }
 

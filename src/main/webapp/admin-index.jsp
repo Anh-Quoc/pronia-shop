@@ -9,6 +9,6 @@
     <a href="admin-tags?command=READ">Plant Tags</a> <br>
     <a href="admin-users?command=READ">Users</a> <br>
     <a href="orders?command=READ">Orders</a> <br>
-    <a href="logout">Logout</a>
+    <a href="logout?accountType=admin">Logout</a>
 </body>
 </html>

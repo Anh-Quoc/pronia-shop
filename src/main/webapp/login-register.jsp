@@ -118,7 +118,7 @@
                                                 Cookie[] cookies = request.getCookies();
                                                 if (cookies != null) {
                                                     for (Cookie cookie : cookies) {
-                                                        if (cookie.getName().equals("session_id")) {
+                                                        if (cookie.getName().equals("customer_session_id")) {
                                                             isAuthentication = true;
                                                             break;
                                                         }
