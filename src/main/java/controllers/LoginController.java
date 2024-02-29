@@ -30,17 +30,12 @@ public class LoginController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         Cookie[] cookies = req.getCookies();
         if(cookies != null){
             for(Cookie cookie : cookies){
                 if(cookie.getName().equals("session_id")){
-                    if(userSessionService.isValidAdminSessionId(cookie.getValue())){
-                        req.getRequestDispatcher("admin-dashboard").forward(req, resp);
-                    }
-                    if(userSessionService.isValidCustomerSessionId(cookie.getValue())){
-                        req.getRequestDispatcher("home").forward(req, resp);
-                    }
+                    req.getRequestDispatcher("home").forward(req, resp);
+                    return;
                 }
             }
         }

@@ -96,7 +96,7 @@
                                 <a href="tel://+00-123-456-789">+00 123 456 789</a>
                             </div>
 
-                            <a href="/pronia-shop/home" class="header-logo">
+                            <a href="home" class="header-logo">
                                 <img src="assets/images/logo/dark.png" alt="Header Logo">
                             </a>
 
@@ -113,13 +113,34 @@
                                                 aria-expanded="false">
                                             <i class="pe-7s-users"></i>
                                         </button>
+
+                                        <%
+                                            boolean isAuthentication = false;
+                                            Cookie[] cookies = request.getCookies();
+                                            if (cookies != null) {
+                                                for (Cookie cookie : cookies) {
+                                                    if (cookie.getName().equals("session_id")) {
+                                                        isAuthentication = true;
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                        %>
+
                                         <ul class="dropdown-menu" aria-labelledby="settingButton">
+                                            <%
+                                                if (isAuthentication) {
+                                            %>
                                             <li><a class="dropdown-item" href="my-account.html">My account</a></li>
+                                            <li><a class="dropdown-item" href="logout">Logout</a></li>
+                                            <%} else {%>
                                             <li><a class="dropdown-item" href="login-register.jsp">Login |
                                                 Register</a>
                                             </li>
+                                            <%}%>
                                         </ul>
                                     </li>
+                                    <% if (isAuthentication) {%>
                                     <li class="d-none d-lg-block">
                                         <a href="wishlist.html">
                                             <i class="pe-7s-like"></i>
@@ -131,6 +152,7 @@
                                             <span class="quantity">3</span>
                                         </a>
                                     </li>
+                                    <%}%>
                                     <li class="mobile-menu_wrap d-block d-lg-none">
                                         <a href="#mobileMenu" class="mobile-menu_btn toolbar-btn pl-0">
                                             <i class="pe-7s-menu"></i>
@@ -151,7 +173,7 @@
                             <nav class="main-nav">
                                 <ul>
                                     <li class="drop-holder">
-                                        <a href="/pronia-shop/home">Home</a>
+                                        <a href="home">Home</a>
                                         <!-- <ul class="drop-menu">
                                             <li>
                                                 <a href="index.jsp">Home One</a>
@@ -247,7 +269,7 @@
                                         </ul>
                                     </li> -->
                                     <li>
-                                        <a href="about.html">About Us</a>
+                                        <a href="about.jsp">About Us</a>
                                     </li>
                                     <!-- <li class="drop-holder">
                                         <a href="#">Pages</a>
@@ -261,7 +283,7 @@
                                         </ul>
                                     </li> -->
                                     <li>
-                                        <a href="contact.html">Contact Us</a>
+                                        <a href="contact.jsp">Contact Us</a>
                                     </li>
                                 </ul>
                             </nav>
@@ -276,7 +298,7 @@
                     <div class="row align-items-center">
                         <div class="col-lg-3 col-6">
 
-                            <a href="/pronia-shop/home" class="header-logo">
+                            <a href="home" class="header-logo">
                                 <img src="assets/images/logo/dark.png" alt="Header Logo">
                             </a>
 
@@ -286,7 +308,7 @@
                                 <nav class="main-nav">
                                     <ul>
                                         <li class="drop-holder">
-                                            <a href="/pronia-shop/home">Home</a>
+                                            <a href="home">Home</a>
                                             <!-- <ul class="drop-menu">
                                                 <li>
                                                     <a href="index.jsp">Home One</a>
@@ -385,7 +407,7 @@
                                             </ul>
                                         </li> -->
                                         <li>
-                                            <a href="about.html">About Us</a>
+                                            <a href="about.jsp">About Us</a>
                                         </li>
                                         <!-- <li class="drop-holder">
                                             <a href="#">Pages</a>
@@ -399,7 +421,7 @@
                                             </ul>
                                         </li> -->
                                         <li>
-                                            <a href="contact.html">Contact Us</a>
+                                            <a href="contact.jsp">Contact Us</a>
                                         </li>
                                     </ul>
                                 </nav>
@@ -420,12 +442,20 @@
                                             <i class="pe-7s-users"></i>
                                         </button>
                                         <ul class="dropdown-menu" aria-labelledby="stickysettingButton">
+                                            <%
+                                                if (isAuthentication) {
+                                            %>
                                             <li><a class="dropdown-item" href="my-account.html">My account</a></li>
+                                            <li><a class="dropdown-item" href="logout">Logout</a></li>
+                                            <%} else {%>
                                             <li><a class="dropdown-item" href="login-register.jsp">Login |
                                                 Register</a>
                                             </li>
+                                            <%}%>
                                         </ul>
                                     </li>
+
+                                    <% if (isAuthentication) {%>
                                     <li class="d-none d-lg-block">
                                         <a href="wishlist.html">
                                             <i class="pe-7s-like"></i>
@@ -437,6 +467,7 @@
                                             <span class="quantity">3</span>
                                         </a>
                                     </li>
+                                    <%}%>
                                     <li class="mobile-menu_wrap d-block d-lg-none">
                                         <a href="#mobileMenu" class="mobile-menu_btn toolbar-btn pl-0">
                                             <i class="pe-7s-menu"></i>
@@ -488,9 +519,15 @@
                                     <i class="pe-7s-users"></i>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="settingButtonTwo">
+                                    <%
+                                        if (isAuthentication) {
+                                    %>
                                     <li><a class="dropdown-item" href="my-account.html">My account</a></li>
+                                    <li><a class="dropdown-item" href="logout">Logout</a></li>
+                                    <%} else {%>
                                     <li><a class="dropdown-item" href="login-register.jsp">Login | Register</a>
                                     </li>
+                                    <%}%>
                                 </ul>
                             </li>
                             <li>
@@ -505,7 +542,7 @@
                             <ul class="mobile-menu">
 
                                 <li>
-                                    <a href="/pronia-shop/home">
+                                    <a href="home">
                                             <span class="mm-text">Home
 
                                             </span>
@@ -521,12 +558,12 @@
                                 </li>
 
                                 <li>
-                                    <a href="about.html">
+                                    <a href="about.jsp">
                                         <span class="mm-text">About Us</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="contact.html">
+                                    <a href="contact.jsp">
                                         <span class="mm-text">Contact</span>
                                     </a>
                                 </li>
@@ -536,6 +573,7 @@
                 </div>
             </div>
         </div>
+        <% if (isAuthentication) {%>
         <div class="offcanvas-minicart_wrapper" id="miniCart">
             <div class="offcanvas-body">
                 <div class="minicart-content">
@@ -575,6 +613,7 @@
                 </div>
             </div>
         </div>
+        <%}%>
         <div class="global-overlay"></div>
     </header>
     <!-- Main Header Area End Here -->
@@ -1247,7 +1286,7 @@
                     <div class="col-lg-3">
                         <div class="footer-widget-item">
                             <div class="footer-widget-logo">
-                                <a href="/pronia-shop/home">
+                                <a href="home">
                                     <img src="assets/images/logo/dark.png" alt="Logo">
                                 </a>
                             </div>

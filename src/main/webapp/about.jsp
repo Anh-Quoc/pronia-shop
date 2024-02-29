@@ -94,7 +94,7 @@
                                     <a href="tel://+00-123-456-789">+00 123 456 789</a>
                                 </div>
 
-                                <a href="index.jsp" class="header-logo">
+                                <a href="home" class="header-logo">
                                     <img src="assets/images/logo/dark.png" alt="Header Logo">
                                 </a>
 
@@ -112,13 +112,35 @@
                                                 aria-expanded="false">
                                                 <i class="pe-7s-users"></i>
                                             </button>
+                                            
                                             <ul class="dropdown-menu" aria-labelledby="settingButton">
+                                                <%
+                                                    boolean isAuthentication = false;
+                                                    Cookie[] cookies = request.getCookies();
+                                                    if (cookies != null) {
+                                                        for (Cookie cookie : cookies) {
+                                                            if (cookie.getName().equals("session_id")) {
+                                                                isAuthentication = true;
+                                                                break;
+                                                            }
+                                                        }
+                                                    }
+                                                %>
+                                                <%
+                                                    if (isAuthentication) {
+                                                %>
+                                                
                                                 <li><a class="dropdown-item" href="my-account.html">My account</a></li>
-                                                <li><a class="dropdown-item" href="login-register.jsp">Login |
+                                                <li><a class="dropdown-item" href="logout">Logout</a></li>
+                                                <%
+                                                    } else { %>
+                                                <li><a class="dropdown-item" href="login">Login |
                                                         Register</a>
                                                 </li>
+                                                <%}%>
                                             </ul>
                                         </li>
+                                        <% if (isAuthentication) { %>
                                         <li class="d-none d-lg-block">
                                             <a href="wishlist.html">
                                                 <i class="pe-7s-like"></i>
@@ -130,6 +152,7 @@
                                                 <span class="quantity">3</span>
                                             </a>
                                         </li>
+                                        <%}%>
                                         <li class="mobile-menu_wrap d-block d-lg-none">
                                             <a href="#mobileMenu" class="mobile-menu_btn toolbar-btn pl-0">
                                                 <i class="pe-7s-menu"></i>
@@ -150,10 +173,10 @@
                                 <nav class="main-nav">
                                     <ul>
                                         <li class="drop-holder">
-                                            <a href="index.jsp">Home</a>
+                                            <a href="home">Home</a>
                                             <!-- <ul class="drop-menu">
                                                 <li>
-                                                    <a href="index.jsp">Home One</a>
+                                                    <a href="home">Home One</a>
                                                 </li>
                                                 <li>
                                                     <a href="index-2.html">Home Two</a>
@@ -216,7 +239,7 @@
                                                             <a href="my-account.html">My Account</a>
                                                         </li>
                                                         <li>
-                                                            <a href="login-register.jsp">Login | Register</a>
+                                                            <a href="login">Login | Register</a>
                                                         </li>
                                                         <li>
                                                             <a href="cart.html">Shopping Cart</a>
@@ -260,7 +283,7 @@
                                             </ul>
                                         </li> -->
                                         <li>
-                                            <a href="contact.html">Contact Us</a>
+                                            <a href="contact.jsp">Contact Us</a>
                                         </li>
                                     </ul>
                                 </nav>
@@ -275,7 +298,7 @@
                         <div class="row align-items-center">
                             <div class="col-lg-3 col-6">
 
-                                <a href="index.jsp" class="header-logo">
+                                <a href="home" class="header-logo">
                                     <img src="assets/images/logo/dark.png" alt="Header Logo">
                                 </a>
 
@@ -285,10 +308,10 @@
                                     <nav class="main-nav">
                                         <ul>
                                             <li class="drop-holder">
-                                                <a href="index.jsp">Home</a>
+                                                <a href="home">Home</a>
                                                 <!-- <ul class="drop-menu">
                                                     <li>
-                                                        <a href="index.jsp">Home One</a>
+                                                        <a href="home">Home One</a>
                                                     </li>
                                                     <li>
                                                         <a href="index-2.html">Home Two</a>
@@ -354,7 +377,7 @@
                                                                 <a href="my-account.html">My Account</a>
                                                             </li>
                                                             <li>
-                                                                <a href="login-register.jsp">Login | Register</a>
+                                                                <a href="login">Login | Register</a>
                                                             </li>
                                                             <li>
                                                                 <a href="cart.html">Shopping Cart</a>
@@ -398,7 +421,7 @@
                                                 </ul>
                                             </li> -->
                                             <li>
-                                                <a href="contact.html">Contact Us</a>
+                                                <a href="contact.jsp">Contact Us</a>
                                             </li>
                                         </ul>
                                     </nav>
@@ -420,12 +443,22 @@
                                                 <i class="pe-7s-users"></i>
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="stickysettingButton">
+                                                <%
+                                                    if (isAuthentication) {
+                                                %>
+                                                    
                                                 <li><a class="dropdown-item" href="my-account.html">My account</a></li>
-                                                <li><a class="dropdown-item" href="login-register.jsp">Login |
+                                                <li><a class="dropdown-item" href="logout">Logout</a></li>
+                                                <%
+                                                    } else { %>
+                                                <li><a class="dropdown-item" href="login">Login |
                                                         Register</a>
                                                 </li>
+                                                <%}%>
                                             </ul>
                                         </li>
+                                        <%
+                                            if (isAuthentication) { %>
                                         <li class="d-none d-lg-block">
                                             <a href="wishlist.html">
                                                 <i class="pe-7s-like"></i>
@@ -437,6 +470,7 @@
                                                 <span class="quantity">3</span>
                                             </a>
                                         </li>
+                                        <%}%>
                                         <li class="mobile-menu_wrap d-block d-lg-none">
                                             <a href="#mobileMenu" class="mobile-menu_btn toolbar-btn pl-0">
                                                 <i class="pe-7s-menu"></i>
@@ -488,16 +522,25 @@
                                         <i class="pe-7s-users"></i>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="settingButtonTwo">
+                                        <%
+                                            if (isAuthentication) {
+                                        %>
                                         <li><a class="dropdown-item" href="my-account.html">My account</a></li>
-                                        <li><a class="dropdown-item" href="login-register.jsp">Login | Register</a>
+                                        <li><a class="dropdown-item" href="logout">Logout</a></li>
+                                        <%
+                                            } else { %>
+                                        <li><a class="dropdown-item" href="login">Login | Register</a>
                                         </li>
+                                        <%}%>
                                     </ul>
                                 </li>
+                                <% if (isAuthentication) { %>
                                 <li>
                                     <a href="wishlist.html">
                                         <i class="pe-7s-like"></i>
                                     </a>
                                 </li>
+                                <%}%>
                             </ul>
                         </div>
                         <div class="offcanvas-menu_area">
@@ -505,14 +548,14 @@
                                 <ul class="mobile-menu">
                                     <!-- <li class="menu-item-has-children"> -->
                                     <li>
-                                        <a href="index.jsp">
+                                        <a href="home">
                                             <span class="mm-text">Home
                                                 <!-- <i class="pe-7s-angle-down"></i> -->
                                             </span>
                                         </a>
                                         <!-- <ul class="sub-menu">
                                             <li>
-                                                <a href="index.jsp">
+                                                <a href="home">
                                                     <span class="mm-text">Home One</span>
                                                 </a>
                                             </li>
@@ -622,7 +665,7 @@
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a href="login-register.jsp">
+                                                        <a href="login">
                                                             <span class="mm-text">Login | Register</span>
                                                         </a>
                                                     </li>
@@ -704,7 +747,7 @@
                                         </ul>
                                     </li> -->
                                     <li>
-                                        <a href="contact.html">
+                                        <a href="contact.jsp">
                                             <span class="mm-text">Contact</span>
                                         </a>
                                     </li>
@@ -819,7 +862,7 @@
                                 <h1 class="breadcrumb-heading">About Us</h1>
                                 <ul>
                                     <li>
-                                        <a href="index.jsp">Home</a>
+                                        <a href="home">Home</a>
                                     </li>
                                     <li>About Us</li>
                                 </ul>
@@ -1194,7 +1237,7 @@
                         <div class="col-lg-3">
                             <div class="footer-widget-item">
                                 <div class="footer-widget-logo">
-                                    <a href="index.jsp">
+                                    <a href="home">
                                         <img src="assets/images/logo/dark.png" alt="Logo">
                                     </a>
                                 </div>

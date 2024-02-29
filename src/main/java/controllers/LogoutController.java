@@ -34,11 +34,13 @@ public class LogoutController extends HttpServlet {
                     userSessionService.deactivateSessionId(cookie.getValue());
                     Cookie newCookie = new Cookie("session_id", "");
                     newCookie.setMaxAge(0);
+                    cookie.setDomain("localhost");
+                    cookie.setPath("/pronia-shop");
                     resp.addCookie(newCookie);
-                    resp.sendRedirect("login");
                 }
             }
         }
+        resp.sendRedirect("login");
     }
 
     @Override

@@ -1,7 +1,5 @@
 <%@ page import="dtos.PlantDTO" %>
-<%@ page import="entities.Category" %>
 <%@ page import="java.util.List" %>
-<%@ page import="entities.Tag" %>
 <%@ page import="dtos.CategoryDTO" %>
 <%@ page import="dtos.TagDTO" %>
 <!DOCTYPE html>
@@ -100,7 +98,7 @@
                                 <a href="tel://+00-123-456-789">+00 123 456 789</a>
                             </div>
 
-                            <a href="index.jsp" class="header-logo">
+                            <a href="home" class="header-logo">
                                 <img src="assets/images/logo/dark.png" alt="Header Logo">
                             </a>
 
@@ -113,12 +111,34 @@
                                             <i class="pe-7s-users"></i>
                                         </button>
                                         <ul class="dropdown-menu" aria-labelledby="settingButton">
+
+                                            <%
+                                                boolean isAuthentication = false;
+                                                Cookie[] cookies = request.getCookies();
+                                                if (cookies != null) {
+                                                    for (Cookie cookie : cookies) {
+                                                        if (cookie.getName().equals("session_id")) {
+                                                            isAuthentication = true;
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+                                            %>
+                                            <%
+                                                if (isAuthentication) {
+                                            %>
+
                                             <li><a class="dropdown-item" href="my-account.html">My account</a></li>
-                                            <li><a class="dropdown-item" href="login-register.jsp">Login |
+                                            <li><a class="dropdown-item" href="logout">Logout</a></li>
+                                            <%
+                                            } else { %>
+                                            <li><a class="dropdown-item" href="login">Login |
                                                 Register</a>
                                             </li>
+                                            <%}%>
                                         </ul>
                                     </li>
+                                    <% if(isAuthentication) { %>
                                     <li class="d-none d-lg-block">
                                         <a href="wishlist.html">
                                             <i class="pe-7s-like"></i>
@@ -130,6 +150,7 @@
                                             <span class="quantity">3</span>
                                         </a>
                                     </li>
+                                    <% } %>
                                     <li class="mobile-menu_wrap d-block d-lg-none">
                                         <a href="#mobileMenu" class="mobile-menu_btn toolbar-btn pl-0">
                                             <i class="pe-7s-menu"></i>
@@ -157,10 +178,10 @@
                                     </li>
 
                                     <li>
-                                        <a href="about.html">About Us</a>
+                                        <a href="about.jsp">About Us</a>
                                     </li>
                                     <li>
-                                        <a href="contact.html">Contact Us</a>
+                                        <a href="contact.jsp">Contact Us</a>
                                     </li>
                                 </ul>
                             </nav>
@@ -175,7 +196,7 @@
                     <div class="row align-items-center">
                         <div class="col-lg-3 col-6">
 
-                            <a href="index.jsp" class="header-logo">
+                            <a href="home" class="header-logo">
                                 <img src="assets/images/logo/dark.png" alt="Header Logo">
                             </a>
 
@@ -185,18 +206,18 @@
                                 <nav class="main-nav">
                                     <ul>
                                         <li class="drop-holder">
-                                            <a href="index.jsp">Home</a>
+                                            <a href="home">Home</a>
                                         </li>
                                         <li class="megamenu-holder">
                                             <a href="shop">Shop</a>
                                         </li>
 
                                         <li>
-                                            <a href="about.html">About Us</a>
+                                            <a href="about.jsp">About Us</a>
                                         </li>
 
                                         <li>
-                                            <a href="contact.html">Contact Us</a>
+                                            <a href="contact.jsp">Contact Us</a>
                                         </li>
                                     </ul>
                                 </nav>
@@ -213,12 +234,20 @@
                                             <i class="pe-7s-users"></i>
                                         </button>
                                         <ul class="dropdown-menu" aria-labelledby="stickysettingButton">
+                                            <%
+                                                if (isAuthentication) { %>
                                             <li><a class="dropdown-item" href="my-account.html">My account</a></li>
-                                            <li><a class="dropdown-item" href="login-register.jsp">Login |
+                                            <li><a class="dropdown-item" href="logout">Logout</a></li>
+                                            <%
+                                                } else { %>
+                                            <li><a class="dropdown-item" href="login">Login |
                                                 Register</a>
                                             </li>
+                                            <%}%>
                                         </ul>
                                     </li>
+                                    <%
+                                        if (isAuthentication) { %>
                                     <li class="d-none d-lg-block">
                                         <a href="wishlist.html">
                                             <i class="pe-7s-like"></i>
@@ -230,6 +259,7 @@
                                             <span class="quantity">3</span>
                                         </a>
                                     </li>
+                                    <% } %>
                                     <li class="mobile-menu_wrap d-block d-lg-none">
                                         <a href="#mobileMenu" class="mobile-menu_btn toolbar-btn pl-0">
                                             <i class="pe-7s-menu"></i>
@@ -281,9 +311,15 @@
                                     <i class="pe-7s-users"></i>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="settingButtonTwo">
+                                    <%
+                                        if (isAuthentication) { %>
                                     <li><a class="dropdown-item" href="my-account.html">My account</a></li>
-                                    <li><a class="dropdown-item" href="login-register.jsp">Login | Register</a>
+                                    <li><a class="dropdown-item" href="logout">Logout</a></li>
+                                    <%
+                                        } else { %>
+                                    <li><a class="dropdown-item" href="login">Login | Register</a>
                                     </li>
+                                    <%}%>
                                 </ul>
                             </li>
                             <li>
@@ -298,7 +334,7 @@
                             <ul class="mobile-menu">
 
                                 <li>
-                                    <a href="index.jsp">
+                                    <a href="home">
                                             <span class="mm-text">Home
 
                                             </span>
@@ -316,12 +352,12 @@
                                 </li>
 
                                 <li>
-                                    <a href="about.html">
+                                    <a href="about.jsp">
                                         <span class="mm-text">About Us</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="contact.html">
+                                    <a href="contact.jsp">
                                         <span class="mm-text">Contact</span>
                                     </a>
                                 </li>
@@ -332,6 +368,7 @@
             </div>
         </div>
 
+        <% if (isAuthentication) { %>
         <div class="offcanvas-minicart_wrapper" id="miniCart">
             <div class="offcanvas-body">
                 <div class="minicart-content">
@@ -401,6 +438,7 @@
                 </div>
             </div>
         </div>
+        <% } %>
         <div class="global-overlay"></div>
     </header>
     <!-- Main Header Area End Here -->
@@ -572,12 +610,13 @@
 
                                 <ul>
                                     <% List<CategoryDTO> categories = plant.getPlantCategories(); %>
-                                    <% if(categories != null && !categories.isEmpty()){
-                                        for(int i = 0; i < categories.size(); ++i) {
+                                    <% if (categories != null && !categories.isEmpty()) {
+                                        for (int i = 0; i < categories.size(); ++i) {
                                             CategoryDTO category = categories.get(i);
                                     %>
                                     <li>
-                                        <a href="#"><%= i < categories.size() - 1 ? category.getName() + ", ": category.getName()%></a>
+                                        <a href="#"><%= i < categories.size() - 1 ? category.getName() + ", " : category.getName()%>
+                                        </a>
                                     </li>
                                     <%
                                             }
@@ -591,16 +630,16 @@
                                 <ul>
                                     <li>
                                         <% List<TagDTO> tags = plant.getPlantTags(); %>
-                                        <% if(tags != null && !tags.isEmpty()){
-                                                for(int i = 0; i < tags.size(); ++i) {
-                                                    TagDTO tag = tags.get(i);
+                                        <% if (tags != null && !tags.isEmpty()) {
+                                            for (int i = 0; i < tags.size(); ++i) {
+                                                TagDTO tag = tags.get(i);
                                         %>
                                         <a href="#">
-                                           <%= i < tags.size() - 1 ? tag.getName() + ", ": tag.getName()%>
+                                            <%= i < tags.size() - 1 ? tag.getName() + ", " : tag.getName()%>
                                         </a>
                                         <%
                                                 }
-                                          }
+                                            }
                                         %>
                                     </li>
                                 </ul>
@@ -749,7 +788,7 @@
                             <div class="swiper-wrapper">
 
                                 <%
-                                    for(PlantDTO relatedPlant : relatedPlants){
+                                    for (PlantDTO relatedPlant : relatedPlants) {
 
                                 %>
 
@@ -793,7 +832,9 @@
                                         </div>
                                     </div>
                                     <div class="product-content">
-                                        <a class="product-name" href="plants?id=<%=relatedPlant.getId()%>"><%=relatedPlant.getTitle()%></a>
+                                        <a class="product-name"
+                                           href="plants?id=<%=relatedPlant.getId()%>"><%=relatedPlant.getTitle()%>
+                                        </a>
                                         <div class="price-box pb-1">
                                             <span class="new-price">$<%=relatedPlant.getUnitPrice()%></span>
                                         </div>
@@ -834,7 +875,7 @@
                     <div class="col-lg-3">
                         <div class="footer-widget-item">
                             <div class="footer-widget-logo">
-                                <a href="index.jsp">
+                                <a href="home">
                                     <img src="assets/images/logo/dark.png" alt="Logo">
                                 </a>
                             </div>
@@ -984,11 +1025,12 @@
 
     <!-- Begin Modal Area -->
     <%
-        if(relatedPlants != null && !relatedPlants.isEmpty()){
-            for(PlantDTO relatedPlant : relatedPlants){
+        if (relatedPlants != null && !relatedPlants.isEmpty()) {
+            for (PlantDTO relatedPlant : relatedPlants) {
     %>
 
-    <div class="modal quick-view-modal fade" id="quickModal_<%=relatedPlant.getId()%>" data-bs-backdrop="static" data-bs-keyboard="false"
+    <div class="modal quick-view-modal fade" id="quickModal_<%=relatedPlant.getId()%>" data-bs-backdrop="static"
+         data-bs-keyboard="false"
          tabindex="-1" aria-labelledby="quickModal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -1038,7 +1080,8 @@
                         </div>
                         <div class="col-lg-6 pt-5 pt-lg-0">
                             <div class="single-product-content">
-                                <h2 class="title"><%=relatedPlant.getTitle()%></h2>
+                                <h2 class="title"><%=relatedPlant.getTitle()%>
+                                </h2>
                                 <div class="price-box">
                                     <span class="new-price">$<%=relatedPlant.getUnitPrice()%></span>
                                 </div>
@@ -1057,7 +1100,8 @@
                                     </div>
                                 </div>
 
-                                <p class="short-desc"><%=relatedPlant.getDescription()%></p>
+                                <p class="short-desc"><%=relatedPlant.getDescription()%>
+                                </p>
                                 <ul class="quantity-with-btn">
                                     <li class="quantity">
                                         <div class="cart-plus-minus">
