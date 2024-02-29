@@ -481,7 +481,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-6">
-                            <form action="#" method="POST">
+                            <form action="login" method="POST">
                                 <div class="login-form">
                                     <h4 class="login-title">Login</h4>
                                     <div class="row">

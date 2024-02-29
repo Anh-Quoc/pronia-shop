@@ -461,14 +461,14 @@ FROM users
 GO
 
 
-
 CREATE TABLE user_sessions
 (
     id          INTEGER IDENTITY (1,1) PRIMARY KEY,
     session_id  VARCHAR(128) NOT NULL UNIQUE,
     user_id     INTEGER FOREIGN KEY REFERENCES users (id),
-    time_creation DATETIME DEFAULT CURRENT_TIMESTAMP,
+    time_created DATETIME DEFAULT CURRENT_TIMESTAMP,
     valid_until DATETIME DEFAULT CURRENT_TIMESTAMP,
+    active      BIT DEFAULT 1,
 )
 GO
 

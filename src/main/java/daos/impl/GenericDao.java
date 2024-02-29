@@ -45,8 +45,8 @@ public class GenericDao<T> implements GenericDaoInterface<T> {
                     prepareStatement.setInt(index, (Integer) parameter);
                 } else if(parameter instanceof java.sql.Date) {
                     prepareStatement.setDate(index, (java.sql.Date) parameter);
-//                } else if (parameter instanceof Timestamp) {
-//                    prepareStatement.setTimestamp(index, (Timestamp) parameter);
+                } else if (parameter instanceof Timestamp) {
+                    prepareStatement.setTimestamp(index, (Timestamp) parameter);
                 } else if (parameter instanceof Boolean) {
                     prepareStatement.setBoolean(index, (Boolean) parameter);
                 }

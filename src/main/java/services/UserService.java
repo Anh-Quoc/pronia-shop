@@ -25,6 +25,13 @@ public class UserService {
         return userDao.getAllUser();
     }
 
+    public User getUserByUserNameAndPassword(String username, String password){
+        return userDao.getUserByUserNameAndPassword(username, password);
+    }
+
+    public String getRoleOfUserById(Integer id){
+        return userDao.getRoleOfUserById(id);
+    }
 
     public void deleteUserByID(int id) {
         userDao.deleteUser(id);
