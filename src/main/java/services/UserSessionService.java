@@ -32,4 +32,9 @@ public class UserSessionService {
         Integer idRow = userSessionDAO.saveSessionId(userSession);
         return idRow != null && idRow > 0;
     }
+
+    public void deactivateSessionId(String sessionId){
+        userSessionDAO.deleteSessionId(sessionId);
+    }
+
 }
