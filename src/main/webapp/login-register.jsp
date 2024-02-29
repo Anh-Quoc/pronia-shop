@@ -530,6 +530,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6">
+                        <!-- Login -->
                         <form action="login" method="POST">
                             <div class="login-form">
                                 <h4 class="login-title">Login</h4>
@@ -553,15 +554,22 @@
                                             <a href="#"> Forgotten pasward?</a>
                                         </div>
                                     </div>
+                                    <% String errorMessage = (String) request.getAttribute("error_message"); %>
+                                    <%    if (errorMessage != null && !errorMessage.isEmpty()) { %>
+                                    <h6 style="color: red"><%=errorMessage%></h6>
+                                    <%}%>
                                     <div class="col-lg-12 pt-5">
                                         <button
                                                 class="btn btn-custom-size lg-size btn-pronia-primary">Login
                                         </button>
                                     </div>
                                 </div>
+
                             </div>
                         </form>
                     </div>
+
+                    <!-- Register -->
                     <div class="col-lg-6 pt-5 pt-lg-0">
                         <form action="#" method="POST">
                             <div class="login-form">

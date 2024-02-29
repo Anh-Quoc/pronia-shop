@@ -13,7 +13,7 @@ public class UserDao extends GenericDao<User> implements UserDaoInterface {
 
     private final String SELECT_USER_BY_ID = "SELECT * FROM user_view WHERE id = ?";
 
-    private final String SELECT_USER_BY_EMAIL_AND_PASSWORD = "SELECT * FROM user_view WHERE email_address = ? AND password = ?";
+    private final String SELECT_ACTIVE_USER_BY_EMAIL_AND_PASSWORD = "SELECT * FROM user_view WHERE email_address = ? AND password = ? AND active = 1";
 
     private final String DELETE_USER_ACCOUNT_STATEMENT = "UPDATE users SET active = 0 WHERE id = ?";
 
@@ -41,7 +41,7 @@ public class UserDao extends GenericDao<User> implements UserDaoInterface {
     }
 
     public User getUserByUserNameAndPassword(String userName, String password){
-        List<User> listUser = executeQuery(SELECT_USER_BY_EMAIL_AND_PASSWORD, new UserMapper(), userName, password);
+        List<User> listUser = executeQuery(SELECT_ACTIVE_USER_BY_EMAIL_AND_PASSWORD, new UserMapper(), userName, password);
         if(listUser == null || listUser.isEmpty()){
             return null;
         }

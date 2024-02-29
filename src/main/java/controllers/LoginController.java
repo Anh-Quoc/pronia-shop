@@ -71,9 +71,9 @@ public class LoginController extends HttpServlet {
             }
 
         } else {
-            req.setAttribute("error_message", "Username or password is incorrect");
+            req.setAttribute("error_message", "Username or password is incorrect or user is not active. Please try again!");
 //        resp.sendRedirect("login");
-            req.getRequestDispatcher("Login.jsp").forward(req, resp);
+            req.getRequestDispatcher("login-register.jsp").forward(req, resp);
         }
 
     }

@@ -273,6 +273,7 @@
                 <div class="row">
                     <div class="col-sm-6">
                        <a href="admin-tags?command=READ"> <h2>Manage <b>Tag</b></h2></a>
+                        <a href="admin-dashboard"> <h2>Back to <b>Dashboard</b></h2></a>
                     </div>
                     <div class="col-sm-6">
                         <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Tag</span></a>
