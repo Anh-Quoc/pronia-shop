@@ -749,21 +749,22 @@ GO
 --     name VARCHAR(30),
 -- )
 -- GO
--- CREATE TABLE carts
--- (
---     id          INTEGER IDENTITY (1,1) PRIMARY KEY,
---     customer_id INTEGER FOREIGN KEY REFERENCES users (id),
---
---     cart_status INTEGER FOREIGN KEY REFERENCES cart_status (id),
--- )
--- GO
--- CREATE TABLE cart_detail
--- (
---     id         INTEGER IDENTITY (1,1) PRIMARY KEY,
---     product_id INTEGER FOREIGN KEY REFERENCES plants (id),
---     quantity   INTEGER NOT NULL,
---     cart_id    INTEGER FOREIGN KEY REFERENCES carts (id),
--- )
+CREATE TABLE carts
+(
+    id          INTEGER IDENTITY (1,1) PRIMARY KEY,
+    customer_id INTEGER FOREIGN KEY REFERENCES users (id),
+    total_price DECIMAL(5, 2) NOT NULL DEFAULT 0,
+)
+GO
+CREATE TABLE cart_detail
+(
+    id         INTEGER IDENTITY (1,1) PRIMARY KEY,
+    product_id INTEGER FOREIGN KEY REFERENCES plants (id),
+    quantity   INTEGER NOT NULL,
+    cart_id    INTEGER FOREIGN KEY REFERENCES carts (id),
+    sub_total  DECIMAL(5, 2) NOT NULL DEFAULT 0,
+)
+GO
 -- GO
 -- CREATE TABLE wish_list
 -- (

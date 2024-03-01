@@ -1,3 +1,6 @@
+<%@ page import="dtos.CartDTO" %>
+<%@ page import="dtos.CartDetailDTO" %>
+<%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -218,7 +221,7 @@
                                                             <a href="login-register.jsp">Login | Register</a>
                                                         </li>
                                                         <li>
-                                                            <a href="cart.html">Shopping Cart</a>
+                                                            <a href="cart.jsp">Shopping Cart</a>
                                                         </li>
                                                         <li>
                                                             <a href="wishlist.html">Wishlist</a>
@@ -356,7 +359,7 @@
                                                                 <a href="login-register.jsp">Login | Register</a>
                                                             </li>
                                                             <li>
-                                                                <a href="cart.html">Shopping Cart</a>
+                                                                <a href="cart.jsp">Shopping Cart</a>
                                                             </li>
                                                             <li>
                                                                 <a href="wishlist.html">Wishlist</a>
@@ -625,7 +628,7 @@
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a href="cart.html">
+                                                        <a href="cart.jsp">
                                                             <span class="mm-text">Shopping Cart</span>
                                                         </a>
                                                     </li>
@@ -823,6 +826,13 @@
                     </div>
                 </div>
             </div> -->
+            <% CartDTO cart = (CartDTO) request.getAttribute("cart");%>
+            <% List<CartDetailDTO> listPlant = null;%>
+            <% if (cart != null) {
+                listPlant = cart.getCartDetails();
+            }
+            %>
+            <% if (listPlant != null && !listPlant.isEmpty()) {%>
             <div class="cart-area section-space-y-axis-100">
                 <div class="container">
                     <div class="row">
@@ -837,10 +847,13 @@
                                                 <th class="cart-product-name">Product</th>
                                                 <th class="product-price">Unit Price</th>
                                                 <th class="product-quantity">Quantity</th>
-                                                <th class="product-subtotal">Total</th>
+                                                <th class="product-subtotal">SubTotal</th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <%
+                                                for (CartDetailDTO cartDetailDTO : listPlant) {
+                                            %>
                                             <tr>
                                                 <td class="product_remove">
                                                     <a href="#">
@@ -852,15 +865,16 @@
                                                 </td>
                                                 <td class="product-thumbnail">
                                                     <a href="#">
-                                                        <img src="assets/images/product/small-size/1-1-112x124.png"
+                                                        <img src="<%=cartDetailDTO.getProductImage()%>"
+                                                             style="max-height: 250px"
                                                             alt="Cart Thumbnail">
                                                     </a>
                                                 </td>
-                                                <td class="product-name"><a href="#">American Marigold</a></td>
-                                                <td class="product-price"><span class="amount">$23.45</span></td>
+                                                <td class="product-name"><a href="#"><%=cartDetailDTO.getProductName()%></a></td>
+                                                <td class="product-price"><span class="amount">$<%=cartDetailDTO.getProductPrice()%></span></td>
                                                 <td class="quantity">
                                                     <div class="cart-plus-minus">
-                                                        <input class="cart-plus-minus-box" value="1" type="text">
+                                                        <input class="cart-plus-minus-box" value="<%=cartDetailDTO.getQuantity()%>" type="text">
                                                         <div class="dec qtybutton">
                                                             <i class="fa fa-minus"></i>
                                                         </div>
@@ -869,8 +883,9 @@
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td class="product-subtotal"><span class="amount">$23.45</span></td>
+                                                <td class="product-subtotal"><span class="amount">$<%=cartDetailDTO.getSubTotal()%></span></td>
                                             </tr>
+                                            <%}%>
                                             <!-- <tr>
                                                 <td class="product_remove">
                                                     <a href="#">
@@ -955,8 +970,8 @@
                                         <div class="cart-page-total">
                                             <h2>Cart totals</h2>
                                             <ul>
-                                                <li>Subtotal <span>$79.35</span></li>
-                                                <li>Total <span>$79.35</span></li>
+<%--                                                <li>Subtotal <span>$79.35</span></li>--%>
+                                                <li>Total <span>$<%=cart.getTotalPrice()%></span></li>
                                             </ul>
                                             <a href="#">Proceed to checkout</a>
                                         </div>
@@ -967,6 +982,10 @@
                     </div>
                 </div>
             </div>
+            <% } else {%>
+
+
+            <%}%>
         </main>
         <!-- Main Content Area End Here -->
 
