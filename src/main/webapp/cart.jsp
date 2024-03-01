@@ -750,7 +750,7 @@
                         <ul class="minicart-list">
                             <% for(CartDetailDTO cartDetailDTO : cart.getCartDetails()) {%>
                             <li class="minicart-product">
-                                <a class="product-item_remove" href="#"><i class="pe-7s-close" data-tippy="Remove"
+                                <a class="product-item_remove" href="cart?command=remove&productId=<%=cartDetailDTO.getProductId()%>"><i class="pe-7s-close" data-tippy="Remove"
                                                                            data-tippy-inertia="true"
                                                                            data-tippy-animation="shift-away"
                                                                            data-tippy-delay="50" data-tippy-arrow="true"
@@ -831,7 +831,7 @@
                                             %>
                                             <tr>
                                                 <td class="product_remove">
-                                                    <a href="#">
+                                                    <a href="cart?command=remove&productId=<%=cartDetailDTO.getProductId()%>">
                                                         <i class="pe-7s-close" data-tippy="Remove"
                                                             data-tippy-inertia="true" data-tippy-animation="shift-away"
                                                             data-tippy-delay="50" data-tippy-arrow="true"

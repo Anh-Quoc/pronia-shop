@@ -94,4 +94,12 @@ public class CartService {
 
     }
 
+    public void removePlantFromCart(Integer customerId, Integer productId) {
+        Cart cart = cartDao.getCartByCustomerId(customerId);
+        CartDetail cartDetail = cartDetailDao.getCartDetailByProductIdAndCartId(productId, cart.getId());
+        if(cartDetail != null) {
+            cartDetailDao.deleteCartDetail(cartDetail.getId());
+            cartDao.updateCartTotalPrice(cart.getId(), cart.getTotalPrice() - cartDetail.getSubTotal());
+        }
+    }
 }

@@ -47,6 +47,8 @@ public class CartController extends HttpServlet {
 //                addToCart(req, resp, userSession);
                 break;
             case "remove":
+                productId = Integer.parseInt(req.getParameter("productId"));
+                cartService.removePlantFromCart(userSession.getUserId(), productId);
 //                removeFromCart(req, resp, userSession);
                 break;
             case "update":
