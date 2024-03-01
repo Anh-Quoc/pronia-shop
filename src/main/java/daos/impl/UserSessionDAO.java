@@ -3,7 +3,6 @@ package daos.impl;
 import entities.UserSession;
 import mappers.impl.UserSessionMapper;
 import services.UserService;
-import utils.DBContext;
 
 import java.sql.*;
 import java.util.List;
@@ -45,18 +44,21 @@ public class UserSessionDAO extends GenericDao<UserSession> {
     }
 
 
-    public boolean isValidCustomerSessionId(String sessionId){
+    public UserSession getSessionIfValid(String sessionId){
         List<UserSession> result = executeQuery(SELECT_SESSION_ID_STATEMENT, new UserSessionMapper(), sessionId);
 
         if( result == null || result.isEmpty()){
-            return false;
+            return null;
         }
         UserSession userSession = result.get(0);
 
         boolean isValid = isSessionIdActive(userSession);
         isValid = isValid && isSessionIdValidDate(userSession);
         isValid = isValid && isCustomerRole(userSession);
-        return isValid;
+        if(isValid){
+            return userSession;
+        }
+        return null;
     }
 
     private boolean isCustomerRole(UserSession userSession){

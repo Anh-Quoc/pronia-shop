@@ -24,8 +24,8 @@ public class UserSessionService {
         return userSessionDAO.isValidAdminSessionId(sessionId);
     }
 
-    public boolean isValidCustomerSessionId(String sessionId){
-        return userSessionDAO.isValidCustomerSessionId(sessionId);
+    public UserSession getUserSessionIfValid(String sessionId){
+        return userSessionDAO.getSessionIfValid(sessionId);
     }
 
     public boolean saveSessionId(UserSession userSession){

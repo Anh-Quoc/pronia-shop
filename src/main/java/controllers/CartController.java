@@ -1,6 +1,7 @@
 package controllers;
 
 import dtos.CartDTO;
+import entities.UserSession;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -22,7 +23,12 @@ public class CartController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        CartDTO cart = cartService.getCart(2);
+        UserSession userSession = (UserSession) req.getAttribute("userSession");
+        if (userSession == null) {
+            resp.sendRedirect("login");
+            return;
+        }
+        CartDTO cart = cartService.getCart(userSession.getUserId());
         req.setAttribute("cart", cart);
         req.getRequestDispatcher("cart.jsp").forward(req, resp);
     }

@@ -1,5 +1,6 @@
 package filters;
 
+import entities.UserSession;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.Cookie;
@@ -33,7 +34,9 @@ public class CustomerAuthenticationFilter implements Filter {
         if(cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("customer_session_id")) {
-                    if (userSessionService.isValidCustomerSessionId(cookie.getValue())) {
+                    UserSession userSession = userSessionService.getUserSessionIfValid(cookie.getValue());
+                    if (userSession != null) {
+                        req.setAttribute("userSession", userSession);
                         filterChain.doFilter(servletRequest, servletResponse);
                         return;
                     }
