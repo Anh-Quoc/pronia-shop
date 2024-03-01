@@ -1,7 +1,5 @@
-<%@ page import="dtos.PlantDTO" %>
 <%@ page import="java.util.List" %>
-<%@ page import="dtos.CategoryDTO" %>
-<%@ page import="dtos.TagDTO" %>
+<%@ page import="dtos.*" %>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -139,6 +137,7 @@
                                         </ul>
                                     </li>
                                     <% if(isAuthentication) { %>
+                                    <% CartDTO cartDTO = (CartDTO) request.getAttribute("cart");%>
                                     <li class="d-none d-lg-block">
                                         <a href="wishlist.html">
                                             <i class="pe-7s-like"></i>
@@ -147,7 +146,7 @@
                                     <li class="minicart-wrap me-3 me-lg-0">
                                         <a href="#miniCart" class="minicart-btn toolbar-btn">
                                             <i class="pe-7s-shopbag"></i>
-                                            <span class="quantity">3</span>
+                                            <span class="quantity"><%=cartDTO.getCartDetails().size()%></span>
                                         </a>
                                     </li>
                                     <% } %>
@@ -248,6 +247,7 @@
                                     </li>
                                     <%
                                         if (isAuthentication) { %>
+                                    <% CartDTO cartDTO = (CartDTO) request.getAttribute("cart");%>
                                     <li class="d-none d-lg-block">
                                         <a href="wishlist.html">
                                             <i class="pe-7s-like"></i>
@@ -256,7 +256,7 @@
                                     <li class="minicart-wrap me-3 me-lg-0">
                                         <a href="#miniCart" class="minicart-btn toolbar-btn">
                                             <i class="pe-7s-shopbag"></i>
-                                            <span class="quantity">3</span>
+                                            <span class="quantity"><%=cartDTO.getCartDetails().size()%></span>
                                         </a>
                                     </li>
                                     <% } %>
@@ -369,6 +369,7 @@
         </div>
 
         <% if (isAuthentication) { %>
+        <% CartDTO cartDTO = (CartDTO) request.getAttribute("cart");%>
         <div class="offcanvas-minicart_wrapper" id="miniCart">
             <div class="offcanvas-body">
                 <div class="minicart-content">
@@ -380,57 +381,28 @@
                                                             data-tippy-arrow="true" data-tippy-theme="sharpborder"></i></a>
                     </div>
                     <ul class="minicart-list">
+                        <% for(CartDetailDTO cartDetailDTO : cartDTO.getCartDetails()) {%>
                         <li class="minicart-product">
                             <a class="product-item_remove" href="#"><i class="pe-7s-close" data-tippy="Remove"
                                                                        data-tippy-inertia="true"
                                                                        data-tippy-animation="shift-away"
                                                                        data-tippy-delay="50" data-tippy-arrow="true"
                                                                        data-tippy-theme="sharpborder"></i></a>
-                            <a href="single-product.html" class="product-item_img">
-                                <img class="img-full" src="assets/images/product/small-size/2-1-70x78.png"
+                            <a href="plants?id=<%=cartDetailDTO.getProductId()%>" class="product-item_img">
+                                <img class="img-full" src="<%=cartDetailDTO.getProductImage()%>"
                                      alt="Product Image">
                             </a>
                             <div class="product-item_content">
-                                <a class="product-item_title" href="single-product.html">American
-                                    Marigold</a>
-                                <span class="product-item_quantity">1 x $23.45</span>
+                                <a class="product-item_title" href="plants?id=<%=cartDetailDTO.getProductId()%>"><%=cartDetailDTO.getProductName()%></a>
+                                <span class="product-item_quantity"><%=cartDetailDTO.getQuantity()%> x $<%=cartDetailDTO.getProductPrice()%></span>
                             </div>
                         </li>
-                        <!-- <li class="minicart-product">
-                            <a class="product-item_remove" href="#"><i class="pe-7s-close" data-tippy="Remove"
-                                    data-tippy-inertia="true" data-tippy-animation="shift-away"
-                                    data-tippy-delay="50" data-tippy-arrow="true"
-                                    data-tippy-theme="sharpborder"></i></a>
-                            <a href="single-product.jsp" class="product-item_img">
-                                <img class="img-full" src="assets/images/product/small-size/2-2-70x78.png"
-                                    alt="Product Image">
-                            </a>
-                            <div class="product-item_content">
-                                <a class="product-item_title" href="single-product.jsp">Black Eyed
-                                    Susan</a>
-                                <span class="product-item_quantity">1 x $25.45</span>
-                            </div>
-                        </li> -->
-                        <!-- <li class="minicart-product">
-                            <a class="product-item_remove" href="#">
-                                <i class="pe-7s-close" data-tippy="Remove" data-tippy-inertia="true"
-                                    data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true"
-                                    data-tippy-theme="sharpborder"></i>
-                            </a>
-                            <a href="single-product.jsp" class="product-item_img">
-                                <img class="img-full" src="assets/images/product/small-size/2-3-70x78.png"
-                                    alt="Product Image">
-                            </a>
-                            <div class="product-item_content">
-                                <a class="product-item_title" href="single-product.jsp">Bleeding Heart</a>
-                                <span class="product-item_quantity">1 x $30.45</span>
-                            </div>
-                        </li> -->
+                        <%}%>
                     </ul>
                 </div>
                 <div class="minicart-item_total">
                     <span>Subtotal</span>
-                    <span class="ammount">$79.35</span>
+                    <span class="ammount">$<%=cartDTO.getTotalPrice()%></span>
                 </div>
                 <div class="group-btn_wrap d-grid gap-2">
                     <a href="cart" class="btn btn-dark">View Cart</a>
@@ -438,7 +410,7 @@
                 </div>
             </div>
         </div>
-        <% } %>
+        <%}%>
         <div class="global-overlay"></div>
     </header>
     <!-- Main Header Area End Here -->

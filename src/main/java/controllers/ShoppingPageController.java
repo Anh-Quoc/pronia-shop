@@ -1,12 +1,17 @@
 package controllers;
 
+import dtos.CartDTO;
+import entities.UserSession;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import services.CartService;
 import services.PlantService;
 import services.PlantTagService;
+import services.UserSessionService;
 
 import java.io.IOException;
 
@@ -15,11 +20,15 @@ public class ShoppingPageController extends HttpServlet {
 
     private PlantService plantService;
     private PlantTagService plantTagService;
+    private UserSessionService userSessionService;
+    private CartService cartService;
 
     @Override
     public void init() throws ServletException {
         plantService = PlantService.getInstance();
         plantTagService = PlantTagService.getInstance();
+        userSessionService = UserSessionService.getInstance();
+        cartService = CartService.getInstance();
     }
 
     @Override
@@ -46,14 +55,36 @@ public class ShoppingPageController extends HttpServlet {
     // SELECT * FROM plants WHERE plants.title LIKE '%%' AND category = ? AND color = ? AND tag = ?
 //        req.setAttribute("listPlantCategories", plantService.getTop6CategoryHasPlant());
 //        req.setAttribute("listPlantTag", plantTagService.getTop6TagHasPlant());
+        getCart(req);
         req.setAttribute("listPlants", plantService.getAllActivePlants());
         req.getRequestDispatcher("shop.jsp").forward(req, resp);
+    }
+
+    protected void getCart(HttpServletRequest req) {
+        UserSession userSession = getUserSession(req);
+        if (userSession != null) {
+            req.setAttribute("userSession", userSession);
+            req.setAttribute("cart", cartService.getCart(userSession.getUserId()));
+        }
+
+    }
+
+    protected UserSession getUserSession(HttpServletRequest req) {
+        Cookie[] cookies = req.getCookies();
+        if(cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("customer_session_id")) {
+                    return userSessionService.getUserSessionIfValid(cookie.getValue());
+                }
+            }
+        }
+        return null;
     }
 
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        getCart(req);
         String productTitle = req.getParameter("searchValue");
         if(productTitle != null && !productTitle.isEmpty()){
             req.setAttribute("listPlants", plantService.searchPlantByName(productTitle));
