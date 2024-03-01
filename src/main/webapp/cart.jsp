@@ -97,7 +97,7 @@
                                     <a href="tel://+00-123-456-789">+00 123 456 789</a>
                                 </div>
 
-                                <a href="index.jsp" class="header-logo">
+                                <a href="home" class="header-logo">
                                     <img src="assets/images/logo/dark.png" alt="Header Logo">
                                 </a>
 
@@ -152,10 +152,10 @@
                                 <nav class="main-nav">
                                     <ul>
                                         <li class="drop-holder">
-                                            <a href="index.jsp">Home</a>
+                                            <a href="home">Home</a>
                                             <!-- <ul class="drop-menu">
                                                 <li>
-                                                    <a href="index.jsp">Home One</a>
+                                                    <a href="home">Home One</a>
                                                 </li>
                                                 <li>
                                                     <a href="index-2.html">Home Two</a>
@@ -277,7 +277,7 @@
                         <div class="row align-items-center">
                             <div class="col-lg-3 col-6">
 
-                                <a href="index.jsp" class="header-logo">
+                                <a href="home" class="header-logo">
                                     <img src="assets/images/logo/dark.png" alt="Header Logo">
                                 </a>
 
@@ -287,10 +287,10 @@
                                     <nav class="main-nav">
                                         <ul>
                                             <li class="drop-holder">
-                                                <a href="index.jsp">Home</a>
+                                                <a href="home">Home</a>
                                                 <!-- <ul class="drop-menu">
                                                     <li>
-                                                        <a href="index.jsp">Home One</a>
+                                                        <a href="home">Home One</a>
                                                     </li>
                                                     <li>
                                                         <a href="index-2.html">Home Two</a>
@@ -506,14 +506,14 @@
                                 <ul class="mobile-menu">
                                     <!-- <li class="menu-item-has-children"> -->
                                     <li>
-                                        <a href="index.jsp">
+                                        <a href="home">
                                             <span class="mm-text">Home
                                                 <!-- <i class="pe-7s-angle-down"></i> -->
                                             </span>
                                         </a>
                                         <!-- <ul class="sub-menu">
                                             <li>
-                                                <a href="index.jsp">
+                                                <a href="home">
                                                     <span class="mm-text">Home One</span>
                                                 </a>
                                             </li>
@@ -798,7 +798,7 @@
                         <span class="ammount">$79.35</span>
                     </div>
                     <div class="group-btn_wrap d-grid gap-2">
-                        <a href="cart.html" class="btn btn-dark">View Cart</a>
+                        <a href="cart" class="btn btn-dark">View Cart</a>
                         <a href="checkout.html" class="btn btn-dark">Checkout</a>
                     </div>
                 </div>
@@ -817,7 +817,7 @@
                                 <h2 class="breadcrumb-heading">Cart Page</h2>
                                 <ul>
                                     <li>
-                                        <a href="index.jsp">Home</a>
+                                        <a href="home">Home</a>
                                     </li>
                                     <li>Cart Page</li>
                                 </ul>
@@ -997,7 +997,7 @@
                         <div class="col-lg-3">
                             <div class="footer-widget-item">
                                 <div class="footer-widget-logo">
-                                    <a href="index.jsp">
+                                    <a href="home">
                                         <img src="assets/images/logo/dark.png" alt="Logo">
                                     </a>
                                 </div>

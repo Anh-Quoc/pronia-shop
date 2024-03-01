@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import services.CartService;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 @WebServlet(name = "CartController", urlPatterns = "/cart")
 public class CartController extends HttpServlet {
@@ -23,10 +24,34 @@ public class CartController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        processRequest(req, resp);
+    }
+
+    protected void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UserSession userSession = (UserSession) req.getAttribute("userSession");
         if (userSession == null) {
             resp.sendRedirect("login");
             return;
+        }
+
+        String command = req.getParameter("command");
+        if(command == null) {
+            command = "view";
+        }
+        switch (command) {
+            case "add":
+                Integer productId = Integer.parseInt(req.getParameter("productId"));
+                Integer quantity = Integer.parseInt(req.getParameter("quantity"));
+                System.out.println("productId: " + productId);
+                cartService.addPlantToCart(userSession.getUserId(), productId, quantity);
+//                addToCart(req, resp, userSession);
+                break;
+            case "remove":
+//                removeFromCart(req, resp, userSession);
+                break;
+            case "update":
+//                updateCart(req, resp, userSession);
+                break;
         }
         CartDTO cart = cartService.getCart(userSession.getUserId());
         req.setAttribute("cart", cart);
@@ -35,6 +60,6 @@ public class CartController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
+        processRequest(req, resp);
     }
 }

@@ -843,7 +843,7 @@
                         <span class="ammount">$79.35</span>
                     </div>
                     <div class="group-btn_wrap d-grid gap-2">
-                        <a href="cart.html" class="btn btn-dark">View Cart</a>
+                        <a href="cart" class="btn btn-dark">View Cart</a>
                         <a href="checkout.html" class="btn btn-dark">Checkout</a>
                     </div>
                 </div>
@@ -1311,7 +1311,7 @@
                                         <a href="#">Sign In</a>
                                     </li>
                                     <li>
-                                        <a href="#">View Cart</a>
+                                        <a href="cart">View Cart</a>
                                     </li>
                                     <li>
                                         <a href="#">My Wishlist</a>

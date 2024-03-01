@@ -7,8 +7,11 @@ import dtos.CartDetailDTO;
 import dtos.PlantDTO;
 import entities.Cart;
 import entities.CartDetail;
+
+
 import java.util.List;
 import java.util.Vector;
+
 
 public class CartService {
 
@@ -64,5 +67,31 @@ public class CartService {
         return cartDTO;
     }
 
+
+    public void addPlantToCart(Integer customerId, Integer productId, Integer quantity) {
+
+        Cart cart = cartDao.getCartByCustomerId(customerId);
+        PlantDTO plant = plantService.getPlantById(productId);
+
+        if(plant == null) {
+            return;
+        }
+        CartDetail cartDetail = cartDetailDao.getCartDetailByProductIdAndCartId(productId, cart.getId());
+        if(cartDetail == null){
+            cartDetail = new CartDetail();
+            cartDetail.setCartId(cart.getId());
+            cartDetail.setProductId(plant.getId());
+            cartDetail.setQuantity(quantity);
+            cartDetail.setSubTotal(plant.getUnitPrice() * quantity);
+            cartDetailDao.saveCartDetail(cartDetail);
+            cartDao.updateCartTotalPrice(cart.getId(), cart.getTotalPrice() + cartDetail.getSubTotal());
+        } else {
+            cartDetail.setQuantity(cartDetail.getQuantity() + quantity);
+            cartDetail.setSubTotal(plant.getUnitPrice() * cartDetail.getQuantity());
+            cartDetailDao.updateCartDetailForCustomer(cartDetail);
+            cartDao.updateCartTotalPrice(cart.getId(), cart.getTotalPrice() + plant.getUnitPrice());
+        }
+
+    }
 
 }

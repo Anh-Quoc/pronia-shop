@@ -383,7 +383,7 @@
                     <span class="ammount">$79.35</span>
                 </div>
                 <div class="group-btn_wrap d-grid gap-2">
-                    <a href="cart.html" class="btn btn-dark">View Cart</a>
+                    <a href="cart" class="btn btn-dark">View Cart</a>
                     <a href="checkout.html" class="btn btn-dark">Checkout</a>
                 </div>
             </div>
@@ -585,7 +585,7 @@
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <a href="cart.html" data-tippy="Add to cart"
+                                                            <a href="cart?command=add&productId=<%=plant.getId()%>&quantity=1" data-tippy="Add to cart"
                                                                data-tippy-inertia="true"
                                                                data-tippy-animation="shift-away"
                                                                data-tippy-delay="50" data-tippy-arrow="true"
@@ -682,7 +682,7 @@
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <a href="cart.html" data-tippy="Add to cart"
+                                                            <a href="cart?command=add&productId=<%=plant.getId()%>&quantity=1" data-tippy="Add to cart"
                                                                data-tippy-inertia="true"
                                                                data-tippy-animation="shift-away"
                                                                data-tippy-delay="50" data-tippy-arrow="true"
@@ -963,7 +963,7 @@
                                     </li>
                                     <li class="add-to-cart">
                                         <a class="btn btn-custom-size lg-size btn-pronia-primary"
-                                           href="cart.html">Add to
+                                           href="cart?command=add&productId=<%=plant.getId()%>&quantity=1">Add to
                                             cart</a>
                                     </li>
                                     <li class="wishlist-btn-wrap">
