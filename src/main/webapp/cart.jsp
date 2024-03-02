@@ -840,13 +840,13 @@
                                                     </a>
                                                 </td>
                                                 <td class="product-thumbnail">
-                                                    <a href="#">
+                                                    <a href="plants?id=<%=cartDetailDTO.getProductId()%>">
                                                         <img src="<%=cartDetailDTO.getProductImage()%>"
                                                              style="max-height: 250px"
                                                             alt="Cart Thumbnail">
                                                     </a>
                                                 </td>
-                                                <td class="product-name"><a href="#"><%=cartDetailDTO.getProductName()%></a></td>
+                                                <td class="product-name"><a href="plants?id=<%=cartDetailDTO.getProductId()%>"><%=cartDetailDTO.getProductName()%></a></td>
                                                 <td class="product-price"><span class="amount">$<%=cartDetailDTO.getProductPrice()%></span></td>
                                                 <td class="quantity">
                                                     <div class="cart-plus-minus">
@@ -900,7 +900,19 @@
                 </div>
             </div>
             <% } else {%>
-
+            <div class="cart-area section-space-y-axis-100">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="cart-empty
+                                text-center">
+                                <h2>Your cart is currently empty.</h2>
+                                <a href="shop" class="btn btn-primary btn-success">Return to shop</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <%}%>
         </main>
