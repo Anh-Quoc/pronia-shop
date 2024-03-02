@@ -84,14 +84,29 @@ public class CartService {
             cartDetail.setQuantity(quantity);
             cartDetail.setSubTotal(plant.getUnitPrice() * quantity);
             cartDetailDao.saveCartDetail(cartDetail);
-            cartDao.updateCartTotalPrice(cart.getId(), cart.getTotalPrice() + cartDetail.getSubTotal());
+            cartDao.updateCartTotalPrice(cart.getId());
         } else {
             cartDetail.setQuantity(cartDetail.getQuantity() + quantity);
             cartDetail.setSubTotal(plant.getUnitPrice() * cartDetail.getQuantity());
             cartDetailDao.updateCartDetailForCustomer(cartDetail);
-            cartDao.updateCartTotalPrice(cart.getId(), cart.getTotalPrice() + plant.getUnitPrice());
+            cartDao.updateCartTotalPrice(cart.getId());
         }
 
+    }
+
+    public void updateCartDetailForCustomer(Integer customerId, Integer productId, Integer quantity) {
+        Cart cart = cartDao.getCartByCustomerId(customerId);
+        PlantDTO plant = plantService.getPlantById(productId);
+        if(plant == null) {
+            return;
+        }
+        CartDetail cartDetail = cartDetailDao.getCartDetailByProductIdAndCartId(productId, cart.getId());
+        if(cartDetail != null) {
+            cartDetail.setQuantity(quantity);
+            cartDetail.setSubTotal(plant.getUnitPrice() * quantity);
+            cartDetailDao.updateCartDetailForCustomer(cartDetail);
+            cartDao.updateCartTotalPrice(cart.getId());
+        }
     }
 
     public void removePlantFromCart(Integer customerId, Integer productId) {
@@ -99,7 +114,7 @@ public class CartService {
         CartDetail cartDetail = cartDetailDao.getCartDetailByProductIdAndCartId(productId, cart.getId());
         if(cartDetail != null) {
             cartDetailDao.deleteCartDetail(cartDetail.getId());
-            cartDao.updateCartTotalPrice(cart.getId(), cart.getTotalPrice() - cartDetail.getSubTotal());
+            cartDao.updateCartTotalPrice(cart.getId());
         }
     }
 }

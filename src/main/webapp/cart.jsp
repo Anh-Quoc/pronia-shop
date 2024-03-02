@@ -812,7 +812,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
-                            <form action="javascript:void(0)">
+                            <form action="cart?command=update" method="post">
                                 <div class="table-content table-responsive">
                                     <table class="table">
                                         <thead>
@@ -829,6 +829,7 @@
                                             <%
                                                 for (CartDetailDTO cartDetailDTO : listPlant) {
                                             %>
+                                            <input type="hidden" name="productId[]" value="<%=cartDetailDTO.getProductId()%>">
                                             <tr>
                                                 <td class="product_remove">
                                                     <a href="cart?command=remove&productId=<%=cartDetailDTO.getProductId()%>">
@@ -849,7 +850,7 @@
                                                 <td class="product-price"><span class="amount">$<%=cartDetailDTO.getProductPrice()%></span></td>
                                                 <td class="quantity">
                                                     <div class="cart-plus-minus">
-                                                        <input class="cart-plus-minus-box" value="<%=cartDetailDTO.getQuantity()%>" type="text">
+                                                        <input class="cart-plus-minus-box" name="quantity[]" value="<%=cartDetailDTO.getQuantity()%>" type="text">
                                                         <div class="dec qtybutton">
                                                             <i class="fa fa-minus"></i>
                                                         </div>
@@ -861,66 +862,7 @@
                                                 <td class="product-subtotal"><span class="amount">$<%=cartDetailDTO.getSubTotal()%></span></td>
                                             </tr>
                                             <%}%>
-                                            <!-- <tr>
-                                                <td class="product_remove">
-                                                    <a href="#">
-                                                        <i class="pe-7s-close" data-tippy="Remove"
-                                                            data-tippy-inertia="true" data-tippy-animation="shift-away"
-                                                            data-tippy-delay="50" data-tippy-arrow="true"
-                                                            data-tippy-theme="sharpborder"></i>
-                                                    </a>
-                                                </td>
-                                                <td class="product-thumbnail">
-                                                    <a href="#">
-                                                        <img src="assets/images/product/small-size/1-2-112x124.png"
-                                                            alt="Cart Thumbnail">
-                                                    </a>
-                                                </td>
-                                                <td class="product-name"><a href="#">Black Eyed Susan</a></td>
-                                                <td class="product-price"><span class="amount">$25.45</span></td>
-                                                <td class="quantity">
-                                                    <div class="cart-plus-minus">
-                                                        <input class="cart-plus-minus-box" value="1" type="text">
-                                                        <div class="dec qtybutton">
-                                                            <i class="fa fa-minus"></i>
-                                                        </div>
-                                                        <div class="inc qtybutton">
-                                                            <i class="fa fa-plus"></i>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td class="product-subtotal"><span class="amount">$25.45</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="product_remove">
-                                                    <a href="#">
-                                                        <i class="pe-7s-close" data-tippy="Remove"
-                                                            data-tippy-inertia="true" data-tippy-animation="shift-away"
-                                                            data-tippy-delay="50" data-tippy-arrow="true"
-                                                            data-tippy-theme="sharpborder"></i>
-                                                    </a>
-                                                </td>
-                                                <td class="product-thumbnail">
-                                                    <a href="#">
-                                                        <img src="assets/images/product/small-size/1-3-112x124.png"
-                                                            alt="Cart Thumbnail">
-                                                    </a>
-                                                </td>
-                                                <td class="product-name"><a href="#">Bleeding Heart</a></td>
-                                                <td class="product-price"><span class="amount">$30.45</span></td>
-                                                <td class="quantity">
-                                                    <div class="cart-plus-minus">
-                                                        <input class="cart-plus-minus-box" value="1" type="text">
-                                                        <div class="dec qtybutton">
-                                                            <i class="fa fa-minus"></i>
-                                                        </div>
-                                                        <div class="inc qtybutton">
-                                                            <i class="fa fa-plus"></i>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td class="product-subtotal"><span class="amount">$30.45</span></td>
-                                            </tr> -->
+
                                         </tbody>
                                     </table>
                                 </div>
