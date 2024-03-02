@@ -756,6 +756,8 @@ CREATE TABLE carts
     total_price DECIMAL(5, 2) NOT NULL DEFAULT 0,
 )
 GO
+INSERT INTO carts (customer_id) SELECT id FROM users;
+GO
 CREATE TABLE cart_detail
 (
     id         INTEGER IDENTITY (1,1) PRIMARY KEY,
@@ -825,4 +827,5 @@ FROM plants
 --
 -- SELECT DISTINCT plants.color
 -- FROM plants
+
 
