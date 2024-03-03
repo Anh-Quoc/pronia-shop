@@ -498,23 +498,23 @@ CREATE TABLE orders
     postcode        VARCHAR(128)  NOT NULL,
 
     total_price     DECIMAL(5, 2) NOT NULL DEFAULT 0,
-    order_date      DATE,
+    order_date      DATETIME     DEFAULT CURRENT_TIMESTAMP,
     order_status_id INTEGER FOREIGN KEY REFERENCES order_status (id),
     customer_id     INTEGER FOREIGN KEY REFERENCES users (id),
 )
 GO
 INSERT INTO orders (country, street_address, apartment, city, postcode, total_price, order_date, order_status_id,
                     customer_id)
-VALUES ('Viet Nam', 'Trieu Son', '', 'Thanh Hoa', '123456', 0, '2021-01-01', 1, 2),
-       ('USA', '123 Main St', 'Apt 456', 'New York', '10001', 0, '2021-02-15', 2, 4),
-       ('Canada', '789 Maple Ave', 'Suite 789', 'Toronto', 'M1M 1M1', 0, '2021-03-01', 3, 5),
-       ('UK', '456 Oak Lane', 'Apt 101', 'London', 'SW1A 1AA', 0, '2021-04-15', 4, 6),
-       ('Australia', '789 Elm Street', 'Unit 23', 'Sydney', '2000', 0, '2021-05-01', 5, 7),
-       ('Spain', 'Calle Principal', 'Piso 3', 'Barcelona', '08001', 0, '2021-06-15', 1, 8),
-       ('Italy', 'Via Roma', 'Appartamento 5', 'Rome', '00100', 0, '2021-07-01', 2, 9),
-       ('Japan', '1-2-3 Shinjuku', 'Apartment 101', 'Tokyo', '160-0022', 0, '2021-08-15', 3, 3),
-       ('Japan', '4-5-6 Shibuya', 'Unit 203', 'Tokyo', '150-0043', 0, '2021-09-01', 4, 2),
-       ('Germany', 'Hauptstrasse', 'Wohnung 7', 'Berlin', '10115', 0, '2021-10-10', 1, 2)
+VALUES ('Viet Nam', 'Trieu Son', '', 'Thanh Hoa', '123456', 0, '2023-03-01 06:22:49.777', 1, 2),
+       ('USA', '123 Main St', 'Apt 456', 'New York', '10001', 0, '2024-04-02 06:22:49.777', 2, 4),
+       ('Canada', '789 Maple Ave', 'Suite 789', 'Toronto', 'M1M 1M1', 0, '2022-01-04 06:22:49.777', 3, 5),
+       ('UK', '456 Oak Lane', 'Apt 101', 'London', 'SW1A 1AA', 0, '2022-06-08 06:22:49.777', 4, 6),
+       ('Australia', '789 Elm Street', 'Unit 23', 'Sydney', '2000', 0, '2021-07-03 06:22:49.777', 5, 7),
+       ('Spain', 'Calle Principal', 'Piso 3', 'Barcelona', '08001', 0, '2020-03-02 06:22:49.777', 1, 8),
+       ('Italy', 'Via Roma', 'Appartamento 5', 'Rome', '00100', 0, '2022-04-02 06:21:49.777', 2, 9),
+       ('Japan', '1-2-3 Shinjuku', 'Apartment 101', 'Tokyo', '160-0022', 0, '2019-03-01 06:22:49.777', 3, 3),
+       ('Japan', '4-5-6 Shibuya', 'Unit 203', 'Tokyo', '150-0043', 0, '2020-01-05 06:22:49.777', 4, 2),
+       ('Germany', 'Hauptstrasse', 'Wohnung 7', 'Berlin', '10115', 0, '2022-03-09 06:22:49.777', 1, 2)
 
 GO
 CREATE TABLE order_detail
@@ -523,6 +523,7 @@ CREATE TABLE order_detail
 
     product_id INTEGER REFERENCES plants (id),
     quantity   INTEGER NOT NULL,
+    subtotal   DECIMAL(5, 2) NOT NULL DEFAULT 0,
     order_id   INTEGER FOREIGN KEY REFERENCES orders (id),
 )
 GO
