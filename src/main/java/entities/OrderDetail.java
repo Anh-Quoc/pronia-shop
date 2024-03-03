@@ -11,4 +11,7 @@ public class OrderDetail {
     private Integer quantity;
     private Double subtotal;
     private Integer orderId;
+
+    public OrderDetail() {
+    }
 }

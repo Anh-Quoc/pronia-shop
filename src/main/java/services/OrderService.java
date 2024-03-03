@@ -5,6 +5,7 @@ import daos.impl.OrderDetailDao;
 import daos.impl.OrderStatusDao;
 import daos.impl.UserDao;
 import dtos.OrderDTO;
+import dtos.OrderDetailDTO;
 import entities.Order;
 import entities.OrderDetail;
 import entities.User;
@@ -91,6 +92,10 @@ public class OrderService {
 
         }
         return orderDTOS;
+    }
+
+    public Integer addOrder(Order order){
+        return orderDao.insertOrder(order);
     }
 
 }

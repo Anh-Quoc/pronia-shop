@@ -12,7 +12,7 @@ import java.io.IOException;
 
 @WebFilter(filterName = "CustomerAuthenticationFilter",
         urlPatterns = {"/cart", "/checkout", "/order", "/order-details", "/my-account",
-        "/cart.jsp", "/checkout.jsp", "/my-account.jsp", "/cart.html", "/checkout.html", "/my-account.jsp"},
+        "/cart.jsp", "/checkout.jsp", "/my-account.jsp", "/cart.html", "/checkout.jsp", "/my-account.jsp"},
         dispatcherTypes = {DispatcherType.REQUEST, DispatcherType.FORWARD})
 public class CustomerAuthenticationFilter implements Filter {
 

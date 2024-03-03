@@ -7,6 +7,8 @@ import dtos.CartDetailDTO;
 import dtos.PlantDTO;
 import entities.Cart;
 import entities.CartDetail;
+import entities.Order;
+import entities.OrderDetail;
 
 
 import java.util.List;
@@ -19,12 +21,17 @@ public class CartService {
     private CartDetailDao cartDetailDao;
     private PlantService plantService;
 
+    private OrderService orderService;
+    private OrderDetailService orderDetailService;
+
     private static CartService instance;
 
     private CartService() {
         cartDao = CartDao.getInstance();
         cartDetailDao = CartDetailDao.getInstance();
         plantService = PlantService.getInstance();
+        orderService = OrderService.getInstance();
+        orderDetailService = OrderDetailService.getInstance();
     }
 
     public static CartService getInstance() {
@@ -117,4 +124,24 @@ public class CartService {
             cartDao.updateCartTotalPrice(cart.getId());
         }
     }
+
+    public Integer checkoutCart(Order order, CartDTO cart) {
+
+        Integer orderId = orderService.addOrder(order);
+        order.setId(orderId);
+
+        for(CartDetailDTO cartDetailDTO : cart.getCartDetails()) {
+            OrderDetail orderDetail = new OrderDetail();
+            orderDetail.setProductId(cartDetailDTO.getProductId());
+            orderDetail.setQuantity(cartDetailDTO.getQuantity());
+            orderDetail.setSubtotal(cartDetailDTO.getSubTotal());
+            orderDetail.setOrderId(order.getId());
+
+            orderDetailService.addOrderDetails(orderDetail);
+        }
+
+        cartDetailDao.deleteCartDetailByCartId(cart.getId());
+        return orderId;
+    }
+
 }

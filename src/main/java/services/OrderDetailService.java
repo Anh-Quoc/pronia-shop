@@ -44,4 +44,9 @@ public class OrderDetailService {
         }
         return orderDetailDTOs;
     }
+
+    public void addOrderDetails(OrderDetail orderDetail) {
+        orderDetailDao.insertOrderDetail(orderDetail);
+    }
+
 }

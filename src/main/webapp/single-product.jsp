@@ -406,7 +406,7 @@
                 </div>
                 <div class="group-btn_wrap d-grid gap-2">
                     <a href="cart" class="btn btn-dark">View Cart</a>
-                    <a href="checkout.html" class="btn btn-dark">Checkout</a>
+                    <a href="checkout" class="btn btn-dark">Checkout</a>
                 </div>
             </div>
         </div>

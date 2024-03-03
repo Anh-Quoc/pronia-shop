@@ -24,4 +24,8 @@ public class CartDetailService {
         cartDetailDao.updateCartDetailForCustomer(cartDetail);
     }
 
+    public void deleteCartDetailForCustomer(Integer cartDetailId) {
+        cartDetailDao.deleteCartDetailByCartId(cartDetailId);
+    }
+
 }

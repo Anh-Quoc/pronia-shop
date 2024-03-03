@@ -1,3 +1,6 @@
+<%@ page import="dtos.CartDTO" %>
+<%@ page import="dtos.CartDetailDTO" %>
+<%@ page import="entities.User" %>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -94,7 +97,7 @@
                                     <a href="tel://+00-123-456-789">+00 123 456 789</a>
                                 </div>
 
-                                <a href="index.jsp" class="header-logo">
+                                <a href="home" class="header-logo">
                                     <img src="assets/images/logo/dark.png" alt="Header Logo">
                                 </a>
 
@@ -105,19 +108,44 @@
                                                 <i class="pe-7s-search"></i>
                                             </a>
                                         </li> -->
+
+
+
                                         <li class="dropdown d-none d-lg-block">
                                             <button class="btn btn-link dropdown-toggle ht-btn p-0" type="button"
                                                 id="settingButton" data-bs-toggle="dropdown" aria-label="setting"
                                                 aria-expanded="false">
                                                 <i class="pe-7s-users"></i>
                                             </button>
+
+                                            <%
+                                                boolean isAuthentication = false;
+                                                Cookie[] cookies = request.getCookies();
+                                                if (cookies != null) {
+                                                    for (Cookie cookie : cookies) {
+                                                        if (cookie.getName().equals("customer_session_id")) {
+                                                            isAuthentication = true;
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+                                            %>
+
                                             <ul class="dropdown-menu" aria-labelledby="settingButton">
-                                                <li><a class="dropdown-item" href="my-account.jsp">My account</a></li>
+                                                <%
+                                                    if (isAuthentication) {
+                                                %>
+                                                <li><a class="dropdown-item" href="my-account">My account</a></li>
+                                                <li><a class="dropdown-item" href="logout?accountType=customer">Logout</a></li>
+                                                <%} else {%>
                                                 <li><a class="dropdown-item" href="login-register.jsp">Login |
-                                                        Register</a>
+                                                    Register</a>
                                                 </li>
+                                                <%}%>
                                             </ul>
                                         </li>
+                                        <% if (isAuthentication) {%>
+                                        <% CartDTO cartDTO = (CartDTO) request.getAttribute("cart");%>
                                         <li class="d-none d-lg-block">
                                             <a href="wishlist.html">
                                                 <i class="pe-7s-like"></i>
@@ -126,9 +154,10 @@
                                         <li class="minicart-wrap me-3 me-lg-0">
                                             <a href="#miniCart" class="minicart-btn toolbar-btn">
                                                 <i class="pe-7s-shopbag"></i>
-                                                <span class="quantity">3</span>
+                                                <span class="quantity"><%=cartDTO.getCartDetails().size()%></span>
                                             </a>
                                         </li>
+                                        <%}%>
                                         <li class="mobile-menu_wrap d-block d-lg-none">
                                             <a href="#mobileMenu" class="mobile-menu_btn toolbar-btn pl-0">
                                                 <i class="pe-7s-menu"></i>
@@ -149,10 +178,10 @@
                                 <nav class="main-nav">
                                     <ul>
                                         <li class="drop-holder">
-                                            <a href="index.jsp">Home</a>
+                                            <a href="home">Home</a>
                                             <!-- <ul class="drop-menu">
                                                 <li>
-                                                    <a href="index.jsp">Home One</a>
+                                                    <a href="home">Home One</a>
                                                 </li>
                                                 <li>
                                                     <a href="index-2.html">Home Two</a>
@@ -212,7 +241,7 @@
                                                     <span class="title">Product Related</span>
                                                     <ul>
                                                         <li>
-                                                            <a href="my-account.jsp">My Account</a>
+                                                            <a href="my-account">My Account</a>
                                                         </li>
                                                         <li>
                                                             <a href="login-register.jsp">Login | Register</a>
@@ -227,7 +256,7 @@
                                                             <a href="compare.html">Compare</a>
                                                         </li>
                                                         <li>
-                                                            <a href="checkout.html">Checkout</a>
+                                                            <a href="checkout">Checkout</a>
                                                         </li>
                                                     </ul>
                                                 </li>
@@ -274,7 +303,7 @@
                         <div class="row align-items-center">
                             <div class="col-lg-3 col-6">
 
-                                <a href="index.jsp" class="header-logo">
+                                <a href="home" class="header-logo">
                                     <img src="assets/images/logo/dark.png" alt="Header Logo">
                                 </a>
 
@@ -284,10 +313,10 @@
                                     <nav class="main-nav">
                                         <ul>
                                             <li class="drop-holder">
-                                                <a href="index.jsp">Home</a>
+                                                <a href="home">Home</a>
                                                 <!-- <ul class="drop-menu">
                                                     <li>
-                                                        <a href="index.jsp">Home One</a>
+                                                        <a href="home">Home One</a>
                                                     </li>
                                                     <li>
                                                         <a href="index-2.html">Home Two</a>
@@ -356,7 +385,7 @@
                                                         <span class="title">Product Related</span>
                                                         <ul>
                                                             <li>
-                                                                <a href="my-account.jsp">My Account</a>
+                                                                <a href="my-account">My Account</a>
                                                             </li>
                                                             <li>
                                                                 <a href="login-register.jsp">Login | Register</a>
@@ -371,7 +400,7 @@
                                                                 <a href="compare.html">Compare</a>
                                                             </li>
                                                             <li>
-                                                                <a href="checkout.html">Checkout</a>
+                                                                <a href="checkout">Checkout</a>
                                                             </li>
                                                         </ul>
                                                     </li>
@@ -423,13 +452,21 @@
                                                 aria-expanded="false">
                                                 <i class="pe-7s-users"></i>
                                             </button>
-                                            <ul class="dropdown-menu" aria-labelledby="stickysettingButton">
-                                                <li><a class="dropdown-item" href="my-account.jsp">My account</a></li>
+                                            <ul class="dropdown-menu" aria-labelledby="settingButton">
+                                                <%
+                                                    if (isAuthentication) {
+                                                %>
+                                                <li><a class="dropdown-item" href="my-account">My account</a></li>
+                                                <li><a class="dropdown-item" href="logout?accountType=customer">Logout</a></li>
+                                                <%} else {%>
                                                 <li><a class="dropdown-item" href="login-register.jsp">Login |
-                                                        Register</a>
+                                                    Register</a>
                                                 </li>
+                                                <%}%>
                                             </ul>
                                         </li>
+                                        <% if (isAuthentication) {%>
+                                        <% CartDTO cartDTO = (CartDTO) request.getAttribute("cart");%>
                                         <li class="d-none d-lg-block">
                                             <a href="wishlist.html">
                                                 <i class="pe-7s-like"></i>
@@ -438,9 +475,10 @@
                                         <li class="minicart-wrap me-3 me-lg-0">
                                             <a href="#miniCart" class="minicart-btn toolbar-btn">
                                                 <i class="pe-7s-shopbag"></i>
-                                                <span class="quantity">3</span>
+                                                <span class="quantity"><%=cartDTO.getCartDetails().size()%></span>
                                             </a>
                                         </li>
+                                        <%}%>
                                         <li class="mobile-menu_wrap d-block d-lg-none">
                                             <a href="#mobileMenu" class="mobile-menu_btn toolbar-btn pl-0">
                                                 <i class="pe-7s-menu"></i>
@@ -491,10 +529,17 @@
                                         id="settingButtonTwo" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="pe-7s-users"></i>
                                     </button>
-                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="settingButtonTwo">
-                                        <li><a class="dropdown-item" href="my-account.jsp">My account</a></li>
-                                        <li><a class="dropdown-item" href="login-register.jsp">Login | Register</a>
+                                    <ul class="dropdown-menu" aria-labelledby="settingButton">
+                                        <%
+                                            if (isAuthentication) {
+                                        %>
+                                        <li><a class="dropdown-item" href="my-account">My account</a></li>
+                                        <li><a class="dropdown-item" href="logout?accountType=customer">Logout</a></li>
+                                        <%} else {%>
+                                        <li><a class="dropdown-item" href="login-register.jsp">Login |
+                                            Register</a>
                                         </li>
+                                        <%}%>
                                     </ul>
                                 </li>
                                 <li>
@@ -509,14 +554,14 @@
                                 <ul class="mobile-menu">
                                     <!-- <li class="menu-item-has-children"> -->
                                         <li>
-                                        <a href="index.jsp">
+                                        <a href="home">
                                             <span class="mm-text">Home
                                                 <!-- <i class="pe-7s-angle-down"></i> -->
                                             </span>
                                         </a>
                                         <!-- <ul class="sub-menu">
                                             <li>
-                                                <a href="index.jsp">
+                                                <a href="home">
                                                     <span class="mm-text">Home One</span>
                                                 </a>
                                             </li>
@@ -621,7 +666,7 @@
                                                 </a>
                                                 <ul class="sub-menu">
                                                     <li>
-                                                        <a href="my-account.jsp">
+                                                        <a href="my-account">
                                                             <span class="mm-text">My Account</span>
                                                         </a>
                                                     </li>
@@ -646,7 +691,7 @@
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a href="checkout.html">
+                                                        <a href="checkout">
                                                             <span class="mm-text">Checkout</span>
                                                         </a>
                                                     </li>
@@ -739,73 +784,49 @@
                     </div>
                 </div>
             </div> -->
+            <% if (isAuthentication) {%>
+            <% CartDTO cartDTO = (CartDTO) request.getAttribute("cart");%>
             <div class="offcanvas-minicart_wrapper" id="miniCart">
                 <div class="offcanvas-body">
                     <div class="minicart-content">
                         <div class="minicart-heading">
                             <h4 class="mb-0">Shopping Cart</h4>
                             <a href="#" class="button-close"><i class="pe-7s-close" data-tippy="Close"
-                                    data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50"
-                                    data-tippy-arrow="true" data-tippy-theme="sharpborder"></i></a>
+                                                                data-tippy-inertia="true" data-tippy-animation="shift-away"
+                                                                data-tippy-delay="50"
+                                                                data-tippy-arrow="true" data-tippy-theme="sharpborder"></i></a>
                         </div>
                         <ul class="minicart-list">
+                            <% for(CartDetailDTO cartDetailDTO : cartDTO.getCartDetails()) {%>
                             <li class="minicart-product">
-                                <a class="product-item_remove" href="#"><i class="pe-7s-close" data-tippy="Remove"
-                                        data-tippy-inertia="true" data-tippy-animation="shift-away"
-                                        data-tippy-delay="50" data-tippy-arrow="true"
-                                        data-tippy-theme="sharpborder"></i></a>
-                                <a href="single-product.jsp" class="product-item_img">
-                                    <img class="img-full" src="assets/images/product/small-size/2-1-70x78.png"
-                                        alt="Product Image">
+                                <a class="product-item_remove" href="cart?command=remove&productId=<%=cartDetailDTO.getProductId()%>"><i class="pe-7s-close" data-tippy="Remove"
+                                                                                                                                         data-tippy-inertia="true"
+                                                                                                                                         data-tippy-animation="shift-away"
+                                                                                                                                         data-tippy-delay="50" data-tippy-arrow="true"
+                                                                                                                                         data-tippy-theme="sharpborder"></i></a>
+                                <a href="plants?id=<%=cartDetailDTO.getProductId()%>" class="product-item_img">
+                                    <img class="img-full" src="<%=cartDetailDTO.getProductImage()%>"
+                                         alt="Product Image">
                                 </a>
                                 <div class="product-item_content">
-                                    <a class="product-item_title" href="single-product.jsp">American
-                                        Marigold</a>
-                                    <span class="product-item_quantity">1 x $23.45</span>
+                                    <a class="product-item_title" href="plants?id=<%=cartDetailDTO.getProductId()%>"><%=cartDetailDTO.getProductName()%></a>
+                                    <span class="product-item_quantity"><%=cartDetailDTO.getQuantity()%> x $<%=cartDetailDTO.getProductPrice()%></span>
                                 </div>
                             </li>
-                            <!-- <li class="minicart-product">
-                                <a class="product-item_remove" href="#"><i class="pe-7s-close" data-tippy="Remove"
-                                        data-tippy-inertia="true" data-tippy-animation="shift-away"
-                                        data-tippy-delay="50" data-tippy-arrow="true"
-                                        data-tippy-theme="sharpborder"></i></a>
-                                <a href="single-product.jsp" class="product-item_img">
-                                    <img class="img-full" src="assets/images/product/small-size/2-2-70x78.png"
-                                        alt="Product Image">
-                                </a>
-                                <div class="product-item_content">
-                                    <a class="product-item_title" href="single-product.jsp">Black Eyed
-                                        Susan</a>
-                                    <span class="product-item_quantity">1 x $25.45</span>
-                                </div>
-                            </li> -->
-                            <!-- <li class="minicart-product">
-                                <a class="product-item_remove" href="#">
-                                    <i class="pe-7s-close" data-tippy="Remove" data-tippy-inertia="true"
-                                        data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true"
-                                        data-tippy-theme="sharpborder"></i>
-                                </a>
-                                <a href="single-product.jsp" class="product-item_img">
-                                    <img class="img-full" src="assets/images/product/small-size/2-3-70x78.png"
-                                        alt="Product Image">
-                                </a>
-                                <div class="product-item_content">
-                                    <a class="product-item_title" href="single-product.jsp">Bleeding Heart</a>
-                                    <span class="product-item_quantity">1 x $30.45</span>
-                                </div>
-                            </li> -->
+                            <%}%>
                         </ul>
                     </div>
                     <div class="minicart-item_total">
                         <span>Subtotal</span>
-                        <span class="ammount">$79.35</span>
+                        <span class="ammount">$<%=cartDTO.getTotalPrice()%></span>
                     </div>
                     <div class="group-btn_wrap d-grid gap-2">
-                        <a href="cart.html" class="btn btn-dark">View Cart</a>
-                        <a href="checkout.html" class="btn btn-dark">Checkout</a>
+                        <a href="cart" class="btn btn-dark">View Cart</a>
+                        <a href="checkout" class="btn btn-dark">Checkout</a>
                     </div>
                 </div>
             </div>
+            <%}%>
             <div class="global-overlay"></div>
         </header>
         <!-- Main Header Area End Here -->
@@ -820,7 +841,7 @@
                                 <h2 class="breadcrumb-heading">Checkout Page</h2>
                                 <ul>
                                     <li>
-                                        <a href="index.jsp">Home</a>
+                                        <a href="home">Home</a>
                                     </li>
                                     <li>Checkout</li>
                                 </ul>
@@ -829,6 +850,7 @@
                     </div>
                 </div>
             </div> -->
+            <form action="checkout" method="POST">
             <div class="checkout-area section-space-y-axis-100">
                 <div class="container">
                     <div class="row">
@@ -873,191 +895,95 @@
                             </div>
                         </div>
                     </div>
+                    <% User user = (User) request.getAttribute("user");%>
                     <div class="row">
                         <div class="col-lg-6 col-12">
-                            <form action="javascript:void(0)">
+
                                 <div class="checkbox-form">
                                     <h3>Billing Details</h3>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div class="country-select clearfix">
+                                            <div class="checkout-form-list">
                                                 <label>Country <span class="required">*</span></label>
-                                                <select class="myniceselect nice-select wide">
-                                                    <option data-display="Bangladesh">Bangladesh</option>
-                                                    <option value="uk">London</option>
-                                                    <option value="rou">Romania</option>
-                                                    <option value="fr">French</option>
-                                                    <option value="de">Germany</option>
-                                                    <option value="aus">Australia</option>
-                                                </select>
+<%--                                                <select class="myniceselect nice-select wide">--%>
+<%--                                                    <option data-display="Bangladesh">Bangladesh</option>--%>
+<%--                                                    <option value="uk">London</option>--%>
+<%--                                                    <option value="rou">Romania</option>--%>
+<%--                                                    <option value="fr">French</option>--%>
+<%--                                                    <option value="de">Germany</option>--%>
+<%--                                                    <option value="aus">Australia</option>--%>
+<%--                                                </select>--%>
+                                                <input placeholder="" name="country" type="text" value="<%=user.getCountry() == null ? " " : user.getCountry()%>" required>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="checkout-form-list">
                                                 <label>First Name <span class="required">*</span></label>
-                                                <input placeholder="" type="text">
+                                                <input placeholder="" name="firstName" type="text" value="<%=user.getFirstName()%>" required>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="checkout-form-list">
                                                 <label>Last Name <span class="required">*</span></label>
-                                                <input placeholder="" type="text">
+                                                <input placeholder="" name="lastName" type="text" value="<%=user.getLastName()%>" required>
                                             </div>
                                         </div>
-                                        <div class="col-md-12">
-                                            <div class="checkout-form-list">
-                                                <label>Company Name</label>
-                                                <input placeholder="" type="text">
-                                            </div>
-                                        </div>
+<%--                                        <div class="col-md-12">--%>
+<%--                                            <div class="checkout-form-list">--%>
+<%--                                                <label>Company Name</label>--%>
+<%--                                                <input placeholder="" type="text" value="">--%>
+<%--                                            </div>--%>
+<%--                                        </div>--%>
                                         <div class="col-md-12">
                                             <div class="checkout-form-list">
                                                 <label>Address <span class="required">*</span></label>
-                                                <input placeholder="Street address" type="text">
+                                                <input placeholder="Street address" name="streetAddress" type="text" value="<%=user.getStreetAddress()%>" required>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
                                             <div class="checkout-form-list">
-                                                <input placeholder="Apartment, suite, unit etc. (optional)" type="text">
+                                                <label> Apartment </label>
+                                                <input placeholder="Apartment, suite, unit etc. (optional)" name="apartment" type="text" value="<%=user.getApartment()%>" required>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
                                             <div class="checkout-form-list">
                                                 <label>Town / City <span class="required">*</span></label>
-                                                <input type="text">
+                                                <input name="city" type="text" value="<%=user.getCity()%>" required>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="checkout-form-list">
-                                                <label>State / County <span class="required">*</span></label>
-                                                <input placeholder="" type="text">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="checkout-form-list">
-                                                <label>Postcode / Zip <span class="required">*</span></label>
-                                                <input placeholder="" type="text">
-                                            </div>
-                                        </div>
+<%--                                        <div class="col-md-6">--%>
+<%--                                            <div class="checkout-form-list">--%>
+<%--                                                <label>State / County <span class="required">*</span></label>--%>
+<%--                                                <input placeholder="" name="country" type="text" value="<%=user.getCountry()%>" required>--%>
+<%--                                            </div>--%>
+<%--                                        </div>--%>
+<%--                                        <div class="col-md-6">--%>
+<%--                                            <div class="checkout-form-list">--%>
+<%--                                                <label>Postcode / Zip <span class="required">*</span></label>--%>
+<%--                                                <input placeholder="" name="postcode" type="text" value="<%=user.getPostcode()%>" required>--%>
+<%--                                            </div>--%>
+<%--                                        </div>--%>
                                         <div class="col-md-6">
                                             <div class="checkout-form-list">
                                                 <label>Email Address <span class="required">*</span></label>
-                                                <input placeholder="" type="email">
+                                                <input placeholder="" name="emailAddress" type="email" value="<%=user.getEmailAddress()%>" required>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="checkout-form-list">
                                                 <label>Phone <span class="required">*</span></label>
-                                                <input type="text">
+                                                <input type="text" name="phone" value="<%=user.getPhone()%>" required>
                                             </div>
                                         </div>
-                                        <!-- <div class="col-md-12">
-                                            <div class="checkout-form-list create-acc">
-                                                <input id="cbox" type="checkbox">
-                                                <label for="cbox">Create an account?</label>
-                                            </div>
-                                            <div id="cbox-info" class="checkout-form-list create-account">
-                                                <p>Create an account by entering the information below. If you are a returning
-                                                    customer please login at the top of the page.</p>
-                                                <label>Account password <span class="required">*</span></label>
-                                                <input placeholder="password" type="password">
-                                            </div>
-                                        </div> -->
                                     </div>
-                                    <!-- <div class="different-address">
-                                        <div class="ship-different-title">
-                                            <h3>
-                                                <label>Ship to a different address?</label>
-                                                <input id="ship-box" type="checkbox">
-                                            </h3>
-                                        </div>
-                                        <div id="ship-box-info" class="row">
-                                            <div class="col-md-12">
-                                                <div class="myniceselect country-select clearfix">
-                                                    <label>Country <span class="required">*</span></label>
-                                                    <select class="myniceselect nice-select wide">
-                                                        <option data-display="Bangladesh">Bangladesh</option>
-                                                        <option value="uk">London</option>
-                                                        <option value="rou">Romania</option>
-                                                        <option value="fr">French</option>
-                                                        <option value="de">Germany</option>
-                                                        <option value="aus">Australia</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <div class="checkout-form-list">
-                                                    <label>First Name <span class="required">*</span></label>
-                                                    <input placeholder="" type="text">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <div class="checkout-form-list">
-                                                    <label>Last Name <span class="required">*</span></label>
-                                                    <input placeholder="" type="text">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <div class="checkout-form-list">
-                                                    <label>Company Name</label>
-                                                    <input placeholder="" type="text">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <div class="checkout-form-list">
-                                                    <label>Address <span class="required">*</span></label>
-                                                    <input placeholder="Street address" type="text">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <div class="checkout-form-list">
-                                                    <input placeholder="Apartment, suite, unit etc. (optional)" type="text">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <div class="checkout-form-list">
-                                                    <label>Town / City <span class="required">*</span></label>
-                                                    <input type="text">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <div class="checkout-form-list">
-                                                    <label>State / County <span class="required">*</span></label>
-                                                    <input placeholder="" type="text">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <div class="checkout-form-list">
-                                                    <label>Postcode / Zip <span class="required">*</span></label>
-                                                    <input placeholder="" type="text">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <div class="checkout-form-list">
-                                                    <label>Email Address <span class="required">*</span></label>
-                                                    <input placeholder="" type="email">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <div class="checkout-form-list">
-                                                    <label>Phone <span class="required">*</span></label>
-                                                    <input type="text">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="order-notes">
-                                            <div class="checkout-form-list checkout-form-list-2">
-                                                <label>Order Notes</label>
-                                                <textarea id="checkout-mess" cols="30" rows="10" placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
-                                            </div>
-                                        </div>
-                                    </div> -->
                                 </div>
-                            </form>
+
                         </div>
                         <div class="col-lg-6 col-12">
                             <div class="your-order">
                                 <h3>Your order</h3>
+                                <% CartDTO cartDTO = (CartDTO) request.getAttribute("cart");%>
                                 <div class="your-order-table table-responsive">
                                     <table class="table">
                                         <thead>
@@ -1067,27 +993,29 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                        <% for(CartDetailDTO cartDetailDTO : cartDTO.getCartDetails()) {%>
                                             <tr class="cart_item">
-                                                <td class="cart-product-name"> Vestibulum suscipit<strong
+                                                <td class="cart-product-name"><%=cartDetailDTO.getProductName()%><strong
                                                         class="product-quantity">
-                                                        × 1</strong></td>
-                                                <td class="cart-product-total"><span class="amount">$165.00</span></td>
+                                                        x <%=cartDetailDTO.getQuantity()%></strong></td>
+                                                <td class="cart-product-total"><span class="amount">$<%=cartDetailDTO.getSubTotal()%></span></td>
                                             </tr>
-                                            <tr class="cart_item">
-                                                <td class="cart-product-name"> Vestibulum suscipit<strong
-                                                        class="product-quantity">
-                                                        × 1</strong></td>
-                                                <td class="cart-product-total"><span class="amount">$165.00</span></td>
-                                            </tr>
+<%--                                            <tr class="cart_item">--%>
+<%--                                                <td class="cart-product-name"> Vestibulum suscipit<strong--%>
+<%--                                                        class="product-quantity">--%>
+<%--                                                        × 1</strong></td>--%>
+<%--                                                <td class="cart-product-total"><span class="amount">$165.00</span></td>--%>
+<%--                                            </tr>--%>
+                                        <%}%>
                                         </tbody>
                                         <tfoot>
-                                            <tr class="cart-subtotal">
-                                                <th>Cart Subtotal</th>
-                                                <td><span class="amount">$215.00</span></td>
-                                            </tr>
+<%--                                            <tr class="cart-subtotal">--%>
+<%--                                                <th>Cart Subtotal</th>--%>
+<%--                                                <td><span class="amount">$<%=cartDTO.getTotalPrice()%></span></td>--%>
+<%--                                            </tr>--%>
                                             <tr class="order-total">
                                                 <th>Order Total</th>
-                                                <td><strong><span class="amount">$215.00</span></strong></td>
+                                                <td><strong><span class="amount">$<%=cartDTO.getTotalPrice()%></span></strong></td>
                                             </tr>
                                         </tfoot>
                                     </table>
@@ -1172,6 +1100,7 @@
                     </div>
                 </div>
             </div>
+            </form>
         </main>
         <!-- Main Content Area End Here -->
 
@@ -1183,7 +1112,7 @@
                         <div class="col-lg-3">
                             <div class="footer-widget-item">
                                 <div class="footer-widget-logo">
-                                    <a href="index.jsp">
+                                    <a href="home">
                                         <img src="assets/images/logo/dark.png" alt="Logo">
                                     </a>
                                 </div>

@@ -252,7 +252,7 @@
                                                             <a href="compare.html">Compare</a>
                                                         </li>
                                                         <li>
-                                                            <a href="checkout.html">Checkout</a>
+                                                            <a href="checkout">Checkout</a>
                                                         </li>
                                                     </ul>
                                                 </li>
@@ -396,7 +396,7 @@
                                                                 <a href="compare.html">Compare</a>
                                                             </li>
                                                             <li>
-                                                                <a href="checkout.html">Checkout</a>
+                                                                <a href="checkout">Checkout</a>
                                                             </li>
                                                         </ul>
                                                     </li>
@@ -681,7 +681,7 @@
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a href="checkout.html">
+                                                        <a href="checkout">
                                                             <span class="mm-text">Checkout</span>
                                                         </a>
                                                     </li>
@@ -835,7 +835,7 @@
                     </div>
                     <div class="group-btn_wrap d-grid gap-2">
                         <a href="cart" class="btn btn-dark">View Cart</a>
-                        <a href="checkout.html" class="btn btn-dark">Checkout</a>
+                        <a href="checkout" class="btn btn-dark">Checkout</a>
                     </div>
                 </div>
             </div>

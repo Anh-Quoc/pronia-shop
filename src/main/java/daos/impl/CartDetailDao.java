@@ -15,6 +15,8 @@ public class CartDetailDao extends GenericDao<CartDetail> implements CartDetailD
     private final String DELETE_CART_DETAIL_BY_PRODUCT_ID_AND_CART_ID_STATEMENT = "DELETE FROM cart_detail WHERE product_id = ? AND cart_id = ?";
     private final String DELETE_CART_DETAIL_BY_ID_STATEMENT = "DELETE FROM cart_detail WHERE id = ?";
 
+    private final String DELETE_CART_DETAIL_BY_CART_ID_STATEMENT = "DELETE FROM cart_detail WHERE cart_id = ?";
+
     private static CartDetailDao instance;
 
     private CartDetailDao() {
@@ -60,5 +62,8 @@ public class CartDetailDao extends GenericDao<CartDetail> implements CartDetailD
         executeUpdate(DELETE_CART_DETAIL_BY_ID_STATEMENT, id);
     }
 
+    public void deleteCartDetailByCartId(Integer cartId) {
+        executeUpdate(DELETE_CART_DETAIL_BY_CART_ID_STATEMENT, cartId);
+    }
 
 }

@@ -12,6 +12,7 @@ public class OrderDao extends GenericDao<Order> implements OrderDaoInterface {
 
     private static final String SELECT_ORDERS_BY_CUSTOMER_ID_STATEMENT = "SELECT * FROM orders WHERE customer_id = ? ORDER BY order_date DESC";
 
+    private static final String INSERT_ORDER_STATEMENT = "INSERT INTO orders (country, street_address, apartment, city, total_price, order_date, customer_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
     private static OrderDao instance;
 
     private OrderDao() {
@@ -33,6 +34,10 @@ public class OrderDao extends GenericDao<Order> implements OrderDaoInterface {
     @Override
     public List<Order> getAllOrdersByCustomerId(Integer customerId) {
         return executeQuery(SELECT_ORDERS_BY_CUSTOMER_ID_STATEMENT, new OrderMapper(), customerId);
+    }
+
+    public Integer insertOrder(Order order) {
+       return executeUpdate(INSERT_ORDER_STATEMENT, order.getCountry(), order.getStreetAddress(), order.getApartment(), order.getCity(), order.getTotalPrice(), order.getOrderDate(), order.getCustomerId());
     }
 
 }

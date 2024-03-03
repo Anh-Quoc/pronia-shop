@@ -435,7 +435,7 @@ INSERT INTO users (first_name, last_name, email_address, password, country, stre
                    phone, role_id)
 VALUES ('Hoang Anh', 'Quoc', 'anhquoc5.1.2003.q@gmail.com', '123456', 'Viet Nam', 'Thach Hoa - Thach That',
         'YoungHouse', 'Ha Noi', '123456', '0859159180', 1),
-       ('Nguyen Thi', 'A', 'nguyenthiA1873@gmail.com', '123456', 'Viet Nam', 'Trieu Son', '', 'Thanh Hoa', '123456',
+       ('Nguyen Thi', 'A', 'nguyenthiA1873@gmail.com', '123456', 'Viet Nam', 'Trieu Son', 'YoungHouse', 'Thanh Hoa', '123456',
         '0859159180', 2),
        ('John', 'Doe', 'john.doe@example.com', 'password123', 'USA', '123 Main St', 'Apt 456', 'New York', '10001',
         '555-1234', 2),
@@ -495,26 +495,26 @@ CREATE TABLE orders
     apartment       VARCHAR(128),
 
     city            VARCHAR(128)  NOT NULL,
-    postcode        VARCHAR(128)  NOT NULL,
+    postcode        VARCHAR(128),
 
     total_price     DECIMAL(5, 2) NOT NULL DEFAULT 0,
     order_date      DATETIME     DEFAULT CURRENT_TIMESTAMP,
-    order_status_id INTEGER FOREIGN KEY REFERENCES order_status (id),
+    order_status_id INTEGER FOREIGN KEY REFERENCES order_status (id) DEFAULT 1,
     customer_id     INTEGER FOREIGN KEY REFERENCES users (id),
 )
 GO
-INSERT INTO orders (country, street_address, apartment, city, postcode, total_price, order_date, order_status_id,
-                    customer_id)
-VALUES ('Viet Nam', 'Trieu Son', '', 'Thanh Hoa', '123456', 0, '2023-03-01 06:22:49.777', 1, 2),
-       ('USA', '123 Main St', 'Apt 456', 'New York', '10001', 0, '2024-04-02 06:22:49.777', 2, 4),
-       ('Canada', '789 Maple Ave', 'Suite 789', 'Toronto', 'M1M 1M1', 0, '2022-01-04 06:22:49.777', 3, 5),
-       ('UK', '456 Oak Lane', 'Apt 101', 'London', 'SW1A 1AA', 0, '2022-06-08 06:22:49.777', 4, 6),
-       ('Australia', '789 Elm Street', 'Unit 23', 'Sydney', '2000', 0, '2021-07-03 06:22:49.777', 5, 7),
-       ('Spain', 'Calle Principal', 'Piso 3', 'Barcelona', '08001', 0, '2020-03-02 06:22:49.777', 1, 8),
-       ('Italy', 'Via Roma', 'Appartamento 5', 'Rome', '00100', 0, '2022-04-02 06:21:49.777', 2, 9),
-       ('Japan', '1-2-3 Shinjuku', 'Apartment 101', 'Tokyo', '160-0022', 0, '2019-03-01 06:22:49.777', 3, 3),
-       ('Japan', '4-5-6 Shibuya', 'Unit 203', 'Tokyo', '150-0043', 0, '2020-01-05 06:22:49.777', 4, 2),
-       ('Germany', 'Hauptstrasse', 'Wohnung 7', 'Berlin', '10115', 0, '2022-03-09 06:22:49.777', 1, 2)
+-- INSERT INTO orders (country, street_address, apartment, city, postcode, total_price, order_date, order_status_id,
+--                     customer_id)
+-- VALUES ('Viet Nam', 'Trieu Son', '', 'Thanh Hoa', '123456', 0, '2023-03-01 06:22:49.777', 1, 2),
+--        ('USA', '123 Main St', 'Apt 456', 'New York', '10001', 0, '2024-04-02 06:22:49.777', 2, 4),
+--        ('Canada', '789 Maple Ave', 'Suite 789', 'Toronto', 'M1M 1M1', 0, '2022-01-04 06:22:49.777', 3, 5),
+--        ('UK', '456 Oak Lane', 'Apt 101', 'London', 'SW1A 1AA', 0, '2022-06-08 06:22:49.777', 4, 6),
+--        ('Australia', '789 Elm Street', 'Unit 23', 'Sydney', '2000', 0, '2021-07-03 06:22:49.777', 5, 7),
+--        ('Spain', 'Calle Principal', 'Piso 3', 'Barcelona', '08001', 0, '2020-03-02 06:22:49.777', 1, 8),
+--        ('Italy', 'Via Roma', 'Appartamento 5', 'Rome', '00100', 0, '2022-04-02 06:21:49.777', 2, 9),
+--        ('Japan', '1-2-3 Shinjuku', 'Apartment 101', 'Tokyo', '160-0022', 0, '2019-03-01 06:22:49.777', 3, 3),
+--        ('Japan', '4-5-6 Shibuya', 'Unit 203', 'Tokyo', '150-0043', 0, '2020-01-05 06:22:49.777', 4, 2),
+--        ('Germany', 'Hauptstrasse', 'Wohnung 7', 'Berlin', '10115', 0, '2022-03-09 06:22:49.777', 1, 2)
 
 GO
 CREATE TABLE order_detail
@@ -539,179 +539,179 @@ CREATE TRIGGER update_total_price_of_order
     WHERE orders.id = (SELECT order_id FROM inserted)
 
 GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (1, 1, 1)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (2, 2, 1)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (3, 3, 1)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (4, 2, 1)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (7, 1, 1)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (4, 2, 2)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (5, 3, 3)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (6, 2, 4)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (38, 3, 3)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (37, 4, 4)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (36, 2, 5)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (35, 4, 6)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (34, 1, 7)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (33, 2, 8)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (32, 3, 9)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (31, 3, 10)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (30, 3, 1)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (29, 2, 2)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (28, 2, 3)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (27, 4, 4)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (26, 2, 5)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (25, 2, 6)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (24, 3, 7)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (23, 2, 8)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (22, 2, 9)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (21, 2, 10)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (20, 2, 1)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (19, 2, 2)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (18, 3, 3)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (17, 1, 4)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (16, 2, 5)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (15, 3, 6)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (14, 2, 7)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (13, 2, 8)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (12, 2, 9)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (11, 3, 10)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (10, 3, 1)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (9, 3, 2)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (8, 2, 3)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (7, 3, 4)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (6, 2, 5)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (5, 3, 6)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (4, 4, 7)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (3, 2, 8)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (2, 3, 9)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (1, 3, 10)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (38, 2, 1)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (37, 2, 2)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (36, 2, 3)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (35, 2, 4)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (34, 3, 5)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (33, 2, 6)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (31, 2, 8)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (30, 1, 9)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (29, 2, 10)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (28, 2, 1)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (27, 3, 2)
-GO
-INSERT INTO order_detail (product_id, quantity, order_id)
-VALUES (26, 2, 3)
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (1, 1, 1)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (2, 2, 1)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (3, 3, 1)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (4, 2, 1)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (7, 1, 1)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (4, 2, 2)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (5, 3, 3)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (6, 2, 4)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (38, 3, 3)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (37, 4, 4)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (36, 2, 5)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (35, 4, 6)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (34, 1, 7)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (33, 2, 8)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (32, 3, 9)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (31, 3, 10)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (30, 3, 1)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (29, 2, 2)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (28, 2, 3)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (27, 4, 4)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (26, 2, 5)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (25, 2, 6)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (24, 3, 7)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (23, 2, 8)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (22, 2, 9)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (21, 2, 10)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (20, 2, 1)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (19, 2, 2)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (18, 3, 3)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (17, 1, 4)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (16, 2, 5)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (15, 3, 6)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (14, 2, 7)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (13, 2, 8)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (12, 2, 9)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (11, 3, 10)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (10, 3, 1)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (9, 3, 2)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (8, 2, 3)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (7, 3, 4)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (6, 2, 5)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (5, 3, 6)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (4, 4, 7)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (3, 2, 8)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (2, 3, 9)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (1, 3, 10)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (38, 2, 1)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (37, 2, 2)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (36, 2, 3)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (35, 2, 4)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (34, 3, 5)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (33, 2, 6)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (31, 2, 8)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (30, 1, 9)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (29, 2, 10)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (28, 2, 1)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (27, 3, 2)
+-- GO
+-- INSERT INTO order_detail (product_id, quantity, order_id)
+-- VALUES (26, 2, 3)
 GO
 CREATE VIEW order_view AS
 SELECT orders.id,
@@ -821,13 +821,3 @@ FROM plants
          JOIN plant_tags ON plants.id = plant_tags.plant_id
          JOIN tags ON plant_tags.tag_id = tags.id
 
---
--- SELECT TOP 8 *
--- FROM plants
--- ORDER BY plants.sale_opening DESC
---
--- SELECT DISTINCT plants.color
--- FROM plants
-
-
-SELECT * FROM orders ORDER BY order_date DESC
