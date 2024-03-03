@@ -130,7 +130,7 @@
                                                     if (isAuthentication) {
                                                 %>
                                                 
-                                                <li><a class="dropdown-item" href="my-account.html">My account</a></li>
+                                                <li><a class="dropdown-item" href="my-account.jsp">My account</a></li>
                                                 <li><a class="dropdown-item" href="logout?accountType=customer">Logout</a></li>
                                                 <%
                                                     } else { %>
@@ -236,7 +236,7 @@
                                                     <span class="title">Product Related</span>
                                                     <ul>
                                                         <li>
-                                                            <a href="my-account.html">My Account</a>
+                                                            <a href="my-account.jsp">My Account</a>
                                                         </li>
                                                         <li>
                                                             <a href="login">Login | Register</a>
@@ -374,7 +374,7 @@
                                                         <span class="title">Product Related</span>
                                                         <ul>
                                                             <li>
-                                                                <a href="my-account.html">My Account</a>
+                                                                <a href="my-account.jsp">My Account</a>
                                                             </li>
                                                             <li>
                                                                 <a href="login">Login | Register</a>
@@ -447,7 +447,7 @@
                                                     if (isAuthentication) {
                                                 %>
                                                     
-                                                <li><a class="dropdown-item" href="my-account.html">My account</a></li>
+                                                <li><a class="dropdown-item" href="my-account.jsp">My account</a></li>
                                                 <li><a class="dropdown-item" href="logout?accountType=customer">Logout</a></li>
                                                 <%
                                                     } else { %>
@@ -525,7 +525,7 @@
                                         <%
                                             if (isAuthentication) {
                                         %>
-                                        <li><a class="dropdown-item" href="my-account.html">My account</a></li>
+                                        <li><a class="dropdown-item" href="my-account.jsp">My account</a></li>
                                         <li><a class="dropdown-item" href="logout?accountType=customer">Logout</a></li>
                                         <%
                                             } else { %>
@@ -660,7 +660,7 @@
                                                 </a>
                                                 <ul class="sub-menu">
                                                     <li>
-                                                        <a href="my-account.html">
+                                                        <a href="my-account.jsp">
                                                             <span class="mm-text">My Account</span>
                                                         </a>
                                                     </li>

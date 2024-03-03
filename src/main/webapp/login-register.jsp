@@ -129,7 +129,7 @@
                                                 if (isAuthentication) {
                                             %>
 
-                                            <li><a class="dropdown-item" href="my-account.html">My account</a></li>
+                                            <li><a class="dropdown-item" href="my-account">My account</a></li>
                                             <li><a class="dropdown-item" href="logout">Logout</a></li>
                                             <%
                                             } else { %>
@@ -237,7 +237,7 @@
                                                 <span class="title">Product Related</span>
                                                 <ul>
                                                     <li>
-                                                        <a href="my-account.html">My Account</a>
+                                                        <a href="my-account">My Account</a>
                                                     </li>
                                                     <li>
                                                         <a href="login-register.jsp">Login | Register</a>
@@ -341,7 +341,7 @@
                                                 if (isAuthentication) {
                                             %>
 
-                                            <li><a class="dropdown-item" href="my-account.html">My account</a></li>
+                                            <li><a class="dropdown-item" href="my-account">My account</a></li>
                                             <li><a class="dropdown-item" href="logout">Logout</a></li>
                                             <%
                                             } else { %>
@@ -419,7 +419,7 @@
                                         if (isAuthentication) {
                                     %>
 
-                                    <li><a class="dropdown-item" href="my-account.html">My account</a></li>
+                                    <li><a class="dropdown-item" href="my-account">My account</a></li>
                                     <li><a class="dropdown-item" href="logout">Logout</a></li>
                                     <%
                                     } else { %>

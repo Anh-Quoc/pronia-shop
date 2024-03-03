@@ -830,3 +830,4 @@ FROM plants
 -- FROM plants
 
 
+SELECT * FROM orders ORDER BY order_date DESC

@@ -126,7 +126,7 @@
                                                 if (isAuthentication) {
                                             %>
 
-                                            <li><a class="dropdown-item" href="my-account.html">My account</a></li>
+                                            <li><a class="dropdown-item" href="my-account">My account</a></li>
                                             <li><a class="dropdown-item" href="logout?accountType=customer">Logout</a></li>
                                             <%
                                             } else { %>
@@ -235,7 +235,7 @@
                                         <ul class="dropdown-menu" aria-labelledby="stickysettingButton">
                                             <%
                                                 if (isAuthentication) { %>
-                                            <li><a class="dropdown-item" href="my-account.html">My account</a></li>
+                                            <li><a class="dropdown-item" href="my-account">My account</a></li>
                                             <li><a class="dropdown-item" href="logout?accountType=customer">Logout</a></li>
                                             <%
                                                 } else { %>
@@ -313,7 +313,7 @@
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="settingButtonTwo">
                                     <%
                                         if (isAuthentication) { %>
-                                    <li><a class="dropdown-item" href="my-account.html">My account</a></li>
+                                    <li><a class="dropdown-item" href="my-account">My account</a></li>
                                     <li><a class="dropdown-item" href="logout?accountType=customer">Logout</a></li>
                                     <%
                                         } else { %>

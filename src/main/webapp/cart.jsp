@@ -115,7 +115,7 @@
                                                 <i class="pe-7s-users"></i>
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="settingButton">
-                                                <li><a class="dropdown-item" href="my-account.html">My account</a></li>
+                                                <li><a class="dropdown-item" href="my-account">My account</a></li>
 
                                                 <li><a class="dropdown-item" href="logout?accountType=customer">Logout</a>
                                                 </li>
@@ -216,7 +216,7 @@
                                                     <span class="title">Product Related</span>
                                                     <ul>
                                                         <li>
-                                                            <a href="my-account.html">My Account</a>
+                                                            <a href="my-account">My Account</a>
                                                         </li>
                                                         <li>
                                                             <a href="login-register.jsp">Login | Register</a>
@@ -354,7 +354,7 @@
                                                         <span class="title">Product Related</span>
                                                         <ul>
                                                             <li>
-                                                                <a href="my-account.html">My Account</a>
+                                                                <a href="my-account">My Account</a>
                                                             </li>
                                                             <li>
                                                                 <a href="login-register.jsp">Login | Register</a>
@@ -422,7 +422,7 @@
                                                 <i class="pe-7s-users"></i>
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="stickysettingButton">
-                                                <li><a class="dropdown-item" href="my-account.html">My account</a></li>
+                                                <li><a class="dropdown-item" href="my-account">My account</a></li>
                                                 <li><a class="dropdown-item" href="login-register.jsp">Login |
                                                         Register</a>
                                                 </li>
@@ -490,7 +490,7 @@
                                         <i class="pe-7s-users"></i>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="settingButtonTwo">
-                                        <li><a class="dropdown-item" href="my-account.html">My account</a></li>
+                                        <li><a class="dropdown-item" href="my-account">My account</a></li>
                                         <li><a class="dropdown-item" href="login-register.jsp">Login | Register</a>
                                         </li>
                                     </ul>
@@ -619,7 +619,7 @@
                                                 </a>
                                                 <ul class="sub-menu">
                                                     <li>
-                                                        <a href="my-account.html">
+                                                        <a href="my-account">
                                                             <span class="mm-text">My Account</span>
                                                         </a>
                                                     </li>

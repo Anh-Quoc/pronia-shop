@@ -21,6 +21,10 @@ public class UserService {
         return instance;
     }
 
+    public User getUserById(Integer id) {
+        return userDao.getUserById(id);
+    }
+
     public List<User> getAllUser() {
         return userDao.getAllUser();
     }

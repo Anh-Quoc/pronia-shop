@@ -126,7 +126,7 @@
                                                     }
                                                 %> 
                                                 <% if (isAuthentication) { %>
-                                                <li><a class="dropdown-item" href="my-account.html">My account</a></li>
+                                                <li><a class="dropdown-item" href="my-account">My account</a></li>
                                                 <li><a class="dropdown-item" href="logout?accountType=customer">Logout</a></li>
                                                 <% } else { %>
                                                 
@@ -237,7 +237,7 @@
                                                     <span class="title">Product Related</span>
                                                     <ul>
                                                         <li>
-                                                            <a href="my-account.html">My Account</a>
+                                                            <a href="my-account">My Account</a>
                                                         </li>
                                                         <li>
                                                             <a href="login">Login | Register</a>
@@ -381,7 +381,7 @@
                                                         <span class="title">Product Related</span>
                                                         <ul>
                                                             <li>
-                                                                <a href="my-account.html">My Account</a>
+                                                                <a href="my-account">My Account</a>
                                                             </li>
                                                             <li>
                                                                 <a href="login">Login | Register</a>
@@ -450,7 +450,7 @@
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="stickysettingButton">
                                                 <% if (isAuthentication) { %>
-                                                <li><a class="dropdown-item" href="my-account.html">My account</a></li>
+                                                <li><a class="dropdown-item" href="my-account">My account</a></li>
                                                 <li><a class="dropdown-item" href="logout?accountType=customer">Logout</a></li>
                                                 <% } else { %>
                                                 <li><a class="dropdown-item" href="login">Login |
@@ -524,7 +524,7 @@
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="settingButtonTwo">
                                         <% if (isAuthentication) { %>
-                                        <li><a class="dropdown-item" href="my-account.html">My account</a></li>
+                                        <li><a class="dropdown-item" href="my-account">My account</a></li>
                                         <li><a class="dropdown-item" href="logout?accountType=customer">Logout</a></li>
                                         <% } else { %>
                                         <li><a class="dropdown-item" href="login">Login | Register</a>
@@ -656,7 +656,7 @@
                                                 </a>
                                                 <ul class="sub-menu">
                                                     <li>
-                                                        <a href="my-account.html">
+                                                        <a href="my-account">
                                                             <span class="mm-text">My Account</span>
                                                         </a>
                                                     </li>

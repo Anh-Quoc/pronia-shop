@@ -36,7 +36,7 @@ public class OrderDetailService {
             PlantDTO plant = plantService.getPlantById(orderDetail.getProductId());
 
 
-            orderDetailDTO = new OrderDetailDTO(orderDetail.getId(), orderDetail.getProductId(),
+            orderDetailDTO = new OrderDetailDTO(orderDetail.getId(), orderDetail.getProductId(), plant.getImageLink(),
                     plant.getTitle(), plant.getUnitPrice(), orderDetail.getQuantity(),
                     orderDetail.getSubtotal(), orderDetail.getOrderId());
 

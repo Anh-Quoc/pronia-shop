@@ -1,3 +1,8 @@
+<%@ page import="dtos.CartDTO" %>
+<%@ page import="dtos.CartDetailDTO" %>
+<%@ page import="java.util.List" %>
+<%@ page import="dtos.OrderDetailDTO" %>
+<%@ page import="dtos.OrderDTO" %>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -5,7 +10,7 @@
 
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Pronia - Error 404</title>
+    <title>Pronia - Cart</title>
     <meta name="robots" content="index, follow" />
     <meta name="description"
         content="Pronia plant store bootstrap 5 template is an awesome website template for any home plant shop.">
@@ -94,7 +99,7 @@
                                     <a href="tel://+00-123-456-789">+00 123 456 789</a>
                                 </div>
 
-                                <a href="index.jsp" class="header-logo">
+                                <a href="home" class="header-logo">
                                     <img src="assets/images/logo/dark.png" alt="Header Logo">
                                 </a>
 
@@ -112,10 +117,29 @@
                                                 <i class="pe-7s-users"></i>
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="settingButton">
-                                                <li><a class="dropdown-item" href="my-account.jsp">My account</a></li>
+
+                                                <%
+                                                    boolean isAuthentication = false;
+                                                    Cookie[] cookies = request.getCookies();
+                                                    if (cookies != null) {
+                                                        for (Cookie cookie : cookies) {
+                                                            if (cookie.getName().equals("customer_session_id")) {
+                                                                isAuthentication = true;
+                                                                break;
+                                                            }
+                                                        }
+                                                    }
+                                                %>
+                                                <%
+                                                    if (isAuthentication) {
+                                                %>
+                                                <li><a class="dropdown-item" href="my-account">My account</a></li>
+                                                <li><a class="dropdown-item" href="logout?accountType=customer">Logout</a></li>
+                                                <%} else {%>
                                                 <li><a class="dropdown-item" href="login-register.jsp">Login |
-                                                        Register</a>
+                                                    Register</a>
                                                 </li>
+                                                <%}%>
                                             </ul>
                                         </li>
                                         <li class="d-none d-lg-block">
@@ -123,10 +147,11 @@
                                                 <i class="pe-7s-like"></i>
                                             </a>
                                         </li>
+                                        <% CartDTO cart = (CartDTO) request.getAttribute("cart");%>
                                         <li class="minicart-wrap me-3 me-lg-0">
                                             <a href="#miniCart" class="minicart-btn toolbar-btn">
                                                 <i class="pe-7s-shopbag"></i>
-                                                <span class="quantity">3</span>
+                                                <span class="quantity"><%=cart.getCartDetails().size()%></span>
                                             </a>
                                         </li>
                                         <li class="mobile-menu_wrap d-block d-lg-none">
@@ -149,10 +174,10 @@
                                 <nav class="main-nav">
                                     <ul>
                                         <li class="drop-holder">
-                                            <a href="index.jsp">Home</a>
+                                            <a href="home">Home</a>
                                             <!-- <ul class="drop-menu">
                                                 <li>
-                                                    <a href="index.jsp">Home One</a>
+                                                    <a href="home">Home One</a>
                                                 </li>
                                                 <li>
                                                     <a href="index-2.html">Home Two</a>
@@ -212,13 +237,13 @@
                                                     <span class="title">Product Related</span>
                                                     <ul>
                                                         <li>
-                                                            <a href="my-account.jsp">My Account</a>
+                                                            <a href="my-account">My Account</a>
                                                         </li>
                                                         <li>
                                                             <a href="login-register.jsp">Login | Register</a>
                                                         </li>
                                                         <li>
-                                                            <a href="cart.html">Shopping Cart</a>
+                                                            <a href="cart.jsp">Shopping Cart</a>
                                                         </li>
                                                         <li>
                                                             <a href="wishlist.html">Wishlist</a>
@@ -274,7 +299,7 @@
                         <div class="row align-items-center">
                             <div class="col-lg-3 col-6">
 
-                                <a href="index.jsp" class="header-logo">
+                                <a href="home" class="header-logo">
                                     <img src="assets/images/logo/dark.png" alt="Header Logo">
                                 </a>
 
@@ -284,10 +309,10 @@
                                     <nav class="main-nav">
                                         <ul>
                                             <li class="drop-holder">
-                                                <a href="index.jsp">Home</a>
+                                                <a href="home">Home</a>
                                                 <!-- <ul class="drop-menu">
                                                     <li>
-                                                        <a href="index.jsp">Home One</a>
+                                                        <a href="home">Home One</a>
                                                     </li>
                                                     <li>
                                                         <a href="index-2.html">Home Two</a>
@@ -350,13 +375,13 @@
                                                         <span class="title">Product Related</span>
                                                         <ul>
                                                             <li>
-                                                                <a href="my-account.jsp">My Account</a>
+                                                                <a href="my-account">My Account</a>
                                                             </li>
                                                             <li>
                                                                 <a href="login-register.jsp">Login | Register</a>
                                                             </li>
                                                             <li>
-                                                                <a href="cart.html">Shopping Cart</a>
+                                                                <a href="cart.jsp">Shopping Cart</a>
                                                             </li>
                                                             <li>
                                                                 <a href="wishlist.html">Wishlist</a>
@@ -417,11 +442,17 @@
                                                 aria-expanded="false">
                                                 <i class="pe-7s-users"></i>
                                             </button>
-                                            <ul class="dropdown-menu" aria-labelledby="stickysettingButton">
-                                                <li><a class="dropdown-item" href="my-account.jsp">My account</a></li>
+                                            <ul class="dropdown-menu" aria-labelledby="settingButton">
+                                                <%
+                                                    if (isAuthentication) {
+                                                %>
+                                                <li><a class="dropdown-item" href="my-account">My account</a></li>
+                                                <li><a class="dropdown-item" href="logout?accountType=customer">Logout</a></li>
+                                                <%} else {%>
                                                 <li><a class="dropdown-item" href="login-register.jsp">Login |
-                                                        Register</a>
+                                                    Register</a>
                                                 </li>
+                                                <%}%>
                                             </ul>
                                         </li>
                                         <li class="d-none d-lg-block">
@@ -432,7 +463,7 @@
                                         <li class="minicart-wrap me-3 me-lg-0">
                                             <a href="#miniCart" class="minicart-btn toolbar-btn">
                                                 <i class="pe-7s-shopbag"></i>
-                                                <span class="quantity">3</span>
+                                                <span class="quantity"><%=cart.getCartDetails().size()%></span>
                                             </a>
                                         </li>
                                         <li class="mobile-menu_wrap d-block d-lg-none">
@@ -486,7 +517,7 @@
                                         <i class="pe-7s-users"></i>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="settingButtonTwo">
-                                        <li><a class="dropdown-item" href="my-account.jsp">My account</a></li>
+                                        <li><a class="dropdown-item" href="my-account">My account</a></li>
                                         <li><a class="dropdown-item" href="login-register.jsp">Login | Register</a>
                                         </li>
                                     </ul>
@@ -503,14 +534,14 @@
                                 <ul class="mobile-menu">
                                     <!-- <li class="menu-item-has-children"> -->
                                     <li>
-                                        <a href="index.jsp">
+                                        <a href="home">
                                             <span class="mm-text">Home
                                                 <!-- <i class="pe-7s-angle-down"></i> -->
                                             </span>
                                         </a>
                                         <!-- <ul class="sub-menu">
                                             <li>
-                                                <a href="index.jsp">
+                                                <a href="home">
                                                     <span class="mm-text">Home One</span>
                                                 </a>
                                             </li>
@@ -532,8 +563,8 @@
                                             <li class="menu-item-has-children">
                                                 <a href="#">
                                                     <span class="mm-text">Shop Layout
-                                                        <i class="pe-7s-angle-down"></i>
-                                                    </span>
+                                                <i class="pe-7s-angle-down"></i>
+                                            </span>
                                                 </a>
                                                 <ul class="sub-menu">
                                                     <li>
@@ -571,8 +602,8 @@
                                             <li class="menu-item-has-children">
                                                 <a href="#">
                                                     <span class="mm-text">Product Style
-                                                        <i class="pe-7s-angle-down"></i>
-                                                    </span>
+                                                <i class="pe-7s-angle-down"></i>
+                                            </span>
                                                 </a>
                                                 <ul class="sub-menu">
                                                     <li>
@@ -610,12 +641,12 @@
                                             <li class="menu-item-has-children">
                                                 <a href="#">
                                                     <span class="mm-text">Product Related
-                                                        <i class="pe-7s-angle-down"></i>
-                                                    </span>
+                                                <i class="pe-7s-angle-down"></i>
+                                            </span>
                                                 </a>
                                                 <ul class="sub-menu">
                                                     <li>
-                                                        <a href="my-account.jsp">
+                                                        <a href="my-account">
                                                             <span class="mm-text">My Account</span>
                                                         </a>
                                                     </li>
@@ -625,7 +656,7 @@
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a href="cart.html">
+                                                        <a href="cart.jsp">
                                                             <span class="mm-text">Shopping Cart</span>
                                                         </a>
                                                     </li>
@@ -651,15 +682,15 @@
                                     <!-- <li class="menu-item-has-children">
                                         <a href="#">
                                             <span class="mm-text">Blog
-                                                <i class="pe-7s-angle-down"></i>
-                                            </span>
+                                        <i class="pe-7s-angle-down"></i>
+                                    </span>
                                         </a>
                                         <ul class="sub-menu">
                                             <li class="menu-item-has-children">
                                                 <a href="#">
                                                     <span class="mm-text">Blog Holder
-                                                        <i class="pe-7s-angle-down"></i>
-                                                    </span>
+                                                <i class="pe-7s-angle-down"></i>
+                                            </span>
                                                 </a>
                                                 <ul class="sub-menu">
                                                     <li>
@@ -685,8 +716,8 @@
                                     <!-- <li class="menu-item-has-children">
                                         <a href="#">
                                             <span class="mm-text">Pages
-                                                <i class="pe-7s-angle-down"></i>
-                                            </span>
+                                        <i class="pe-7s-angle-down"></i>
+                                    </span>
                                         </a>
                                         <ul class="sub-menu">
                                             <li>
@@ -739,140 +770,164 @@
                         <div class="minicart-heading">
                             <h4 class="mb-0">Shopping Cart</h4>
                             <a href="#" class="button-close"><i class="pe-7s-close" data-tippy="Close"
-                                    data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50"
-                                    data-tippy-arrow="true" data-tippy-theme="sharpborder"></i></a>
+                                                                data-tippy-inertia="true" data-tippy-animation="shift-away"
+                                                                data-tippy-delay="50"
+                                                                data-tippy-arrow="true" data-tippy-theme="sharpborder"></i></a>
                         </div>
                         <ul class="minicart-list">
+                            <% for(CartDetailDTO cartDetailDTO : cart.getCartDetails()) {%>
                             <li class="minicart-product">
-                                <a class="product-item_remove" href="#"><i class="pe-7s-close" data-tippy="Remove"
-                                        data-tippy-inertia="true" data-tippy-animation="shift-away"
-                                        data-tippy-delay="50" data-tippy-arrow="true"
-                                        data-tippy-theme="sharpborder"></i></a>
-                                <a href="single-product.jsp" class="product-item_img">
-                                    <img class="img-full" src="assets/images/product/small-size/2-1-70x78.png"
-                                        alt="Product Image">
+                                <a class="product-item_remove" href="cart?command=remove&productId=<%=cartDetailDTO.getProductId()%>"><i class="pe-7s-close" data-tippy="Remove"
+                                                                           data-tippy-inertia="true"
+                                                                           data-tippy-animation="shift-away"
+                                                                           data-tippy-delay="50" data-tippy-arrow="true"
+                                                                           data-tippy-theme="sharpborder"></i></a>
+                                <a href="plants?id=<%=cartDetailDTO.getProductId()%>" class="product-item_img">
+                                    <img class="img-full" src="<%=cartDetailDTO.getProductImage()%>"
+                                         alt="Product Image">
                                 </a>
                                 <div class="product-item_content">
-                                    <a class="product-item_title" href="single-product.jsp">American
-                                        Marigold</a>
-                                    <span class="product-item_quantity">1 x $23.45</span>
+                                    <a class="product-item_title" href="plants?id=<%=cartDetailDTO.getProductId()%>"><%=cartDetailDTO.getProductName()%></a>
+                                    <span class="product-item_quantity"><%=cartDetailDTO.getQuantity()%> x $<%=cartDetailDTO.getProductPrice()%></span>
                                 </div>
                             </li>
-                            <!-- <li class="minicart-product">
-                                <a class="product-item_remove" href="#"><i class="pe-7s-close" data-tippy="Remove"
-                                        data-tippy-inertia="true" data-tippy-animation="shift-away"
-                                        data-tippy-delay="50" data-tippy-arrow="true"
-                                        data-tippy-theme="sharpborder"></i></a>
-                                <a href="single-product.jsp" class="product-item_img">
-                                    <img class="img-full" src="assets/images/product/small-size/2-2-70x78.png"
-                                        alt="Product Image">
-                                </a>
-                                <div class="product-item_content">
-                                    <a class="product-item_title" href="single-product.jsp">Black Eyed
-                                        Susan</a>
-                                    <span class="product-item_quantity">1 x $25.45</span>
-                                </div>
-                            </li> -->
-                            <!-- <li class="minicart-product">
-                                <a class="product-item_remove" href="#">
-                                    <i class="pe-7s-close" data-tippy="Remove" data-tippy-inertia="true"
-                                        data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true"
-                                        data-tippy-theme="sharpborder"></i>
-                                </a>
-                                <a href="single-product.jsp" class="product-item_img">
-                                    <img class="img-full" src="assets/images/product/small-size/2-3-70x78.png"
-                                        alt="Product Image">
-                                </a>
-                                <div class="product-item_content">
-                                    <a class="product-item_title" href="single-product.jsp">Bleeding Heart</a>
-                                    <span class="product-item_quantity">1 x $30.45</span>
-                                </div>
-                            </li> -->
+                            <%}%>
                         </ul>
                     </div>
                     <div class="minicart-item_total">
                         <span>Subtotal</span>
-                        <span class="ammount">$79.35</span>
+                        <span class="ammount">$<%=cart.getTotalPrice()%></span>
                     </div>
                     <div class="group-btn_wrap d-grid gap-2">
-                        <a href="cart.html" class="btn btn-dark">View Cart</a>
+                        <a href="cart" class="btn btn-dark">View Cart</a>
                         <a href="checkout.html" class="btn btn-dark">Checkout</a>
                     </div>
                 </div>
             </div>
+
             <div class="global-overlay"></div>
         </header>
         <!-- Main Header Area End Here -->
 
         <!-- Begin Main Content Area -->
-        <!-- <div class="breadcrumb-area breadcrumb-height" data-bg-image="assets/images/breadcrumb/bg/1-1-1919x388.jpg">
-            <div class="container h-100">
-                <div class="row h-100">
-                    <div class="col-lg-12">
-                        <div class="breadcrumb-item">
-                            <h2 class="breadcrumb-heading">Error 404</h2>
-                            <ul>
-                                <li>
-                                    <a href="index.jsp">Home</a>
-                                </li>
-                                <li>404</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-        <div class="error-404-area section-space-y-axis-100" data-bg-image="assets/images/error-404/bg/1-1920x886.png">
-            <div class="container h-100">
-                <div class="row h-100">
-                    <div class="col-lg-12 align-self-center">
-                        <div class="error-404-content">
-                            <div class="error-404-img">
-                                <img src="assets/images/error-404/404.png" alt="Error Image">
-                            </div>
-                            <h2 class="title"><span>Oops,</span> page not found!</h2>
-                            <div class="button-wrap">
-                                <a class="btn btn-error" href="index.jsp">Back to home
-                                    <i class="pe-7s-home"></i>
-                                </a>
+        <main class="main-content">
+            <!-- <div class="breadcrumb-area breadcrumb-height" data-bg-image="assets/images/breadcrumb/bg/1-1-1919x388.jpg">
+                <div class="container h-100">
+                    <div class="row h-100">
+                        <div class="col-lg-12">
+                            <div class="breadcrumb-item">
+                                <h2 class="breadcrumb-heading">Cart Page</h2>
+                                <ul>
+                                    <li>
+                                        <a href="home">Home</a>
+                                    </li>
+                                    <li>Cart Page</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <!-- Main Content Area End Here -->
+            </div> -->
 
-        <!-- Begin Newsletter Area -->
-        <div class="newsletter-area section-border-y-axis" data-bg-image="assets/images/newsletter/1-1920x400.jpg">
-            <div class="container h-100">
-                <div class="row h-100">
-                    <div class="col-12 align-self-center">
-                        <div class="newsletter-content">
-                            <h2 class="newsletter-title">Subscribe Our Newsletter & Get Update Everytime</h2>
-                            <form class="newsletter-form" id="mc-form" action="#">
-                                <input class="input-field" id="mc-email" type="email" autocomplete="off"
-                                    name="Enter Your Email" value="Enter Your Email"
-                                    onblur="if(this.value==''){this.value='Enter Your Email'}"
-                                    onfocus="if(this.value=='Enter Your Email'){this.value=''}">
-                                <div class="btn-wrap">
-                                    <button class="btn btn-submit" id="mc-submit">
-                                        <i class="pe-7s-paper-plane"></i>
-                                    </button>
+            <% List<OrderDetailDTO> listOrderDetail = (List<OrderDetailDTO>) request.getAttribute("listOrderDetails");%>
+            <% if (listOrderDetail != null) {%>
+            <div class="cart-area section-space-y-axis-100">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <form action="" method="post">
+                                <div class="table-content table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+<%--                                                <th class="product_remove">remove</th>--%>
+                                                <th class="product-thumbnail">Images</th>
+                                                <th class="cart-product-name">Product Name</th>
+                                                <th class="product-price">Unit Price</th>
+                                                <th class="product-quantity">Quantity</th>
+                                                <th class="product-subtotal">SubTotal</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <%
+                                                Double totalPrice = 0.0;
+                                                for (OrderDetailDTO orderDetailDTO : listOrderDetail) {
+                                                    totalPrice += orderDetailDTO.getSubtotal();
+                                            %>
+                                            <input type="hidden" name="productId[]" value="<%=orderDetailDTO.getProductId()%>">
+                                            <tr>
+<%--                                                <td class="product_remove">--%>
+<%--                                                    <a href="cart?command=remove&productId=<%=orderDetailDTO.getProductId()%>">--%>
+<%--                                                        <i class="pe-7s-close" data-tippy="Remove"--%>
+<%--                                                            data-tippy-inertia="true" data-tippy-animation="shift-away"--%>
+<%--                                                            data-tippy-delay="50" data-tippy-arrow="true"--%>
+<%--                                                            data-tippy-theme="sharpborder"></i>--%>
+<%--                                                    </a>--%>
+<%--                                                </td>--%>
+                                                <td class="product-thumbnail">
+                                                    <a href="plants?id=<%=orderDetailDTO.getProductId()%>">
+                                                        <img src="<%=orderDetailDTO.getImageLink()%>"
+                                                             style="max-height: 250px"
+                                                            alt="Cart Thumbnail">
+                                                    </a>
+                                                </td>
+                                                <td class="product-name"><a href="plants?id=<%=orderDetailDTO.getProductId()%>"><%=orderDetailDTO.getProductName()%></a></td>
+                                                <td class="product-price"><span class="amount">$<%=orderDetailDTO.getUnitPrice()%></span></td>
+                                                <td> <%=orderDetailDTO.getQuantity() %> </td>
+<%--                                                <td class="quantity">--%>
+<%--                                                    <div class="cart-plus-minus">--%>
+<%--                                                        <input class="cart-plus-minus-box" name="quantity[]" value="<%=orderDetailDTO.getQuantity()%>" type="text">--%>
+<%--                                                        <div class="dec qtybutton">--%>
+<%--                                                            <i class="fa fa-minus"></i>--%>
+<%--                                                        </div>--%>
+<%--                                                        <div class="inc qtybutton">--%>
+<%--                                                            <i class="fa fa-plus"></i>--%>
+<%--                                                        </div>--%>
+<%--                                                    </div>--%>
+<%--                                                </td>--%>
+                                                <td class="product-subtotal"><span class="amount">$<%=orderDetailDTO.getSubtotal()%></span></td>
+                                            </tr>
+                                            <%}%>
+                                        </tbody>
+                                    </table>
+                                </div>
+<%--                                <div class="row">--%>
+<%--                                    <div class="col-12">--%>
+<%--                                        <div class="coupon-all">--%>
+<%--                                            <div class="coupon">--%>
+<%--                                                <input id="coupon_code" class="input-text" name="coupon_code" value=""--%>
+<%--                                                    placeholder="Coupon code" type="text">--%>
+<%--                                                <input class="button mt-xxs-30" name="apply_coupon" value="Apply coupon"--%>
+<%--                                                    type="submit">--%>
+<%--                                            </div>--%>
+<%--                                            <div class="coupon2">--%>
+<%--                                                <input class="button" name="update_cart" value="Update cart"--%>
+<%--                                                    type="submit">--%>
+<%--                                            </div>--%>
+<%--                                        </div>--%>
+<%--                                    </div>--%>
+<%--                                </div>--%>
+                                <div class="row">
+                                    <div class="col-md-5 ml-auto">
+                                        <div class="cart-page-total">
+                                            <h2>Order totals</h2>
+                                            <ul>
+<%--                                                <li>Subtotal <span>$79.35</span></li>--%>
+                                                <li>Total <span>$<%=totalPrice%></span></li>
+                                            </ul>
+
+                                        </div>
+                                    </div>
                                 </div>
                             </form>
-                            <!-- Mailchimp Alerts -->
-                            <div class="mailchimp-alerts text-centre p3-5">
-                                <div class="mailchimp-submitting"></div>
-                                <div class="mailchimp-success"></div>
-                                <div class="mailchimp-error"></div>
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- Newsletter Area End Here -->
+            <% }%>
+
+        </main>
+        <!-- Main Content Area End Here -->
 
         <!-- Begin Footer Area -->
         <div class="footer-area" data-bg-image="assets/images/footer/bg/1-1920x465.jpg">
@@ -882,7 +937,7 @@
                         <div class="col-lg-3">
                             <div class="footer-widget-item">
                                 <div class="footer-widget-logo">
-                                    <a href="index.jsp">
+                                    <a href="home">
                                         <img src="assets/images/logo/dark.png" alt="Logo">
                                     </a>
                                 </div>

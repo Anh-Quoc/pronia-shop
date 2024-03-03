@@ -1,3 +1,9 @@
+<%@ page import="entities.User" %>
+<%@ page import="entities.OrderDetail" %>
+<%@ page import="java.util.List" %>
+<%@ page import="dtos.OrderDTO" %>
+<%@ page import="dtos.CartDTO" %>
+<%@ page import="dtos.CartDetailDTO" %>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -94,7 +100,7 @@
                                     <a href="tel://+00-123-456-789">+00 123 456 789</a>
                                 </div>
 
-                                <a href="index.jsp" class="header-logo">
+                                <a href="home" class="header-logo">
                                     <img src="assets/images/logo/dark.png" alt="Header Logo">
                                 </a>
 
@@ -111,13 +117,34 @@
                                                 aria-expanded="false">
                                                 <i class="pe-7s-users"></i>
                                             </button>
+                                            <%
+                                                boolean isAuthentication = false;
+                                                Cookie[] cookies = request.getCookies();
+                                                if (cookies != null) {
+                                                    for (Cookie cookie : cookies) {
+                                                        if (cookie.getName().equals("customer_session_id")) {
+                                                            isAuthentication = true;
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+                                            %>
+
                                             <ul class="dropdown-menu" aria-labelledby="settingButton">
-                                                <li><a class="dropdown-item" href="my-account.html">My account</a></li>
+                                                <%
+                                                    if (isAuthentication) {
+                                                %>
+                                                <li><a class="dropdown-item" href="my-account">My account</a></li>
+                                                <li><a class="dropdown-item" href="logout?accountType=customer">Logout</a></li>
+                                                <%} else {%>
                                                 <li><a class="dropdown-item" href="login-register.jsp">Login |
-                                                        Register</a>
+                                                    Register</a>
                                                 </li>
+                                                <%}%>
                                             </ul>
                                         </li>
+                                        <% if (isAuthentication) {%>
+                                        <% CartDTO cartDTO = (CartDTO) request.getAttribute("cart");%>
                                         <li class="d-none d-lg-block">
                                             <a href="wishlist.html">
                                                 <i class="pe-7s-like"></i>
@@ -126,9 +153,10 @@
                                         <li class="minicart-wrap me-3 me-lg-0">
                                             <a href="#miniCart" class="minicart-btn toolbar-btn">
                                                 <i class="pe-7s-shopbag"></i>
-                                                <span class="quantity">3</span>
+                                                <span class="quantity"><%=cartDTO.getCartDetails().size()%></span>
                                             </a>
                                         </li>
+                                        <%}%>
                                         <li class="mobile-menu_wrap d-block d-lg-none">
                                             <a href="#mobileMenu" class="mobile-menu_btn toolbar-btn pl-0">
                                                 <i class="pe-7s-menu"></i>
@@ -149,10 +177,10 @@
                                 <nav class="main-nav">
                                     <ul>
                                         <li class="drop-holder">
-                                            <a href="index.jsp">Home</a>
+                                            <a href="home">Home</a>
                                             <!-- <ul class="drop-menu">
                                                 <li>
-                                                    <a href="index.jsp">Home One</a>
+                                                    <a href="home">Home One</a>
                                                 </li>
                                                 <li>
                                                     <a href="index-2.html">Home Two</a>
@@ -212,7 +240,7 @@
                                                     <span class="title">Product Related</span>
                                                     <ul>
                                                         <li>
-                                                            <a href="my-account.html">My Account</a>
+                                                            <a href="my-account">My Account</a>
                                                         </li>
                                                         <li>
                                                             <a href="login-register.jsp">Login | Register</a>
@@ -274,7 +302,7 @@
                         <div class="row align-items-center">
                             <div class="col-lg-3 col-6">
 
-                                <a href="index.jsp" class="header-logo">
+                                <a href="home" class="header-logo">
                                     <img src="assets/images/logo/dark.png" alt="Header Logo">
                                 </a>
 
@@ -284,10 +312,10 @@
                                     <nav class="main-nav">
                                         <ul>
                                             <li class="drop-holder">
-                                                <a href="index.jsp">Home</a>
+                                                <a href="home">Home</a>
                                                 <!-- <ul class="drop-menu">
                                                     <li>
-                                                        <a href="index.jsp">Home One</a>
+                                                        <a href="home">Home One</a>
                                                     </li>
                                                     <li>
                                                         <a href="index-2.html">Home Two</a>
@@ -350,7 +378,7 @@
                                                         <span class="title">Product Related</span>
                                                         <ul>
                                                             <li>
-                                                                <a href="my-account.html">My Account</a>
+                                                                <a href="my-account">My Account</a>
                                                             </li>
                                                             <li>
                                                                 <a href="login-register.jsp">Login | Register</a>
@@ -417,13 +445,21 @@
                                                 aria-expanded="false">
                                                 <i class="pe-7s-users"></i>
                                             </button>
-                                            <ul class="dropdown-menu" aria-labelledby="stickysettingButton">
-                                                <li><a class="dropdown-item" href="my-account.html">My account</a></li>
+                                            <ul class="dropdown-menu" aria-labelledby="settingButton">
+                                                <%
+                                                    if (isAuthentication) {
+                                                %>
+                                                <li><a class="dropdown-item" href="my-account">My account</a></li>
+                                                <li><a class="dropdown-item" href="logout?accountType=customer">Logout</a></li>
+                                                <%} else {%>
                                                 <li><a class="dropdown-item" href="login-register.jsp">Login |
-                                                        Register</a>
+                                                    Register</a>
                                                 </li>
+                                                <%}%>
                                             </ul>
                                         </li>
+                                        <% if (isAuthentication) {%>
+                                        <% CartDTO cartDTO = (CartDTO) request.getAttribute("cart");%>
                                         <li class="d-none d-lg-block">
                                             <a href="wishlist.html">
                                                 <i class="pe-7s-like"></i>
@@ -432,9 +468,10 @@
                                         <li class="minicart-wrap me-3 me-lg-0">
                                             <a href="#miniCart" class="minicart-btn toolbar-btn">
                                                 <i class="pe-7s-shopbag"></i>
-                                                <span class="quantity">3</span>
+                                                <span class="quantity"><%=cartDTO.getCartDetails().size()%></span>
                                             </a>
                                         </li>
+                                        <%}%>
                                         <li class="mobile-menu_wrap d-block d-lg-none">
                                             <a href="#mobileMenu" class="mobile-menu_btn toolbar-btn pl-0">
                                                 <i class="pe-7s-menu"></i>
@@ -486,7 +523,7 @@
                                         <i class="pe-7s-users"></i>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="settingButtonTwo">
-                                        <li><a class="dropdown-item" href="my-account.html">My account</a></li>
+                                        <li><a class="dropdown-item" href="my-account">My account</a></li>
                                         <li><a class="dropdown-item" href="login-register.jsp">Login | Register</a>
                                         </li>
                                     </ul>
@@ -510,7 +547,7 @@
                                         </a>
                                         <!-- <ul class="sub-menu">
                                             <li>
-                                                <a href="index.jsp">
+                                                <a href="home">
                                                     <span class="mm-text">Home One</span>
                                                 </a>
                                             </li>
@@ -615,7 +652,7 @@
                                                 </a>
                                                 <ul class="sub-menu">
                                                     <li>
-                                                        <a href="my-account.html">
+                                                        <a href="my-account">
                                                             <span class="mm-text">My Account</span>
                                                         </a>
                                                     </li>
@@ -733,73 +770,49 @@
                     </div>
                 </div>
             </div> -->
+            <% if (isAuthentication) {%>
+            <% CartDTO cartDTO = (CartDTO) request.getAttribute("cart");%>
             <div class="offcanvas-minicart_wrapper" id="miniCart">
                 <div class="offcanvas-body">
                     <div class="minicart-content">
                         <div class="minicart-heading">
                             <h4 class="mb-0">Shopping Cart</h4>
                             <a href="#" class="button-close"><i class="pe-7s-close" data-tippy="Close"
-                                    data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50"
-                                    data-tippy-arrow="true" data-tippy-theme="sharpborder"></i></a>
+                                                                data-tippy-inertia="true" data-tippy-animation="shift-away"
+                                                                data-tippy-delay="50"
+                                                                data-tippy-arrow="true" data-tippy-theme="sharpborder"></i></a>
                         </div>
                         <ul class="minicart-list">
+                            <% for(CartDetailDTO cartDetailDTO : cartDTO.getCartDetails()) {%>
                             <li class="minicart-product">
-                                <a class="product-item_remove" href="#"><i class="pe-7s-close" data-tippy="Remove"
-                                        data-tippy-inertia="true" data-tippy-animation="shift-away"
-                                        data-tippy-delay="50" data-tippy-arrow="true"
-                                        data-tippy-theme="sharpborder"></i></a>
-                                <a href="single-product-variable.html" class="product-item_img">
-                                    <img class="img-full" src="assets/images/product/small-size/2-1-70x78.png"
-                                        alt="Product Image">
+                                <a class="product-item_remove" href="cart?command=remove&productId=<%=cartDetailDTO.getProductId()%>"><i class="pe-7s-close" data-tippy="Remove"
+                                                                                                                                         data-tippy-inertia="true"
+                                                                                                                                         data-tippy-animation="shift-away"
+                                                                                                                                         data-tippy-delay="50" data-tippy-arrow="true"
+                                                                                                                                         data-tippy-theme="sharpborder"></i></a>
+                                <a href="plants?id=<%=cartDetailDTO.getProductId()%>" class="product-item_img">
+                                    <img class="img-full" src="<%=cartDetailDTO.getProductImage()%>"
+                                         alt="Product Image">
                                 </a>
                                 <div class="product-item_content">
-                                    <a class="product-item_title" href="single-product-variable.html">American
-                                        Marigold</a>
-                                    <span class="product-item_quantity">1 x $23.45</span>
+                                    <a class="product-item_title" href="plants?id=<%=cartDetailDTO.getProductId()%>"><%=cartDetailDTO.getProductName()%></a>
+                                    <span class="product-item_quantity"><%=cartDetailDTO.getQuantity()%> x $<%=cartDetailDTO.getProductPrice()%></span>
                                 </div>
                             </li>
-                            <!-- <li class="minicart-product">
-                                <a class="product-item_remove" href="#"><i class="pe-7s-close" data-tippy="Remove"
-                                        data-tippy-inertia="true" data-tippy-animation="shift-away"
-                                        data-tippy-delay="50" data-tippy-arrow="true"
-                                        data-tippy-theme="sharpborder"></i></a>
-                                <a href="single-product-variable.html" class="product-item_img">
-                                    <img class="img-full" src="assets/images/product/small-size/2-2-70x78.png"
-                                        alt="Product Image">
-                                </a>
-                                <div class="product-item_content">
-                                    <a class="product-item_title" href="single-product-variable.html">Black Eyed
-                                        Susan</a>
-                                    <span class="product-item_quantity">1 x $25.45</span>
-                                </div>
-                            </li> -->
-                            <!-- <li class="minicart-product">
-                                <a class="product-item_remove" href="#">
-                                    <i class="pe-7s-close" data-tippy="Remove" data-tippy-inertia="true"
-                                        data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true"
-                                        data-tippy-theme="sharpborder"></i>
-                                </a>
-                                <a href="single-product-variable.html" class="product-item_img">
-                                    <img class="img-full" src="assets/images/product/small-size/2-3-70x78.png"
-                                        alt="Product Image">
-                                </a>
-                                <div class="product-item_content">
-                                    <a class="product-item_title" href="single-product-variable.html">Bleeding Heart</a>
-                                    <span class="product-item_quantity">1 x $30.45</span>
-                                </div>
-                            </li> -->
+                            <%}%>
                         </ul>
                     </div>
                     <div class="minicart-item_total">
                         <span>Subtotal</span>
-                        <span class="ammount">$79.35</span>
+                        <span class="ammount">$<%=cartDTO.getTotalPrice()%></span>
                     </div>
                     <div class="group-btn_wrap d-grid gap-2">
-                        <a href="cart.html" class="btn btn-dark">View Cart</a>
+                        <a href="cart" class="btn btn-dark">View Cart</a>
                         <a href="checkout.html" class="btn btn-dark">Checkout</a>
                     </div>
                 </div>
             </div>
+            <%}%>
             <div class="global-overlay"></div>
         </header>
         <!-- Main Header Area End Here -->
@@ -814,7 +827,7 @@
                                 <h2 class="breadcrumb-heading">My Account Page</h2>
                                 <ul>
                                     <li>
-                                        <a href="index.jsp">Home</a>
+                                        <a href="home">Home</a>
                                     </li>
                                     <li>My Account</li>
                                 </ul>
@@ -849,7 +862,7 @@
                                         aria-selected="false">Account Details</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="account-logout-tab" href="login-register.jsp" role="tab"
+                                    <a class="nav-link" id="account-logout-tab" href="logout?accountType=customer" role="tab"
                                        aria-selected="false">Logout</a>
                                 </li>
                             </ul>
@@ -872,6 +885,7 @@
                                     <div class="myaccount-orders">
                                         <h4 class="small-title">MY ORDERS</h4>
                                         <div class="table-responsive">
+                                            <% List<OrderDTO> orders = (List<OrderDTO>) request.getAttribute("orders"); %>
                                             <table class="table table-bordered table-hover">
                                                 <tbody>
                                                     <tr>
@@ -881,22 +895,28 @@
                                                         <th>TOTAL</th>
                                                         <th></th>
                                                     </tr>
+                                                    <%
+                                                        if(orders != null && !orders.isEmpty()){
+                                                        for (OrderDTO order : orders) {
+                                                    %>
+
                                                     <tr>
-                                                        <td><a class="account-order-id" href="#">#5364</a></td>
-                                                        <td>Mar 27, 2019</td>
-                                                        <td>On Hold</td>
-                                                        <td>$162.00 for 2 items</td>
-                                                        <td><a href="#" class="btn btn-dark"><span>View</span></a>
+                                                        <td><a class="account-order-id" href="#">#<%=order.getId()%></a></td>
+                                                        <td><%=order.getOrderDate()%></td>
+                                                        <td><%=order.getOrderStatus().getName()%></td>
+                                                        <td>$<%=order.getTotalPrice()%> for <%=order.getOrderDetails().size()%> items</td>
+                                                        <td><a href="order-details?orderId=<%=order.getId()%>" class="btn btn-dark"><span>View</span></a>
                                                         </td>
                                                     </tr>
-                                                    <tr>
-                                                        <td><a class="account-order-id" href="#">#5356</a></td>
-                                                        <td>Mar 27, 2019</td>
-                                                        <td>On Hold</td>
-                                                        <td>$162.00 for 2 items</td>
-                                                        <td><a href="#" class="btn btn-dark"><span>View</span></a>
-                                                        </td>
-                                                    </tr>
+                                                    <%}}%>
+<%--                                                    <tr>--%>
+<%--                                                        <td><a class="account-order-id" href="#">#5356</a></td>--%>
+<%--                                                        <td>Mar 27, 2019</td>--%>
+<%--                                                        <td>On Hold</td>--%>
+<%--                                                        <td>$162.00 for 2 items</td>--%>
+<%--                                                        <td><a href="#" class="btn btn-dark"><span>View</span></a>--%>
+<%--                                                        </td>--%>
+<%--                                                    </tr>--%>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -927,17 +947,18 @@
                                     <div class="myaccount-details">
                                         <form action="#" class="myaccount-form">
                                             <div class="myaccount-form-inner">
+                                                <% User user = (User) request.getAttribute("userInfo"); %>
                                                 <div class="single-input single-input-half">
                                                     <label>First Name*</label>
-                                                    <input type="text">
+                                                    <input type="text" value="<%=user.getFirstName()%>">
                                                 </div>
                                                 <div class="single-input single-input-half">
                                                     <label>Last Name*</label>
-                                                    <input type="text">
+                                                    <input type="text" value="<%=user.getLastName()%>">
                                                 </div>
                                                 <div class="single-input">
                                                     <label>Email*</label>
-                                                    <input type="email">
+                                                    <input type="email" value="<%=user.getEmailAddress()%>">
                                                 </div>
                                                 <div class="single-input">
                                                     <label>Current Password(leave blank to leave
@@ -979,7 +1000,7 @@
                         <div class="col-lg-3">
                             <div class="footer-widget-item">
                                 <div class="footer-widget-logo">
-                                    <a href="index.jsp">
+                                    <a href="home">
                                         <img src="assets/images/logo/dark.png" alt="Logo">
                                     </a>
                                 </div>

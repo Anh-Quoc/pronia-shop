@@ -8,10 +8,10 @@ import lombok.Data;
 public class OrderDetailDTO {
     private Integer id;
     private Integer productId;
+    private String imageLink;
     private String productName;
     private Double unitPrice;
     private Integer quantity;
     private Double subtotal;
     private Integer orderId;
-
 }
