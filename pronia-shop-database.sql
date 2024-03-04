@@ -416,17 +416,17 @@ CREATE TABLE users
     first_name     NVARCHAR(30),
     last_name      NVARCHAR(30),
 
-    email_address  NVARCHAR(30),
-    password       VARCHAR(30),
+    email_address  NVARCHAR(30) NOT NULL UNIQUE,
+    password       VARCHAR(30) NOT NULL CHECK (LEN(password) >= 6),
 
-    country        NVARCHAR(20) NOT NULL,
-    street_address VARCHAR(128) NOT NULL,
+    country        NVARCHAR(20),
+    street_address VARCHAR(128),
     apartment      VARCHAR(128),
 
-    city           VARCHAR(128) NOT NULL,
+    city           VARCHAR(128),
 --     postcode       VARCHAR(128) NOT NULL,
 
-    phone          VARCHAR(11)  NOT NULL,
+    phone          VARCHAR(11),
     active         BIT          DEFAULT 1,
     role_id        INTEGER FOREIGN KEY REFERENCES user_roles (id),
 )

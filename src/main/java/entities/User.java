@@ -19,7 +19,7 @@ public class User {
     private String phone;
 
     private boolean active;
-
+    private Integer roleId;
     private String role;
 
     public User() {

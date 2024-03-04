@@ -33,6 +33,20 @@ public class UserService {
         return userDao.getUserByUserNameAndPassword(username, password);
     }
 
+    public Integer createUserAccount(String firstName, String lastName, String emailAddress, String password, Integer roleId) {
+
+        User newUser = new User();
+        newUser.setFirstName(firstName);
+        newUser.setLastName(lastName);
+        newUser.setEmailAddress(emailAddress);
+        newUser.setPassword(password);
+
+        newUser.setRoleId(roleId);
+
+        return userDao.saveUser(newUser);
+
+    }
+
     public String getRoleOfUserById(Integer id){
         return userDao.getRoleOfUserById(id);
     }

@@ -15,6 +15,7 @@ public class UserDao extends GenericDao<User> implements UserDaoInterface {
 
     private final String SELECT_ACTIVE_USER_BY_EMAIL_AND_PASSWORD = "SELECT * FROM user_view WHERE email_address = ? AND password = ? AND active = 1";
 
+    private final String INSERT_USER_STATEMENT = "INSERT INTO users (first_name, last_name, email_address, password, role_id) VALUES (?, ?, ?, ?, ?)";
     private final String DELETE_USER_ACCOUNT_STATEMENT = "UPDATE users SET active = 0 WHERE id = ?";
 
     private UserDao() {
@@ -55,6 +56,11 @@ public class UserDao extends GenericDao<User> implements UserDaoInterface {
         }
         return user.getRole();
     }
+
+    public Integer saveUser(User user) {
+       return executeUpdate(INSERT_USER_STATEMENT, user.getFirstName(), user.getLastName(), user.getEmailAddress(), user.getPassword(), user.getRoleId());
+    }
+
     @Override
     public void deleteUser(int id) {
         executeUpdate(DELETE_USER_ACCOUNT_STATEMENT, id);

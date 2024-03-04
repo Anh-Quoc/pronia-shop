@@ -74,6 +74,12 @@ public class CartService {
         return cartDTO;
     }
 
+    public void createCart(Integer customerId) {
+        Cart cart = new Cart();
+        cart.setCustomerId(customerId);
+        cartDao.saveCart(cart);
+    }
+
 
     public void addPlantToCart(Integer customerId, Integer productId, Integer quantity) {
 
