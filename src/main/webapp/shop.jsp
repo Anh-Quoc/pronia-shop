@@ -474,14 +474,14 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="widgets-item widgets-filter">
-                                    <h2 class="widgets-title mb-4">Price Filter</h2>
-                                    <div class="price-filter">
-                                        <input type="text" class="pronia-range-slider" name="pronia-range-slider"
-                                               value="" data-type="double" data-min="16" data-from="16" data-to="300"
-                                               data-max="350" data-grid="false"/>
-                                    </div>
-                                </div>
+<%--                                <div class="widgets-item widgets-filter">--%>
+<%--                                    <h2 class="widgets-title mb-4">Price Filter</h2>--%>
+<%--                                    <div class="price-filter">--%>
+<%--                                        <input type="text" class="pronia-range-slider" name="pronia-range-slider"--%>
+<%--                                               value="" data-type="double" data-min="16" data-from="16" data-to="300"--%>
+<%--                                               data-max="350" data-grid="false"/>--%>
+<%--                                    </div>--%>
+<%--                                </div>--%>
 
                                 <% List<Tag> listPlantTag = (List<Tag>) request.getAttribute("listPlantTag"); %>
                                 <% if (listPlantTag != null && !listPlantTag.isEmpty()) { %>
@@ -538,12 +538,20 @@
                                     </ul>
                                 </li>
                                 <li class="short">
-                                    <select class="nice-select">
-                                        <option value="1">Sort by Default</option>
-                                        <option value="4">Sort by Latest</option>
-                                        <option value="5">Sort by High Price</option>
-                                        <option value="6">Sort by Low Price</option>
+                                    <script>
+                                        function changeSortType() {
+                                            document.getElementById("sortType").submit();
+                                        }
+                                    </script>
+                                    <form action="shop" id="sortType" method="GET">
+
+                                    <select class="nice-select" name="sortType" onchange="changeSortType()">
+                                        <option value="default">Sort by Default</option>
+<%--                                        <option value="4">Sort by Latest</option>--%>
+                                        <option value="price-desc">Sort by High Price</option>
+                                        <option value="price-asc">Sort by Low Price</option>
                                     </select>
+                                    </form>
                                 </li>
                             </ul>
                         </div>
@@ -712,9 +720,12 @@
                         <div class="pagination-area">
                             <nav aria-label="Page navigation example">
                                 <ul class="pagination justify-content-center">
-                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+
+                                    <li class="page-item active"><a class="page-link" href="shop?page=1">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="shop?page=2">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="shop?page=3">3</a></li>
+                                    <li class="page-item"><a class="page-link" href="shop?page=4">4</a></li>
+                                    <li class="page-item"><a class="page-link" href="shop?page=5">5</a></li>
                                     <li class="page-item">
                                         <a class="page-link" href="#" aria-label="Next">&raquo;</a>
                                     </li>

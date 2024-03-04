@@ -805,3 +805,18 @@ FROM plants
          JOIN plant_tags ON plants.id = plant_tags.plant_id
          JOIN tags ON plant_tags.tag_id = tags.id
 
+CREATE PROCEDURE usb_PlantsFindByPage(@page_index INT, @page_size INT)
+AS
+    BEGIN
+
+        WITH plantPage AS
+        (
+            SELECT Plants.*, ROW_NUMBER() OVER (ORDER BY id) AS [index]
+            FROM Plants
+        )
+
+        SELECT * FROM plantPage
+        WHERE plantPage.[index] BETWEEN (@page_index - 1) * @page_size + 1 AND @page_index * @page_size
+    END
+
+EXEC usb_PlantsFindByPage 1, 5

@@ -148,6 +148,7 @@ public class CartService {
 
         cartDetailDao.deleteCartDetailByCartId(cart.getId());
         cartDao.updateCartTotalPrice(cart.getId());
+        plantService.updatePlantQuantity(cart);
         return orderId;
     }
 

@@ -3,11 +3,9 @@ package services;
 
 import daos.impl.PlantDao;
 
-import dtos.CategoryDTO;
-import dtos.TagDTO;
+import dtos.*;
 import entities.Category;
 import entities.Plant;
-import dtos.PlantDTO;
 import entities.Tag;
 
 import java.util.List;
@@ -16,6 +14,7 @@ import java.util.stream.Collectors;
 
 public class PlantService {
 
+    private final Integer PAGE_SIZE = 9;
     private PlantTagService plantTagService;
     private PlantCategoryService plantCategoryService;
     private PlantDao plantDAO;
@@ -89,6 +88,97 @@ public class PlantService {
 
         return plants;
     }
+
+    public List<PlantDTO> getAllActivePlants(Integer pageNumber){
+        List<PlantDTO> plants = new Vector<>();
+        List<Plant> listPlantEntity = plantDAO.getAllActivePlant(pageNumber, PAGE_SIZE);
+
+        listPlantEntity.forEach(plant -> {
+            PlantDTO plantDTO = new PlantDTO();
+
+            List<TagDTO> tags = plantTagService.getTagsByPlantId(plant.getId()).stream().map(tag -> {
+                TagDTO tagDTO = new TagDTO();
+                tagDTO.loadFromEntity(tag);
+                return tagDTO;
+            }).collect(Collectors.toList());
+
+
+            List<CategoryDTO> categories = plantCategoryService.getCategoriesByPlantId(plant.getId()).stream().map(category -> {
+                CategoryDTO categoryDTO = new CategoryDTO();
+                categoryDTO.loadFromEntity(category);
+                return categoryDTO;
+            }).collect(Collectors.toList());
+
+            plantDTO.loadFromEntity(plant, tags, categories);
+
+            plants.add(plantDTO);
+        });
+
+        return plants;
+    }
+
+    public List<PlantDTO> getAllActivePlantsOrderByPriceAsc(){
+        List<PlantDTO> plants = new Vector<>();
+        List<Plant> listPlantEntity = plantDAO.getAllActivePlantOrderByPriceAsc();
+
+        listPlantEntity.forEach(plant -> {
+            PlantDTO plantDTO = new PlantDTO();
+
+            List<TagDTO> tags = plantTagService.getTagsByPlantId(plant.getId()).stream().map(tag -> {
+                TagDTO tagDTO = new TagDTO();
+                tagDTO.loadFromEntity(tag);
+                return tagDTO;
+            }).collect(Collectors.toList());
+
+
+            List<CategoryDTO> categories = plantCategoryService.getCategoriesByPlantId(plant.getId()).stream().map(category -> {
+                CategoryDTO categoryDTO = new CategoryDTO();
+                categoryDTO.loadFromEntity(category);
+                return categoryDTO;
+            }).collect(Collectors.toList());
+
+            plantDTO.loadFromEntity(plant, tags, categories);
+
+            plants.add(plantDTO);
+        });
+
+        return plants;
+
+    }
+
+    public List<PlantDTO> getAllActivePlantsOrderByPriceDesc(){
+        List<PlantDTO> plants = new Vector<>();
+        List<Plant> listPlantEntity = plantDAO.getAllActivePlantOrderByPriceDesc();
+
+        listPlantEntity.forEach(plant -> {
+            PlantDTO plantDTO = new PlantDTO();
+
+            List<TagDTO> tags = plantTagService.getTagsByPlantId(plant.getId()).stream().map(tag -> {
+                TagDTO tagDTO = new TagDTO();
+                tagDTO.loadFromEntity(tag);
+                return tagDTO;
+            }).collect(Collectors.toList());
+
+
+            List<CategoryDTO> categories = plantCategoryService.getCategoriesByPlantId(plant.getId()).stream().map(category -> {
+                CategoryDTO categoryDTO = new CategoryDTO();
+                categoryDTO.loadFromEntity(category);
+                return categoryDTO;
+            }).collect(Collectors.toList());
+
+            plantDTO.loadFromEntity(plant, tags, categories);
+
+            plants.add(plantDTO);
+        });
+
+        return plants;
+    }
+
+    public Integer getNumberOfPages() {
+        Integer totalPlants = plantDAO.getNumberOfPlants();
+        return (int) Math.ceil((double) totalPlants / PAGE_SIZE);
+    }
+
 
     public PlantDTO getPlantById(int id) {
         Plant plant = plantDAO.getActivePlantById(id);
@@ -239,6 +329,17 @@ public class PlantService {
         });
 
         return plants;
+    }
+
+    public void updatePlantQuantity(CartDTO cartDTO) {
+        List<CartDetailDTO> cartDetails = cartDTO.getCartDetails();
+        for (CartDetailDTO cartDetail : cartDetails) {
+            Plant plant = plantDAO.getPlantById(cartDetail.getProductId());
+            int quantity = plant.getQuantity() - cartDetail.getQuantity();
+            if(quantity > 0) {
+                plantDAO.updatePlantQuantity(cartDetail.getProductId(), quantity);
+            }
+        }
     }
 
 }

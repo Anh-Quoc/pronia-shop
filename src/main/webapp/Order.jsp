@@ -404,12 +404,12 @@
                     </td>
 
                     <td>
-                        <% if (order.getOrderStatus().getName().equals("Pending")) { %>
+<%--                        <% if (order.getOrderStatus().getName().equals("Pending")) { %>--%>
                         <a href="#editOrderModal_<%=order.getId()%>" class="edit" data-toggle="modal"><i
                                 class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                         <a href="#deleteOrderModal_<%=order.getId()%>" class="delete" data-toggle="modal"><i
                                 class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-                        <% } %>
+<%--                        <% } %>--%>
                     </td>
 
                 </tr>
@@ -466,7 +466,6 @@
 <% List<OrderStatus> listOrderStatus = (List<OrderStatus>) request.getAttribute("listOrderStatus");%>
 <% if(listOrders != null && !listOrders.isEmpty()) { %>
 <% for (OrderDTO order : listOrders) { %>
-<% if(order.getOrderStatus().getName().equals("Pending")) { %>
 <div id="editOrderModal_<%=order.getId()%>" class="modal fade">
    <div class="modal-dialog">
         <div class="modal-content">
@@ -518,6 +517,6 @@
         </div>
     </div>
 </div>
-<% }}} %>
+<% }} %>
 </body>
 </html>

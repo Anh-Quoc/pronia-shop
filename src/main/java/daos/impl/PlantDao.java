@@ -4,11 +4,14 @@ import daos.PlantDaoInterface;
 import entities.Plant;
 import mappers.impl.PlantMapper;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class PlantDao extends GenericDao<Plant> implements PlantDaoInterface {
 
     private final String SELECT_ALL_PLANT_STATEMENT = "SELECT * FROM plants";
+
+    private final String SELECT_ALL_PLANT_PER_PAGE_STATEMENT = "EXEC usb_PlantsFindByPage ?, ?";
     private final String SELECT_PLANT_BY_TITLE_STATEMENT = "SELECT * FROM plants WHERE plants.title LIKE ?";
     private final String SELECT_PLANT_BY_ID_STATEMENT = "SELECT * FROM plants WHERE plants.id = ?";
     private final String SELECT_PLANT_ORDER_BY_SALE_OPENING_STATEMENT = "SELECT TOP (?) * FROM plants ORDER BY plants.sale_opening DESC";
@@ -16,6 +19,7 @@ public class PlantDao extends GenericDao<Plant> implements PlantDaoInterface {
     private final String SELECT_FEATURED_PLANT_STATEMENT = "SELECT TOP (?) * FROM plants ORDER BY plants.sale_opening";
     private final String INSERT_PLANT_STATEMENT = "INSERT INTO plants (title, description, image_link, color, unit_price, quantity, sale_opening, stock_status, active) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private final String UPDATE_PLANT_STATEMENT = "UPDATE plants SET title = ?, description = ?, image_link = ?, color = ?, unit_price = ?, quantity = ?, sale_opening = ?, stock_status = ?, active = ? WHERE id = ?";
+    private final String UPDATE_PLANT_QUANTITY_STATEMENT = "UPDATE plants SET quantity = ? WHERE id = ?";
     private final String DELETE_PLANT_STATEMENT = "UPDATE plants SET active = 0 WHERE id = ?";
 
     private static PlantDao instance = null;
@@ -31,6 +35,10 @@ public class PlantDao extends GenericDao<Plant> implements PlantDaoInterface {
         return instance;
     }
 
+    public Integer getNumberOfPlants() {
+        List<Plant> allPlant = getAllPlant();
+        return allPlant.size();
+    }
 
     @Override
     public Plant getPlantById(int id) {
@@ -50,8 +58,24 @@ public class PlantDao extends GenericDao<Plant> implements PlantDaoInterface {
         return result;
     }
 
+    public List<Plant> getAllActivePlantOrderByPriceAsc(){
+        List<Plant> result = executeQuery(SELECT_ALL_PLANT_STATEMENT + " WHERE active = 1 ORDER BY unit_price ASC", new PlantMapper());
+        return result;
+    }
+
+    public List<Plant> getAllActivePlantOrderByPriceDesc(){
+        List<Plant> result = executeQuery(SELECT_ALL_PLANT_STATEMENT + " WHERE active = 1 ORDER BY unit_price DESC", new PlantMapper());
+        return result;
+    }
+
+
     public List<Plant> getAllActivePlant() {
         List<Plant> result = executeQuery(SELECT_ALL_PLANT_STATEMENT + " WHERE active = 1", new PlantMapper());
+        return result;
+    }
+
+    public List<Plant> getAllActivePlant(Integer pageNumber, Integer pageSize) {
+        List<Plant> result = executeQuery(SELECT_ALL_PLANT_PER_PAGE_STATEMENT, new PlantMapper(), pageNumber, pageSize);
         return result;
     }
 
@@ -101,6 +125,10 @@ public class PlantDao extends GenericDao<Plant> implements PlantDaoInterface {
         executeUpdate(UPDATE_PLANT_STATEMENT, plant.getTitle(), plant.getDescription(), plant.getImageLink(),
                 plant.getColor(), plant.getUnitPrice(), plant.getQuantity(), plant.getSaleOpening(),
                 plant.getStockStatus(), plant.isActive(), plant.getId());
+    }
+
+    public void updatePlantQuantity(int id, int quantity) {
+        executeUpdate(UPDATE_PLANT_QUANTITY_STATEMENT, quantity, id);
     }
 
     @Override

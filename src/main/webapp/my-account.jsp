@@ -515,12 +515,21 @@
                                         id="settingButtonTwo" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="pe-7s-users"></i>
                                     </button>
-                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="settingButtonTwo">
+                                    <ul class="dropdown-menu" aria-labelledby="settingButton">
+                                        <%
+                                            if (isAuthentication) {
+                                        %>
+
                                         <li><a class="dropdown-item" href="my-account">My account</a></li>
-                                        <li><a class="dropdown-item" href="login-register.jsp">Login | Register</a>
+                                        <li><a class="dropdown-item" href="logout?accountType=customer">Logout</a></li>
+                                        <%} else {%>
+                                        <li><a class="dropdown-item" href="login-register.jsp">Login |
+                                            Register</a>
                                         </li>
+                                        <%}%>
                                     </ul>
                                 </li>
+
                                 <li>
                                     <a href="wishlist.html">
                                         <i class="pe-7s-like"></i>

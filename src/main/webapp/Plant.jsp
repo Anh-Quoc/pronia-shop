@@ -355,6 +355,10 @@
 <%--                        <input type="submit">--%>
 <%--                    </form>--%>
 <%--                </div>--%>
+
+                <a href="admin-plants?command=READ&active=true">Plant active</a>
+                <a href="admin-plants?command=READ&active=false">Plant inactive</a>
+
             </div>
             <table class="table table-striped table-hover">
                 <thead>

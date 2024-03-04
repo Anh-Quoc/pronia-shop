@@ -24,7 +24,6 @@ public class OrderController extends HttpServlet {
         String command = req.getParameter("command");
         switch (command) {
             case "READ":
-                req.setAttribute("listOrderStatus", orderService.getAllOrderStatus());
                 getAllOrder(req, resp);
                 break;
             case "SEARCH":
@@ -36,6 +35,7 @@ public class OrderController extends HttpServlet {
     }
 
     private void getAllOrder(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("listOrderStatus", orderService.getAllOrderStatus());
         req.setAttribute("listOrders", orderService.getAllOrders());
         req.getRequestDispatcher("Order.jsp").forward(req, resp);
     }

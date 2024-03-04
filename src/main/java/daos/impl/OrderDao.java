@@ -14,7 +14,7 @@ public class OrderDao extends GenericDao<Order> implements OrderDaoInterface {
 
     private static final String INSERT_ORDER_STATEMENT = "INSERT INTO orders (country, street_address, apartment, city, total_price, order_date, customer_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-    private static final String UPDATE_ORDER_STATUS_STATEMENT = "UPDATE orders SET order_status_id = ? WHERE id = ? AND order_status_id = 1";
+    private static final String UPDATE_ORDER_STATUS_STATEMENT = "UPDATE orders SET order_status_id = ? WHERE id = ?";
     private static OrderDao instance;
 
     private OrderDao() {

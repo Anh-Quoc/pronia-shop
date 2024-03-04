@@ -46,7 +46,8 @@ public class PlantController extends HttpServlet {
 
         switch (command) {
             case "READ":
-                getAllPlant(req, resp);
+                String active = req.getParameter("active");
+                getAllPlant(req, resp, active);
                 break;
             case "DELETE":
                 int id = Integer.parseInt(req.getParameter("plantID"));
@@ -124,7 +125,21 @@ public class PlantController extends HttpServlet {
     }
 
 
+    private void getAllPlant(HttpServletRequest req, HttpServletResponse resp, String active) throws ServletException, IOException {
+        if(active == null) {
+            req.setAttribute("listPlants", plantService.getAllPlant());
+        } else if (active.equals("true")){
+            req.setAttribute("listPlants", plantService.getAllPlant().stream().filter(plant -> plant.isActive() == true).collect(toList()));
+        } else {
+            req.setAttribute("listPlants", plantService.getAllPlant().stream().filter(plant -> plant.isActive() == false).collect(toList()));
+        }
+//        req.setAttribute("listPlants", plantService.getAllPlant().stream().filter(plant -> plant.isActive() == ).collect(toList()));
+        req.setAttribute("listPlantCategories", plantCategoryService.getAllPlantCategory());
+        req.setAttribute("listPlantTags", plantTagService.getAllPlantTag());
+        req.getRequestDispatcher("Plant.jsp").forward(req, resp);
+    }
     private void getAllPlant(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         req.setAttribute("listPlants", plantService.getAllPlant());
         req.setAttribute("listPlantCategories", plantCategoryService.getAllPlantCategory());
         req.setAttribute("listPlantTags", plantTagService.getAllPlantTag());
