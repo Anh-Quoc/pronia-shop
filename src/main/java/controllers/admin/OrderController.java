@@ -24,6 +24,7 @@ public class OrderController extends HttpServlet {
         String command = req.getParameter("command");
         switch (command) {
             case "READ":
+                req.setAttribute("listOrderStatus", orderService.getAllOrderStatus());
                 getAllOrder(req, resp);
                 break;
             case "SEARCH":
@@ -42,6 +43,16 @@ public class OrderController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        String command = req.getParameter("command");
+        switch (command) {
+            case "UPDATE":
+                Integer orderId = Integer.parseInt(req.getParameter("orderID"));
+                Integer orderStatusId = Integer.parseInt(req.getParameter("orderStatusId"));
+                orderService.updateOrderStatus(orderId, orderStatusId);
+                getAllOrder(req, resp);
+                break;
+            default:
+                break;
+        }
     }
 }

@@ -13,6 +13,8 @@ public class OrderDao extends GenericDao<Order> implements OrderDaoInterface {
     private static final String SELECT_ORDERS_BY_CUSTOMER_ID_STATEMENT = "SELECT * FROM orders WHERE customer_id = ? ORDER BY order_date DESC";
 
     private static final String INSERT_ORDER_STATEMENT = "INSERT INTO orders (country, street_address, apartment, city, total_price, order_date, customer_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+    private static final String UPDATE_ORDER_STATUS_STATEMENT = "UPDATE orders SET order_status_id = ? WHERE id = ? AND order_status_id = 1";
     private static OrderDao instance;
 
     private OrderDao() {
@@ -38,6 +40,11 @@ public class OrderDao extends GenericDao<Order> implements OrderDaoInterface {
 
     public Integer insertOrder(Order order) {
        return executeUpdate(INSERT_ORDER_STATEMENT, order.getCountry(), order.getStreetAddress(), order.getApartment(), order.getCity(), order.getTotalPrice(), order.getOrderDate(), order.getCustomerId());
+    }
+
+    public void updateOrderStatus(Integer orderId, Integer orderStatusId) {
+
+        executeUpdate(UPDATE_ORDER_STATUS_STATEMENT, orderStatusId, orderId);
     }
 
 }

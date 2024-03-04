@@ -1,5 +1,6 @@
 <%@ page import="java.util.List" %>
 <%@ page import="dtos.OrderDTO" %>
+<%@ page import="entities.OrderStatus" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -402,16 +403,15 @@
                     <td><%=order.getCustomerPhone()%>
                     </td>
 
-                    <% if (order.getOrderStatus().getName().equals("Processing")) { %>
-
-                    <% } else { %>
                     <td>
+                        <% if (order.getOrderStatus().getName().equals("Pending")) { %>
                         <a href="#editOrderModal_<%=order.getId()%>" class="edit" data-toggle="modal"><i
                                 class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                         <a href="#deleteOrderModal_<%=order.getId()%>" class="delete" data-toggle="modal"><i
                                 class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                        <% } %>
                     </td>
-                    <%}%>
+
                 </tr>
                 <% } %>
                 <% } %>
@@ -463,12 +463,14 @@
 <%--</div>--%>
 
 <!-- Edit Modal HTML -->
+<% List<OrderStatus> listOrderStatus = (List<OrderStatus>) request.getAttribute("listOrderStatus");%>
 <% if(listOrders != null && !listOrders.isEmpty()) { %>
 <% for (OrderDTO order : listOrders) { %>
+<% if(order.getOrderStatus().getName().equals("Pending")) { %>
 <div id="editOrderModal_<%=order.getId()%>" class="modal fade">
    <div class="modal-dialog">
         <div class="modal-content">
-            <form action="adminn-orders" method="POST">
+            <form action="admin-orders" method="POST">
                 <input type="hidden" name="command" value="UPDATE">
                 <input type="hidden" name="orderID" value="<%=order.getId()%>">
                 <div class="modal-header">
@@ -478,6 +480,11 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Order status</label>
+                        <select name="orderStatusId">
+                            <% for (OrderStatus orderStatus : listOrderStatus) { %>
+                            <option value="<%=orderStatus.getId()%>"<% if (orderStatus.getId() == order.getOrderStatus().getId()) { %> selected <% } %>><%=orderStatus.getName()%></option>
+                            <% } %>
+                        </select>
 <%--                        <input type="text" class="form-control" name="name" value="<%=tag.getName()%>" required>--%>
                     </div>
                 </div>
@@ -511,7 +518,6 @@
         </div>
     </div>
 </div>
-<% } %>
-<% } %>
+<% }}} %>
 </body>
 </html>

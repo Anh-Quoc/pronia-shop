@@ -8,6 +8,7 @@ import dtos.OrderDTO;
 import dtos.OrderDetailDTO;
 import entities.Order;
 import entities.OrderDetail;
+import entities.OrderStatus;
 import entities.User;
 
 import java.util.List;
@@ -90,6 +91,14 @@ public class OrderService {
 
         }
         return orderDTOS;
+    }
+
+    public List<OrderStatus> getAllOrderStatus() {
+        return orderStatusDao.getAllOrderStatus();
+    }
+
+    public void updateOrderStatus(Integer orderId, Integer orderStatusId) {
+        orderDao.updateOrderStatus(orderId, orderStatusId);
     }
 
     public Integer addOrder(Order order){

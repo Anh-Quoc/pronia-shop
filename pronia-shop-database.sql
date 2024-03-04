@@ -436,23 +436,7 @@ INSERT INTO users (first_name, last_name, email_address, password, country, stre
 VALUES ('Hoang Anh', 'Quoc', 'anhquoc5.1.2003.q@gmail.com', '123456', 'Viet Nam', 'Thach Hoa - Thach That',
         'YoungHouse', 'Ha Noi', '0859159180', 1),
        ('Nguyen Thi', 'A', 'nguyenthiA1873@gmail.com', '123456', 'Viet Nam', 'Trieu Son', 'YoungHouse', 'Thanh Hoa',
-        '0859159180', 2),
-       ('John', 'Doe', 'john.doe@example.com', 'password123', 'USA', '123 Main St', 'Apt 456', 'New York',
-        '555-1234', 2),
-       ('Jane', 'Smith', 'jane.smith@example.com', 'pass456', 'Canada', '789 Maple Ave', 'Suite 789', 'Toronto',
-        , '555-5678', 2),
-       ('Michael', 'Johnson', 'michael.johnson@example.com', 'pass789', 'UK', '456 Oak Lane', 'Apt 101', 'London',
-        , '555-8765', 2),
-       ('Sophie', 'Taylor', 'sophie.taylor@example.com', 'secure123', 'Australia', '789 Elm Street', 'Unit 23',
-        'Sydney', '555-4321', 2),
-       ('Carlos', 'Rodriguez', 'carlos.rodriguez@example.com', 'pass123', 'Spain', 'Calle Principal', 'Piso 3',
-        'Barcelona', '555-9876', 2),
-       ('Anna', 'Lopez', 'anna.lopez@example.com', 'password456', 'Italy', 'Via Roma', 'Appartamento 5', 'Rome',
-        '555-6543', 2),
-       ('Makoto', 'Sato', 'makoto.sato@example.com', 'pass789', 'Japan', '1-2-3 Shinjuku', 'Apartment 101', 'Tokyo',
-        '555-7890', 2),
-       ('Yuki', 'Tanaka', 'yuki.tanaka@example.com', 'secure123', 'Japan', '4-5-6 Shibuya', 'Unit 203', 'Tokyo',
-        , '555-0123', 2)
+        '0859159180', 2)
 GO
 CREATE VIEW user_view AS
 SELECT users.*, user_roles.name AS role_name
