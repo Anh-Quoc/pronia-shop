@@ -424,35 +424,35 @@ CREATE TABLE users
     apartment      VARCHAR(128),
 
     city           VARCHAR(128) NOT NULL,
-    postcode       VARCHAR(128) NOT NULL,
+--     postcode       VARCHAR(128) NOT NULL,
 
     phone          VARCHAR(11)  NOT NULL,
     active         BIT          DEFAULT 1,
     role_id        INTEGER FOREIGN KEY REFERENCES user_roles (id),
 )
 GO
-INSERT INTO users (first_name, last_name, email_address, password, country, street_address, apartment, city, postcode,
+INSERT INTO users (first_name, last_name, email_address, password, country, street_address, apartment, city,
                    phone, role_id)
 VALUES ('Hoang Anh', 'Quoc', 'anhquoc5.1.2003.q@gmail.com', '123456', 'Viet Nam', 'Thach Hoa - Thach That',
-        'YoungHouse', 'Ha Noi', '123456', '0859159180', 1),
-       ('Nguyen Thi', 'A', 'nguyenthiA1873@gmail.com', '123456', 'Viet Nam', 'Trieu Son', 'YoungHouse', 'Thanh Hoa', '123456',
+        'YoungHouse', 'Ha Noi', '0859159180', 1),
+       ('Nguyen Thi', 'A', 'nguyenthiA1873@gmail.com', '123456', 'Viet Nam', 'Trieu Son', 'YoungHouse', 'Thanh Hoa',
         '0859159180', 2),
-       ('John', 'Doe', 'john.doe@example.com', 'password123', 'USA', '123 Main St', 'Apt 456', 'New York', '10001',
+       ('John', 'Doe', 'john.doe@example.com', 'password123', 'USA', '123 Main St', 'Apt 456', 'New York',
         '555-1234', 2),
        ('Jane', 'Smith', 'jane.smith@example.com', 'pass456', 'Canada', '789 Maple Ave', 'Suite 789', 'Toronto',
-        'M1M 1M1', '555-5678', 2),
+        , '555-5678', 2),
        ('Michael', 'Johnson', 'michael.johnson@example.com', 'pass789', 'UK', '456 Oak Lane', 'Apt 101', 'London',
-        'SW1A 1AA', '555-8765', 2),
+        , '555-8765', 2),
        ('Sophie', 'Taylor', 'sophie.taylor@example.com', 'secure123', 'Australia', '789 Elm Street', 'Unit 23',
-        'Sydney', '2000', '555-4321', 2),
+        'Sydney', '555-4321', 2),
        ('Carlos', 'Rodriguez', 'carlos.rodriguez@example.com', 'pass123', 'Spain', 'Calle Principal', 'Piso 3',
-        'Barcelona', '08001', '555-9876', 2),
+        'Barcelona', '555-9876', 2),
        ('Anna', 'Lopez', 'anna.lopez@example.com', 'password456', 'Italy', 'Via Roma', 'Appartamento 5', 'Rome',
-        '00100', '555-6543', 2),
+        '555-6543', 2),
        ('Makoto', 'Sato', 'makoto.sato@example.com', 'pass789', 'Japan', '1-2-3 Shinjuku', 'Apartment 101', 'Tokyo',
-        '160-0022', '555-7890', 2),
+        '555-7890', 2),
        ('Yuki', 'Tanaka', 'yuki.tanaka@example.com', 'secure123', 'Japan', '4-5-6 Shibuya', 'Unit 203', 'Tokyo',
-        '150-0043', '555-0123', 2)
+        , '555-0123', 2)
 GO
 CREATE VIEW user_view AS
 SELECT users.*, user_roles.name AS role_name
@@ -495,7 +495,7 @@ CREATE TABLE orders
     apartment       VARCHAR(128),
 
     city            VARCHAR(128)  NOT NULL,
-    postcode        VARCHAR(128),
+--     postcode        VARCHAR(128),
 
     total_price     DECIMAL(5, 2) NOT NULL DEFAULT 0,
     order_date      DATETIME     DEFAULT CURRENT_TIMESTAMP,
@@ -719,7 +719,7 @@ SELECT orders.id,
        orders.street_address,
        orders.apartment,
        orders.city,
-       orders.postcode,
+--        orders.postcode,
        orders.total_price,
        orders.order_date,
        order_status.name AS order_status,

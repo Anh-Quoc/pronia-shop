@@ -47,7 +47,6 @@ public class OrderService {
             orderDTO.setStreetAddress(order.getStreetAddress());
             orderDTO.setApartment(order.getApartment());
             orderDTO.setCity(order.getCity());
-            orderDTO.setPostcode(order.getPostcode());
             orderDTO.setTotalPrice(order.getTotalPrice());
             orderDTO.setOrderDate(order.getOrderDate());
             orderDTO.setOrderDetails(orderDetails);
@@ -77,7 +76,6 @@ public class OrderService {
             orderDTO.setStreetAddress(order.getStreetAddress());
             orderDTO.setApartment(order.getApartment());
             orderDTO.setCity(order.getCity());
-            orderDTO.setPostcode(order.getPostcode());
             orderDTO.setTotalPrice(order.getTotalPrice());
             orderDTO.setOrderDate(order.getOrderDate());
             orderDTO.setOrderDetails(orderDetails);

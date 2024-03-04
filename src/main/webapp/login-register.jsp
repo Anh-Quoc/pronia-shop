@@ -1,3 +1,4 @@
+<%@ page import="entities.UserSession" %>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -114,16 +115,8 @@
                                         <ul class="dropdown-menu" aria-labelledby="settingButton">
 
                                             <%
-                                                boolean isAuthentication = false;
-                                                Cookie[] cookies = request.getCookies();
-                                                if (cookies != null) {
-                                                    for (Cookie cookie : cookies) {
-                                                        if (cookie.getName().equals("customer_session_id")) {
-                                                            isAuthentication = true;
-                                                            break;
-                                                        }
-                                                    }
-                                                }
+                                                UserSession userSession = (UserSession) session.getAttribute("userSession");
+                                                boolean isAuthentication = userSession != null;
                                             %>
                                             <%
                                                 if (isAuthentication) {

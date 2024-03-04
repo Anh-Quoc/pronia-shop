@@ -20,7 +20,6 @@ public class UserMapper implements RowMapperInterface<User> {
             newUser.setStreetAddress(resultSet.getString("street_address"));
             newUser.setApartment(resultSet.getString("apartment"));
             newUser.setCity(resultSet.getString("city"));
-            newUser.setPostcode(resultSet.getString("postcode"));
             newUser.setPhone(resultSet.getString("phone"));
             newUser.setActive(resultSet.getBoolean("active"));
             newUser.setRole(resultSet.getString("role_name"));

@@ -28,6 +28,7 @@ public class OrderDetailPageController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Integer orderId = Integer.parseInt(req.getParameter("orderId"));
         UserSession userSession = (UserSession) req.getAttribute("userSession");
+        req.setAttribute("userSession", userSession);
         req.setAttribute("cart", cartService.getCart(userSession.getUserId()));
         req.setAttribute("listOrderDetails", orderDetailService.getOrderDetailsByOrderId(orderId));
         req.getRequestDispatcher("CustomerOrderDetail.jsp").forward(req, resp);

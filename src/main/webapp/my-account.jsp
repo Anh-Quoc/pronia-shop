@@ -4,6 +4,7 @@
 <%@ page import="dtos.OrderDTO" %>
 <%@ page import="dtos.CartDTO" %>
 <%@ page import="dtos.CartDetailDTO" %>
+<%@ page import="entities.UserSession" %>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -118,16 +119,8 @@
                                                 <i class="pe-7s-users"></i>
                                             </button>
                                             <%
-                                                boolean isAuthentication = false;
-                                                Cookie[] cookies = request.getCookies();
-                                                if (cookies != null) {
-                                                    for (Cookie cookie : cookies) {
-                                                        if (cookie.getName().equals("customer_session_id")) {
-                                                            isAuthentication = true;
-                                                            break;
-                                                        }
-                                                    }
-                                                }
+                                                UserSession userSession = (UserSession) request.getSession().getAttribute("userSession");
+                                                boolean isAuthentication = userSession != null;
                                             %>
 
                                             <ul class="dropdown-menu" aria-labelledby="settingButton">

@@ -38,6 +38,7 @@ public class CheckoutPageController extends HttpServlet {
             resp.sendRedirect("login");
             return;
         }
+        req.setAttribute("userSession", userSession);
         User user = userService.getUserById(userSession.getUserId());
         req.setAttribute("user", user);
         req.setAttribute("cart", cartService.getCart(userSession.getUserId()));
@@ -59,7 +60,10 @@ public class CheckoutPageController extends HttpServlet {
         }
         User user = userService.getUserById(userSession.getUserId());
         CartDTO cart = cartService.getCart(userSession.getUserId());
-
+        if(cart.getCartDetails().isEmpty()) {
+            resp.sendRedirect("cart");
+            return;
+        }
         Order order = new Order();
         order.setCountry(country);
         order.setStreetAddress(address);

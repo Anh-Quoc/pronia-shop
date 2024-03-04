@@ -2,6 +2,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="dtos.CartDTO" %>
 <%@ page import="dtos.CartDetailDTO" %>
+<%@ page import="entities.UserSession" %>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -117,16 +118,8 @@
                                         </button>
 
                                         <%
-                                            boolean isAuthentication = false;
-                                            Cookie[] cookies = request.getCookies();
-                                            if (cookies != null) {
-                                                for (Cookie cookie : cookies) {
-                                                    if (cookie.getName().equals("customer_session_id")) {
-                                                        isAuthentication = true;
-                                                        break;
-                                                    }
-                                                }
-                                            }
+                                            UserSession userSession = (UserSession) request.getAttribute("userSession");
+                                            boolean isAuthentication = userSession != null;
                                         %>
 
                                         <ul class="dropdown-menu" aria-labelledby="settingButton">

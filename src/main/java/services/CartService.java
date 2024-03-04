@@ -141,6 +141,7 @@ public class CartService {
         }
 
         cartDetailDao.deleteCartDetailByCartId(cart.getId());
+        cartDao.updateCartTotalPrice(cart.getId());
         return orderId;
     }
 

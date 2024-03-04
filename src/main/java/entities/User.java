@@ -15,7 +15,6 @@ public class User {
     private String streetAddress;
     private String apartment;
     private String city;
-    private String postcode;
 
     private String phone;
 
@@ -27,7 +26,7 @@ public class User {
     }
 
     public User(String firstName, String lastName, String emailAddress, String password, String country,
-                String streetAddress, String apartment, String city, String postcode, String phone, String role) {
+                String streetAddress, String apartment, String city, String phone, String role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailAddress = emailAddress;
@@ -36,13 +35,8 @@ public class User {
         this.streetAddress = streetAddress;
         this.apartment = apartment;
         this.city = city;
-        this.postcode = postcode;
         this.phone = phone;
         this.role = role;
-    }
-
-    public String getFullName() {
-        return firstName + " " + lastName;
     }
 
 }

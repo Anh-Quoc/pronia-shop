@@ -349,7 +349,7 @@
                     <th>Street Address</th>
                     <th>Apartment</th>
                     <th>City</th>
-                    <th>Postcode</th>
+<%--                    <th>Postcode<th>--%>
                     <th>Total Price</th>
                     <th>Order Date</th>
                     <th>Order Details</th>
@@ -382,8 +382,8 @@
                     </td>
                     <td><%=order.getCity()%>
                     </td>
-                    <td><%=order.getPostcode()%>
-                    </td>
+<%--                    <td><%=order.getPostcode()%>--%>
+<%--                    </td>--%>
                     <td><%=order.getTotalPrice()%>
                     </td>
                     <td><%=order.getOrderDate()%>
@@ -463,8 +463,8 @@
 <%--</div>--%>
 
 <!-- Edit Modal HTML -->
-<% if(listOrders != null && !listOrders.isEmpty()) { %>--%>
-<% for (OrderDTO order : listOrders) { %>--%>
+<% if(listOrders != null && !listOrders.isEmpty()) { %>
+<% for (OrderDTO order : listOrders) { %>
 <div id="editOrderModal_<%=order.getId()%>" class="modal fade">
    <div class="modal-dialog">
         <div class="modal-content">
@@ -491,26 +491,26 @@
 </div>
 
 <!-- Delete Modal HTML -->
-<%--<div id="deleteOrderModal_<%=order.getId()%>" class="modal fade">--%>
-<%--    <div class="modal-dialog">--%>
-<%--        <div class="modal-content">--%>
-<%--            <form>--%>
-<%--                <div class="modal-header">--%>
-<%--                    <h4 class="modal-title">Delete Employee</h4>--%>
-<%--                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>--%>
-<%--                </div>--%>
-<%--                <div class="modal-body">--%>
-<%--                    <p>Are you sure you want to delete these Records?</p>--%>
-<%--                    <p class="text-warning"><small>This action cannot be undone.</small></p>--%>
-<%--                </div>--%>
-<%--                <div class="modal-footer">--%>
-<%--                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">--%>
-<%--                    <input type="submit" class="btn btn-danger" value="Delete">--%>
-<%--                </div>--%>
-<%--            </form>--%>
-<%--        </div>--%>
-<%--    </div>--%>
-<%--</div>--%>
+<div id="deleteOrderModal_<%=order.getId()%>" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form>
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete Employee</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete these Records?</p>
+                    <p class="text-warning"><small>This action cannot be undone.</small></p>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                    <input type="submit" class="btn btn-danger" value="Delete">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <% } %>
 <% } %>
 </body>

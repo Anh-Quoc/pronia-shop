@@ -30,7 +30,11 @@ public class MyAccountPageController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UserSession userSession = (UserSession) req.getAttribute("userSession");
-
+        if (userSession == null) {
+            resp.sendRedirect("login");
+            return;
+        }
+        req.setAttribute("userSession", userSession);
         req.setAttribute("cart", cartService.getCart(userSession.getUserId()));
         req.setAttribute("orders", orderService.getALlOrderByCustomerId(userSession.getUserId()));
         req.setAttribute("userInfo", userService.getUserById(userSession.getUserId()));

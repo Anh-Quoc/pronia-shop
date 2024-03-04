@@ -35,7 +35,7 @@ public class CartController extends HttpServlet {
             resp.sendRedirect("login");
             return;
         }
-
+        req.setAttribute("userSession", userSession);
         String command = req.getParameter("command");
         if(command == null) {
             command = "view";

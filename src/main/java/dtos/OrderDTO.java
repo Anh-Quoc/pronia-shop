@@ -16,7 +16,6 @@ public class OrderDTO {
     private String streetAddress;
     private String apartment;
     private String city;
-    private String postcode;
     private Double totalPrice;
     private Date orderDate;
     private List<OrderDetail> orderDetails;

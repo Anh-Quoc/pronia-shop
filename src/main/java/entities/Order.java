@@ -7,19 +7,14 @@ import lombok.Data;
 @AllArgsConstructor
 public class Order {
     private Integer id;
-    private String country; //
-    private String streetAddress;//
-    private String apartment;//
-    private String city;//
-    private String postcode;
-    private Double totalPrice;//
-    private java.sql.Date orderDate;//
-    //    private List<OrderDetail> orderDetails;
+    private String country;
+    private String streetAddress;
+    private String apartment;
+    private String city;
+    private Double totalPrice;
+    private java.sql.Date orderDate;
     private Integer orderStatusId;
-    private Integer customerId;//
-//    private String customerName;
-//    private String customerEmail;
-//    private String customerPhone;
+    private Integer customerId;
 
     public Order() {
     }
